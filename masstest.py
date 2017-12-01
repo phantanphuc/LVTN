@@ -43,7 +43,7 @@ for a, b, c in os.walk(DRC):
 	for file in c:
 		try:
 			# Load test image
-			img = Image.open(DRC + '/' + file)
+			img = Image.open(DRC + '/' + file).convert('L')
 			img1 = img.resize((InputImgSize,InputImgSize))
 			transform = transforms.Compose([transforms.ToTensor(),
 											transforms.Normalize(mean=(0.485, 0.456, 0.406), std=(0.229, 0.224, 0.225))])
@@ -72,7 +72,7 @@ for a, b, c in os.walk(DRC):
 			print('saving to: ' + args.output_dir + '/' + file)
 			img.save(args.output_dir + '/' + file)
 			
-		except ValueError as E:
+		except ValueError as e:
 			print('err')
 			
 

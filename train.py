@@ -96,7 +96,7 @@ def train(epoch):
 		optimizer.step()
 
 		train_loss += loss.data[0]
-		print('%.3f %.3f' % (loss.data[0], train_loss/(batch_idx+1)))
+		print('[E %d I %d]: %.3f %.3f' % (epoch, batch_idx, loss.data[0], train_loss/(batch_idx+1)))
 
 
 def test(epoch):
@@ -116,7 +116,7 @@ def test(epoch):
 		loc_preds, conf_preds = net(images)
 		loss = criterion(loc_preds, loc_targets, conf_preds, conf_targets)
 		test_loss += loss.data[0]
-		print('%.3f %.3f' % (loss.data[0], test_loss/(batch_idx+1)))
+		print('[ETe %d I %d]: %.3f %.3f' % (epoch, batch_idx, loss.data[0], test_loss/(batch_idx+1)))
 
 	# Save checkpoint.
 	global best_loss

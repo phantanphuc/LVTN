@@ -29,8 +29,8 @@ class DataEncoder:
 		steps = [s / scale for s in steps_raw]
 		sizes = [s / scale for s in sizes_raw]
 		
-
 		num_layers = len(feature_map_sizes)
+
 
 		boxes = []
 		for i in range(num_layers):
@@ -51,6 +51,7 @@ class DataEncoder:
 					boxes.append((cx, cy, s / math.sqrt(ar), s * math.sqrt(ar)))
 
 		self.default_boxes = torch.Tensor(boxes)
+
 
 	def iou(self, box1, box2):
 		'''Compute the intersection over union of two set of boxes, each box is [x1,y1,x2,y2].
@@ -212,9 +213,6 @@ class DataEncoder:
 		if abs(args.bacground_conf_multiplier - 1.0) < 0.001:
 			for i in conf:
 				i[0] = i[0] / args.bacground_conf_multiplier
-				#_max_index = numpy.argmax(i.numpy())
-				#if (_max_index != 0):
-				#	print(i)
 
 
 		variances = [0.1, 0.2]
@@ -223,9 +221,9 @@ class DataEncoder:
 		boxes = torch.cat([cxcy-wh/2, cxcy+wh/2], 1)  # [8732,4]
 
 		max_conf, labels = conf.max(1)  # [8732,1]
-		ids = labels.squeeze(1).nonzero().squeeze(1)  # [#boxes,]
+		ids = labels.squeeze(0).nonzero().squeeze(1)  # [#boxes,]
 
-		keep = self.nms(boxes[ids], max_conf[ids].squeeze(1))
+		keep = self.nms(boxes[ids], max_conf[ids].squeeze(0))
 		return boxes[ids][keep], labels[ids][keep], max_conf[ids][keep]
 
 
