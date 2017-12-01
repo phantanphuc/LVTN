@@ -42,6 +42,7 @@ parser.add_argument('--output_format', default='ckpt_%d.pth', type=str, help='Fo
 ######### MISC.
 parser.add_argument('--epoch_cycle', default=50, type=int, help='For output model name format')
 parser.add_argument('--upload_model', default=True, type=bool, help='Upload trained model after training process')
+parser.add_argument('--bacground_conf_multiplier', default=1.0, type=float, help='Background Confident Multiplier')
 
 
 #############################

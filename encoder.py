@@ -208,6 +208,15 @@ class DataEncoder:
 		  boxes: (tensor) bbox locations, sized [#obj, 4].
 		  labels: (tensor) class labels, sized [#obj,1].
 		'''
+
+		if abs(args.bacground_conf_multiplier - 1.0) < 0.001:
+			for i in conf:
+				i[0] = i[0] / args.bacground_conf_multiplier
+				#_max_index = numpy.argmax(i.numpy())
+				#if (_max_index != 0):
+				#	print(i)
+
+
 		variances = [0.1, 0.2]
 		wh = torch.exp(loc[:,2:]*variances[1]) * self.default_boxes[:,2:]
 		cxcy = loc[:,:2] * variances[0] * self.default_boxes[:,2:] + self.default_boxes[:,:2]
