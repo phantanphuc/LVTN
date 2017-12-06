@@ -72,7 +72,7 @@ for a, b, c in os.walk(DRC):
 			print('saving to: ' + args.output_dir + '/' + file)
 			img.save(args.output_dir + '/' + file)
 			
-		except ValueError as e:
+		except:
 			print('err')
 			
 

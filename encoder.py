@@ -221,9 +221,9 @@ class DataEncoder:
 		boxes = torch.cat([cxcy-wh/2, cxcy+wh/2], 1)  # [8732,4]
 
 		max_conf, labels = conf.max(1)  # [8732,1]
-		ids = labels.squeeze(0).nonzero().squeeze(1)  # [#boxes,]
+		ids = labels.squeeze(1).nonzero().squeeze(1)  # [#boxes,]
 
-		keep = self.nms(boxes[ids], max_conf[ids].squeeze(0))
+		keep = self.nms(boxes[ids], max_conf[ids].squeeze(1))
 		return boxes[ids][keep], labels[ids][keep], max_conf[ids][keep]
 
 
