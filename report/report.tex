@@ -323,6 +323,130 @@
 		\end{itemize}
 	\end{itemize}
 	
+	
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+	
+	\newpage
+	\section{Kiến thức đã tìm hiểu}
+	\subsection{Mạng nơ-ron tích chập (CNN)}
+	
+	\subsection{Mạng Single Shot Multibox Detector (SSD)}
+	
+	SSD như là một mạng cải tiến phương pháp phát hiện bằng cửa sổ trượt\footnote{Thuật ngữ tiếng Anh: Sliding Window}. Thay vì sử dụng một (một số) cửa sổ có kích thước cố định, thì SSD sinh ra một số lượng hữu hạn các ô chuẩn \footnote{Thuật ngữ tiếng Anh: Default box} để rồi từ các ô chuẩn đó để hệ thống có thể xác định vị trí các ký tự cần nhận diện cho quá trình huấn luyện, qua đó mạng cần phải học cách dự đoán cả kích thước của các ô bọc quanh ký tự thay vì chỉ chấp nhận kích thước cho trước. SSD cũng sử dụng các lớp tích chập để trích đặc trưng, tạo tiền đề cho việc phân loại ký tự. \\
+	
+	Nhóm xin phép được tách quá trình huấn luyện thành ba giai đoạn: mã hóa \footnote{Thuật ngữ tiếng Anh: Encoder}, trích đặc trưng - phân loại và tính giá trị mất mát. Và song song với huấn luyện, quá trình kiểm tra, kiểm định, chạy thực tiễn cũng được chia thành ba giai đoạn: trích đặc trưng - phân loại và giải mã \footnote{Thuật ngữ tiếng Anh: Decoder}
+	
+	\subsubsection{Bộ mã hóa (Encoder)}
+	Bộ mã hóa chỉ được sử dụng trong quá trình huấn luyện nhằm mã hóa, chuyển đổi từ "đáp án" \footnote{Thuật ngữ tiếng Anh: Ground truth} thô (được lưu trong tệp tin txt hoặc xml) sang "đáp án" mà mạng SSD có thể hiểu được.
+	
+	\subsubsection*{Sinh ô chuẩn}
+	
+	Để mã hóa "đáp án", mã hóa trước hết có nhiệm vụ sinh ra nhiều ô chuẩn có nhiều kích thước khác nhau, để làm được điều này, mạng cần phải được cung cấp một số thông số:\\
+	\begin{itemize}
+		\item Danh sách kích thước của các feature map (Phần này sẽ được giải thích rõ hơn ở mục sau). Mỗi feature map trong danh sách tưng ứng với một mức kích thước\footnote{Thuật ngữ tiếng Anh: Scale} về mặt kích thước trong việc phát hiện ảnh. Trong một mức kích thước, tất cả các ô chuẩn đều có kích thước như nhau và cách đều nhau, mỗi pixel trong feature map thể hiện một (một số ô chuẩn), vì vậy, ta có thể tính được danh sách khoảng cách giữa trọng tâm giữa các ô chuẩn bằng cách lấy kích thước ảnh chia cho kích thước của feature map ở mức kích thước tương ứng. Tất cả các dữ liệu liên quan đến kích thước sau đó sẽ được chuyển về tập giá trị $\{x \in R | x \in [0, 1] \} $ 
+		\item Danh sách các tỉ lệ diện mạo\footnote{Thuật ngữ tiếng Anh: Aspect ratio} ứng với mỗi mức kích thước. Mạng SSD dựa vào các tỉ lệ diện mạo đó để tạo ra các ô chuẩn có hình dạng khác nhau tại cùng một vị trí (trọng tâm của các ô chuẩn có cùng một vị trí).
+		\item Kích thước nhỏ nhất và lớn nhất của các ô chuẩn.
+	\end{itemize} 
+	
+	Từ những thông số trên, các ô chuẩn sẽ được sinh ra theo các bước sau: \\
+	Trước hết, bộ phận này tiến hành sinh ra kích thước của ổ chuẩn ứng với mỗi mức kích thước tương ứng bằng công thức: 
+	
+	$$s_k = s_{min} + \frac{s_{max} - s_{min}}{m - 1}(k - 1) $$
+	
+	Trong đó $s_{min}$ và $s_{max}$ là kích thước nhỏ nhất và lớn nhất của ô chuẩn, m là số lượng feature map.
+	
+	Ứng với mỗi mức kích thước:
+	
+	\begin{itemize}
+		
+		\item Mỗi ô chuẩn đều được liên kết với một pixel trên feature map, ta cũng đã tính được danh sách khoảng cách trọng tâm theo đề cập ở trên. Từ đó ta dễ dàng tính được tọa độ của các trọng tâm của các ô chuẩn trong ảnh theo công thức:
+		$$ (x, y) =\left( \left(i + \frac{1}{2} \right) \times step, \left(j + \frac{1}{2} \right) \times step \right)$$
+		Trong đó: x, y là tọa độ của các trọng tâm, i, j là các số nguyên dương nằm trong khoảng từ 0 đến kích thước feature map đang xét và step là khoảng cách giữa hai trọng tâm liền kề trong mức kích thước đang xét.
+		
+		\item Sau khi có được tọa độ của các trọng tâm, bộ phận mã hóa tiến hành sinh các ô chuẩn ứng với mỗi vị trí trọng tâm: 
+		
+		\begin{itemize}
+			\item Tạo một ô chuẩn có kích thước $s_k$ là kích thước ứng với mức kích thươc $k$ hiện tại.
+			\item Tạo một ô chuẩn có kích thước bằng $\sqrt{s_k \times s_{k + 1}}$.
+			\item Với mỗi phần tử trong danh sách tỉ lệ diện mạo tương ứng, ta tạo một ô chuẩn có kích thước chiều rộng: $w = s_k \times \sqrt{aspect\_ratio}$ và chiều cao bằng $h = s_k \div \sqrt{aspect\_ratio}$ với $aspect\_ratio$ là tỉ lẹ diện mạo đang xét.
+		\end{itemize}
+		
+	\end{itemize}
+	
+	Như vậy, với mỗi vị trí được chọn để đặt trong tâm các ô chuẩn, bộ phận mã hóa sẽ sinh ra $2 + n$ ô chuẩn với $n$ là số tỉ lệ diện mạo ứng với mức kích thước hiện tại. Kết quả của quá trình sinh ô chuẩn là một tập hợp nhiều vector. Mỗi vector ứng với một ô chuẩn mang thông tin tọa độ trọng tâm, chiều dài, chiều rộng của ô chuẩn.
+	
+	\subsubsection*{Kết hợp\footnote{Thuật ngữ tiếng Anh: Matching}}
+	
+	Sau khi hoàn tất sinh ô chuẩn, bộ phận encoder có nhiệm vụ kết hợp dữ liệu thô là các ô bọc \footnote{Thuật ngữ tiếng Anh: Bounding box} từ "đáp án" qua các ô chuẩn vừa được tạo. Kết quả là ta sẽ thu được một tập nhiều vector, mỗi vector đại diện cho mỗi ô chuẩn chứa thông tin gồm tọa độ trọng tâm, kích thước của ô chuẩn và nội dung ô chuẩn đó chứa gì (có thể là phần nền - không có gì cả, hoặc một ký tự nào đó cần được nhận diện). \\
+	
+	Việc kết hợp được thực hiện bằng cách so sánh từng ô chuẩn với từng ô bọc trong "đáp án" bằng cách tính chỉ số Jackard, nếu chỉ số này thỏa điều kiện thì ô chuẩn đó được gán nội dung là kí tự chứa trong ô bọc phù hợp nhất, nếu không thì ô chuẩn được gán nội dung là "nền".\\
+	
+	Chỉ số Jackard giữa hai ô bọc được tính bằng công thức:
+	
+	$$  J(A, B) = \frac{A \cap B }{ A \cup B } $$
+	
+	Trong đó, A, B lần lượt là phần ảnh mà ô bọc A và ô bọc B chiếm. Công thức này mang ý nghĩa hai ô bọc có kích thước càng tương đồng và phần trùng nhau càng nhiều thì có chỉ số Jackard càng gần giá trị 1.\\
+	
+	Các ô bọc chỉ là thành phần trung gian để mạng SSD có thể tính được giá trị mất mát cũng như thực hiện quá trình lan truyền ngược, vì vậy để thuận tiện cho việc tính mất mát sau này, từ dữ liệu vị trí và kích thước của ô bọc, bộ mã hóa tạo ra các vector có các giá trị biểu diễn sự mất mát của các ô bọc so với các ô chuẩn, sau đó nhiệm vụ của mạng là dự đoán ra sự mất mát đó (Vấn đề này sẽ được đề cập rõ hơn trong [hần tính giá trị mất mát).
+	
+	\subsubsection{Bộ trích đặc trưng - phân loại}
+	Đây là bộ phận có nhiệm vụ trích đặc trưng từ ảnh thô đầu và, tạo ra các feature map để đưa vào quá trình phân loại ký tự
+	
+	\subsubsection*{Trích đặc trưng (Hay mạng cơ sở \footnote{Thuật ngữ tiếng Anh: Base Network})}
+	
+	Mạng cơ sở của SSD là một mạng nơron tích chập bất kỳ, có thể là VGG hoặc lenet, ... Hầu hết những mạng này có mục đích phân loại\footnote{Thuật ngữ tiếng Anh: Classification}, vì vậy ở phía cuối mạng thường có các lớp liên kết đầy đủ nhằm giảm kích thước feature map và tạo ra dữ liệu đầu ra có kích thước phù hợp (bằng với số nhãn cần dự đoán). Khi kết hợp với mạng SSD, các lớp liên kết đầy đủ này sẽ được thay thế bằng các lớp tích chập và song hành là lớp Multibox, chi tiết phần này sẽ được để cập ở mục tiếp theo.
+	
+	\subsubsection* {Phân loại}
+	
+	Bộ phận phân loại có nhiệm vụ đưa ra dự đoán về vị trí và nhãn của các ký tự có trong ảnh. Để làm được điều đó, bộ phân loại phải sinh ra các feature map ứng với từng mức kích thước khác nhau, các feature map đó được đưa vào lớp Multibox để sinh ra các vị trí dự đoán và nhãn tương ứng. Các feature map được lấy sau một (một số) lớp tích chập. Danh sách feature map có được ở giai đoạn sinh ô chuẩn chính là được lấy từ đây. \\
+	
+	Sau khi có được các feature map, lớp Multibox sẽ tiến hành đưa ra dự đoán về ô bọc và nhãn gắn với ô bọc đó. Mỗi feature map sử dụng một tập hợp các lớp tích chập sẽ cho ra một số lượng dự đoán nhất định. Với mỗi vị trí trên feature map được kernel trượt qua, thì một dự đoán về ký tự được sinh ra. Kernel có kích thước:
+	$$3 \times 3 \times (n \times (classes + 4))$$
+	Với $n$ là số lượng tỉ lệ diện mạo với fearture map tương ứng và $classes$ là số lượng nhãn cần nhận diện, số $4$ trong công thức đại diện cho 4 thông số về vị trí của ô bọc (tọa độ trọng tâm và kích thước). Do kích thước của các kernel không đồng nhất (vì số lượng tỉ lệ diện mạo ứng với từng feature map có thể khác nhau), nên để tạo ra dữ liệu đầu ra phù hợp với các ô chuẩn đã tạo từ trước thì các vector dự đoán sẽ được sắp xếp lại sao cho dữ liệu đầu ra chỉ có $classes + 4$ kênh và vị trí của các vector phải tương ứng với vị trí các ô chuẩn đã sinh từ trước.
+	
+	\subsubsection{Tính giá trị mất mát}
+	
+	Giá trị mất mát được tính bằng tổng có trọng số giữa mất mát về vị trí\footnote{Thuật ngữ tiếng Anh: Localization Loss} và mất mát về độ tin cậy\footnote{Thuật ngữ tiếng Anh: Confidence Loss}
+	
+	$$ L(x,c,l,g) = \frac{1}{N} (L_{conf}(x,c) + \alpha L_{loc}(x,l,g) ) $$
+	Trong đó:
+	\begin{itemize}
+		\item x biểu thị các phép kết hợp, cụ thể $x^p_{ij}$ biểu thị phép kết hợp giữa ô chuẩn thứ $i$ với ô bọc thứ $j$ đối với nhãn $p$. Vì vậy $x^p_{ij}$ có tập giá trị $\{0, 1\}$.
+		\item $c$ biểu thị nhãn kỳ vọng cho phép kết hợp đang xét.
+		\item $l$ biểu thị ô bọc dự đoán.
+		\item $g$ biểu thị ô bọc "đáp án".
+	\end{itemize}
+	
+	Hàm mất mát về vị trí có thể được biểu diễn bằng công thức:
+	$$L_{loc}(x,l,g) = \sum^N_{i \in Pos} \sum_{m \in \{ cx, cy, w, g \}} x^k_{ij} smooth_{L1} (l^m_i - \hat{g}^m_j) $$
+	Trong đó:
+	\begin{itemize}
+		\item N là số lượng phép kết hợp giữa ô chuẩn và ô bọc có ý nghĩa (nhãn của phép kết hợp không phải là "nền". Nếu như $N = 0$ thì ta đặt giá trị mất mát bằng 0.
+		\item Pos là tập hợp các phép kết hợp có ý nghĩa.
+		\item $smooth_{L1}$ là một hàm tính mất mát được định nghĩa là 
+		$$L(x) = \begin{cases} 0.5x^2 \quad if |x| < 1 \\ |x| - 0.5 \quad otherwise \end{cases} $$
+		\item $\hat{g}_j^{cx} = (g_j^{cx} - d_i^{cx}) / d^w_i$ Với $d$ biểu thị cho ô chuẩn.
+		\item $\hat{g}_j^{cy} = (g_j^{cy} - d_i^{cy}) / d^h_i$
+		\item $\hat{g}^w_j = \log \left( \frac{g_j^w}{d_i^w} \right)$
+		\item $\hat{g}^h_j = \log \left( \frac{g_j^h}{d_i^h} \right)$
+	\end{itemize}
+	
+	Vậy ta có thể thấy khi tính giá trại mất mát về vị trí, ta tính dựa trên sai lệch so với ô chuẩn mà ô bọc "đáp án" ban đầu kết hợp được thay vì tính mất mát trực tiếp.\\
+	
+	hàm mất mát về độ tin cậy có thể được tính theo công thức:
+	
+	\subsubsection{Bộ giải mã (Decoder)}
+	
+	Bản chất của bộ giải mã khá đơn giản, nó có chức năng chuyển dữ liệu các ô bọc mà mạng dự đoán (tức là những ô bọc được tính kích thước và tọa độ theo ô chuẩn mà ô bọc đó được kết hợp vào) sang dữ liệu tọa độ của ảnh (có gốc tọa độ nằm ở góc trên bên phải và tọa độ nằm trong miền $[0, 1]$
+	
+	\subsubsection{Một số vấn đề khác trong mạng SSD}
+	\subsubsection*{Tăng cường dữ liệu\footnote{Data Augumentation}}
+	
+	Ngay trước quá trình kết hợp
+	
+	\subsubsection*{Cân bằng nhãn\footnote{Hard Negative Mining}}	
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	
@@ -417,73 +541,15 @@
 	\newpage
 	\section{Mô hình đề xuất}
 	
+	\subsection{Tổng quan}
+	
 	Nhóm quyết định sử dụng mạng SSD\footnote{Thuật ngữ tiếng Anh: Single Shot Detector} để phát hiện các ký tự trong ảnh và sau đó sử dụng bộ phân tích cú pháp DRACULAE để sinh ra chuỗi Latex.
 	
-	\subsection{Mạng Single Shot Multibox Detector (SSD)}
+	\subsection{Phát hiện ký tự}
 	
-	SSD như là một mạng cải tiến phương pháp phát hiện bằng cửa sổ trượt\footnote{Thuật ngữ tiếng Anh: Sliding Window}. Thay vì sử dụng một (một số) cửa sổ có kích thước cố định, thì SSD sinh ra một số lượng hữu hạn các ô chuẩn \footnote{Thuật ngữ tiếng Anh: Default box} để rồi từ các ô chuẩn đó để hệ thống có thể xác định vị trí các ký tự cần nhận diện cho quá trình huấn luyện, qua đó mạng cần phải học cách dự đoán cả kích thước của các ô bọc quanh ký tự thay vì chỉ chấp nhận kích thước cho trước. SSD cũng sử dụng các lớp tích chập để trích đặc trưng, tạo tiền đề cho việc phân loại ký tự. \\
+
 	
-	Nhóm xin phép được tách quá trình huấn luyện thành ba giai đoạn: mã hóa \footnote{Thuật ngữ tiếng Anh: Encoder}, trích đặc trưng - phân loại và tính giá trị mất mát. Và song song với huấn luyện, quá trình kiểm tra, kiểm định, chạy thực tiễn cũng được chia thành ba giai đoạn: trích đặc trưng - phân loại và giải mã \footnote{Thuật ngữ tiếng Anh: Decoder}
-	
-	\subsubsection{Bộ mã hóa (Encoder)}
-	Bộ mã hóa chỉ được sử dụng trong quá trình huấn luyện nhằm mã hóa, chuyển đổi từ "đáp án" \footnote{Thuật ngữ tiếng Anh: Ground truth} thô (được lưu trong tệp tin txt hoặc xml) sang "đáp án" mà mạng SSD có thể hiểu được.
-	
-	\subsubsection*{Sinh ô chuẩn}
-	
-	Để mã hóa "đáp án", mã hóa trước hết có nhiệm vụ sinh ra nhiều ô chuẩn có nhiều kích thước khác nhau, để làm được điều này, mạng cần phải được cung cấp một số thông số:\\
-	\begin{itemize}
-		\item Danh sách kích thước của các feature map (Phần này sẽ được giải thích rõ hơn ở mục sau). Mỗi feature map trong danh sách tưng ứng với một mức kích thước\footnote{Thuật ngữ tiếng Anh: Scale} về mặt kích thước trong việc phát hiện ảnh. Trong một mức kích thước, tất cả các ô chuẩn đều có kích thước như nhau và cách đều nhau, mỗi pixel trong feature map thể hiện một (một số ô chuẩn), vì vậy, ta có thể tính được danh sách khoảng cách giữa trọng tâm giữa các ô chuẩn bằng cách lấy kích thước ảnh chia cho kích thước của feature map ở mức kích thước tương ứng. Tất cả các dữ liệu liên quan đến kích thước sau đó sẽ được chuyển về tập giá trị $\{x \in R | x \in [0, 1] \} $ 
-		\item Danh sách các tỉ lệ diện mạo\footnote{Thuật ngữ tiếng Anh: Aspect ratio} ứng với mỗi mức kích thước. Mạng SSD dựa vào các tỉ lệ diện mạo đó để tạo ra các ô chuẩn có hình dạng khác nhau tại cùng một vị trí (trọng tâm của các ô chuẩn có cùng một vị trí).
-		\item Kích thước nhỏ nhất và lớn nhất của các ô chuẩn.
-	\end{itemize} 
-	
-	Từ những thông số trên, các ô chuẩn sẽ được sinh ra theo các bước sau: \\
-	Trước hết, bộ phận này tiến hành sinh ra kích thước của ổ chuẩn ứng với mỗi mức kích thước tương ứng bằng công thức: 
-	
-	$$s_k = s_{min} + \frac{s_{max} - s_{min}}{m - 1}(k - 1) $$
-	
-	Trong đó $s_{min}$ và $s_{max}$ là kích thước nhỏ nhất và lớn nhất của ô chuẩn, m là số lượng feature map.
-	
-	Ứng với mỗi mức kích thước:
-	
-	\begin{itemize}
-		
-		\item Mỗi ô chuẩn đều được liên kết với một pixel trên feature map, ta cũng đã tính được danh sách khoảng cách trọng tâm theo đề cập ở trên. Từ đó ta dễ dàng tính được tọa độ của các trọng tâm của các ô chuẩn trong ảnh theo công thức:
-		$$ (x, y) =\left( \left(i + \frac{1}{2} \right) \times step, \left(j + \frac{1}{2} \right) \times step \right)$$
-		Trong đó: x, y là tọa độ của các trọng tâm, i, j là các số nguyên dương nằm trong khoảng từ 0 đến kích thước feature map đang xét và step là khoảng cách giữa hai trọng tâm liền kề trong mức kích thước đang xét.
-		
-		\item Sau khi có được tọa độ của các trọng tâm, bộ phận mã hóa tiến hành sinh các ô chuẩn ứng với mỗi vị trí trọng tâm: 
-		
-		\begin{itemize}
-			\item Tạo một ô chuẩn có kích thước $s_k$ là kích thước ứng với mức kích thươc $k$ hiện tại.
-			\item Tạo một ô chuẩn có kích thước bằng $\sqrt{s_k \times s_{k + 1}}$.
-			\item Với mỗi phần tử trong danh sách tỉ lệ diện mạo tương ứng, ta tạo một ô chuẩn có kích thước chiều rộng: $w = s_k \times \sqrt{aspect\_ratio}$ và chiều cao bằng $h = s_k \div \sqrt{aspect\_ratio}$ với $aspect\_ratio$ là tỉ lẹ diện mạo đang xét.
-		\end{itemize}
-		
-	\end{itemize}
-	
-	Như vậy, với mỗi vị trí được chọn để đặt trong tâm các ô chuẩn, bộ phận mã hóa sẽ sinh ra $2 + n$ ô chuẩn với $n$ là số tỉ lệ diện mạo ứng với mức kích thước hiện tại. Kết quả của quá trình sinh ô chuẩn là một tập hợp nhiều vector. Mỗi vector ứng với một ô chuẩn mang thông tin tọa độ trọng tâm, chiều dài, chiều rộng của ô chuẩn.
-	
-	\subsubsection*{Kết hợp\footnote{Thuật ngữ tiếng Anh: Matching}}
-	
-	Sau khi hoàn tất sinh ô chuẩn, bộ phận encoder có nhiệm vụ kết hợp dữ liệu thô là các ô bọc \footnote{Thuật ngữ tiếng Anh: Bounding box} từ "đáp án" qua các ô chuẩn vừa được tạo. Kết quả là ta sẽ thu được một tập nhiều vector, mỗi vector đại diện cho mỗi ô chuẩn chứa thông tin gồm tọa độ trọng tâm, kích thước của ô chuẩn và nội dung ô chuẩn đó chứa gì (có thể là phần nền - không có gì cả, hoặc một ký tự nào đó cần được nhận diện). \\
-	
-	Việc kết hợp được thực hiện bằng cách so sánh từng ô chuẩn với từng ô bọc trong "đáp án" bằng cách tính chỉ số Jackard, nếu chỉ số này thỏa điều kiện thì ô chuẩn đó được gán nội dung là kí tự chứa trong ô bọc phù hợp nhất, nếu không thì ô chuẩn được gán nội dung là "nền".\\
-	
-	Chỉ số Jackard giữa hai ô bọc được tính bằng công thức:
-	
-	$$  J(A, B) = \frac{A \cap B }{ A \cup B } $$
-	
-	Trong đó, A, B lần lượt là phần ảnh mà ô bọc A và ô bọc B chiếm. Công thức này mang ý nghĩa hai ô bọc có kích thước càng tương đồng và phần trùng nhau càng nhiều thì có chỉ số Jackard càng gần giá trị 1.\\
-	
-	Các ô bọc chỉ là thành phần trung gian để mạng SSD có thể tính được giá trị mất mát cũng như thực hiện quá trình lan truyền ngược, vì vậy để thuận tiện cho việc tính mất mát sau này, từ dữ liệu vị trí và kích thước của ô bọc, bộ mã hóa tạo ra các vector có các giá trị biểu diễn sự mất mát của các ô bọc so với các ô chuẩn, sau đó nhiệm vụ của mạng là dự đoán ra sự mất mát đó (Vấn đề này sẽ được đề cập rõ hơn trong [hần tính giá trị mất mát).
-	
-	\subsubsection{Bộ trích đặc trưng - phân loại}
-	Đây là bộ phận có nhiệm vụ trích đặc trưng từ ảnh thô đầu và, tạo ra các feature map để đưa vào quá trình phân loại ký tự
-	
-	\subsubsection*{Trích đặc trưng (Hay mạng cơ sở \footnote{Thuật ngữ tiếng Anh: Base Network})}
-	
-	Nhóm đã sử dụng mạng VGG16 [trích dẫn] cho bộ trích đặc trưng. Cấu trúc của mạng VGG16 gồm tổ hợp các lớp tích chập và lớp pooling xếp chồng lên nhau, ở cuối mạng có các lớp liên kết đầy đủ \footnote{Thuật ngữ tiếng Anh: Fully connected layer} để giảm kích thước tensor và cuối cùng là xuất ra vector có số chiều phù hợp (có số chiều bằng với số lớp đối tượng cần dự đoán).
+	Về cấu trúc của SSD, nhóm đã sử dụng mạng VGG16 [trích dẫn] cho phần mạng cơ sở. Cấu trúc của mạng VGG16 gồm tổ hợp các lớp tích chập và lớp pooling xếp chồng lên nhau, ở cuối mạng có các lớp liên kết đầy đủ \footnote{Thuật ngữ tiếng Anh: Fully connected layer} để giảm kích thước tensor và cuối cùng là xuất ra vector có số chiều phù hợp (có số chiều bằng với số lớp đối tượng cần dự đoán).
 	
 	\begin{center}
 		
@@ -493,11 +559,49 @@
 		\captionof{figure}{Cấu tạo mạng VGG16}
 	\end{center}
 	
-	Như hình vẽ bên trên, các lớp tích chập và lớp pooling được gom lại thành các cụm, sau hai đến ba lớp tích chập là một lớp pooling. Số kênh của tensor chạy trong mạng được nâng dần từ 64 lên 512 về phía cuối mạng. Khi đưa mạng cơ sở vào mạng SSD, các lớp liên kết đầy đủ sẽ được bỏ đi và bộ phận phân loại sẽ được chèn vào vị trí tương ứng. Khi đó, ta cần phải chuyển model của mạng VGG sang mạng SSD, phần này sẽ được đề cập chi tiết hơn trong phần huấn luyện.
+	Như hình vẽ bên trên, các lớp tích chập và lớp pooling được gom lại thành các cụm, sau hai đến ba lớp tích chập là một lớp pooling. Số kênh của tensor chạy trong mạng được nâng dần từ 64 lên 512 về phía cuối mạng. Khi đưa mạng cơ sở vào mạng SSD, các lớp liên kết đầy đủ sẽ được bỏ đi và bộ phận phân loại sẽ được chèn vào vị trí tương ứng. Khi đó, ta cần phải chuyển model của mạng VGG sang mạng SSD, phần này sẽ được đề cập chi tiết hơn trong phần hiện thực.\\
 	
-	\subsubsection* {Phân loại}
+	Khi tiếp hợp vào mạng SSD, các lớp liên kết đầy đủ của VGG16 được lược bỏ, thay vào đó là những lớp tích chập, mô hình cụ thể của mạng SSD nhóm để xuất được thể hiện ở ảnh dưới.
 	
-	Bộ phận phân loại có nhiệm vụ đưa ra dự đoán về vị trí và nhãn của các ký tự có trong ảnh. Để làm được điều đó, bộ phân loại phải sinh ra các feature map ứng với từng mức kích thước khác nhau, các feature map đó được đưa vào lớp Multibox để sinh ra cac vị trí dự đoán và nhãn tương ứng. Danh sách feature map có được ở giai đoạn sinh ô chuẩn chính là được lấy từ đây. \\
+	\begin{center}
+		
+		\centering
+		\includegraphics[width=0.6\linewidth]{SSD_Layers.png}
+		\vspace{0.5cm}
+		\captionof{figure}{Sơ đồ các lớp trong mạng SSD}
+	\end{center}
+	
+	Trong đó Khối VGG16 là phần mạng VGG16 đã được lược bỏ các lớp liên kết đầy đủ. Các khối còn lại được thể hiện trong bảng sau:
+	
+	\begin{center}
+		\begin{tabular}{||c | c | c | c | c | c ||} 
+			\hline
+			Khối & \makecell{ Số kênh \\ đầu vào } & \makecell{ Số kênh \\ đầu ra} & Kích thước nhân &  \makecell{ Chèn thêm \\ (Padding) } &  \makecell{ Bước \\ (Stride) } \\ [0.5ex] 
+			\hline\hline
+			Conv\_6 & 512 & 1024 & 3 & 1 & 1 \\ 
+			\hline
+			Conv\_7 & 1024 & 1024 & 3 & 6 & 1 \\ 
+			\hline
+			Conv\_8\_1 & 1024 & 256 & 1 & 0 & 1 \\ 
+			\hline
+			Conv\_8\_2 & 256 & 512 & 3 & 1 & 2 \\ 
+			\hline
+			Conv\_9\_1 & 512 & 128 & 1 & 0 & 1 \\ 
+			\hline
+			Conv\_9\_2 & 128 & 256 & 3 & 1 & 2 \\ 
+			\hline
+			Conv\_10\_1 & 256 & 128 & 1 & 0 & 1 \\ 
+			\hline
+			Conv\_10\_2 & 128 & 256 & 3 & 1 & 2 \\ 
+			\hline
+			Conv\_11\_1 & 256 & 128 & 1 & 0 & 1 \\ 
+			\hline
+			Conv\_11\_2 & 128 & 256 & 3 & 0 & 1 \\ 
+			\hline
+		\end{tabular}
+	\end{center}
+	
+	Các lớp tích chập đều sử dụng hàm truyền là hàm ReLu, riêng ở sau các lớp Conv\_10\_1, Conv\_10\_2, Conv\_11\_1, Conv\_11\_2 thì có thêm một lớp dropout với hệ số dropout là 0.2.
 	
 	Feature map được trích ra từ hai vị trí:
 	
@@ -514,54 +618,7 @@
 		\captionof{figure}{Cấu tạo mạng SSD}
 	\end{center}
 	
-	
-	Sau khi có được các feature map, lớp Multibox sẽ tiến hành đưa ra dự đoán về ô bọc và nhãn gắn với ô bọc đó. Mỗi feature map sử dụng một tập hợp các lớp tích chập sẽ cho ra một số lượng dự đoán nhất định. Với mỗi vị trí trên feature map được kernel trượt qua, thì một dự đoán về ký tự được sinh ra. Kernel có kích thước:
-	$$3 \times 3 \times (n \times (classes + 4))$$
-	Với $n$ là số lượng tỉ lệ diện mạo với fearture map tương ứng và $classes$ là số lượng nhãn cần nhận diện, số $4$ trong công thức đại diện cho 4 thông số về vị trí của ô bọc (tọa độ trọng tâm và kích thước). Do kích thước của các kernel không đồng nhất (vì số lượng tỉ lệ diện mạo ứng với từng feature map có thể khác nhau), nên để tạo ra dữ liệu đầu ra phù hợp với các ô chuẩn đã tạo từ trước thì các vector dự đoán sẽ được sắp xếp lại sao cho dữ liệu đầu ra chỉ có $classes + 4$ kênh và vị trí của các vector phải tương ứng với vị trí các ô chuẩn đã sinh từ trước.
-	
-	\subsubsection{Tính giá trị mất mát}
-	
-	Giá trị mất mát được tính bằng tổng có trọng số giữa mất mát về vị trí\footnote{Thuật ngữ tiếng Anh: Localization Loss} và mất mát về độ tin cậy\footnote{Thuật ngữ tiếng Anh: Confidence Loss}
-	
-	$$ L(x,c,l,g) = \frac{1}{N} (L_{conf}(x,c) + \alpha L_{loc}(x,l,g) ) $$
-	Trong đó:
-	\begin{itemize}
-		\item x biểu thị các phép kết hợp, cụ thể $x^p_{ij}$ biểu thị phép kết hợp giữa ô chuẩn thứ $i$ với ô bọc thứ $j$ đối với nhãn $p$. Vì vậy $x^p_{ij}$ có tập giá trị $\{0, 1\}$.
-		\item $c$ biểu thị nhãn kỳ vọng cho phép kết hợp đang xét.
-		\item $l$ biểu thị ô bọc dự đoán.
-		\item $g$ biểu thị ô bọc "đáp án".
-	\end{itemize}
-	
-	Hàm mất mát về vị trí có thể được biểu diễn bằng công thức:
-	$$L_{loc}(x,l,g) = \sum^N_{i \in Pos} \sum_{m \in \{ cx, cy, w, g \}} x^k_{ij} smooth_{L1} (l^m_i - \hat{g}^m_j) $$
-	Trong đó:
-	\begin{itemize}
-		\item N là số lượng phép kết hợp giữa ô chuẩn và ô bọc có ý nghĩa (nhãn của phép kết hợp không phải là "nền". Nếu như $N = 0$ thì ta đặt giá trị mất mát bằng 0.
-		\item Pos là tập hợp các phép kết hợp có ý nghĩa.
-		\item $smooth_{L1}$ là một hàm tính mất mát được định nghĩa là 
-		$$L(x) = \begin{cases} 0.5x^2 \quad if |x| < 1 \\ |x| - 0.5 \quad otherwise \end{cases} $$
-		\item $\hat{g}_j^{cx} = (g_j^{cx} - d_i^{cx}) / d^w_i$ Với $d$ biểu thị cho ô chuẩn.
-		\item $\hat{g}_j^{cy} = (g_j^{cy} - d_i^{cy}) / d^h_i$
-		\item $\hat{g}^w_j = \log \left( \frac{g_j^w}{d_i^w} \right)$
-		\item $\hat{g}^h_j = \log \left( \frac{g_j^h}{d_i^h} \right)$
-	\end{itemize}
-	
-	Vậy ta có thể thấy khi tính giá trại mất mát về vị trí, ta tính dựa trên sai lệch so với ô chuẩn mà ô bọc "đáp án" ban đầu kết hợp được thay vì tính mất mát trực tiếp.\\
-	
-	hàm mất mát về độ tin cậy có thể được tính theo công thức:
-	
-	\subsubsection{Bộ giải mã (Decoder)}
-	
-	Bản chất của bộ giải mã khá đơn giản, nó có chức năng chuyển dữ liệu các ô bọc mà mạng dự đoán (tức là những ô bọc được tính kích thước và tọa độ theo ô chuẩn mà ô bọc đó được kết hợp vào) sang dữ liệu tọa độ của ảnh (có gốc tọa độ nằm ở góc trên bên phải và tọa độ nằm trong miền $[0, 1]$
-	
-	\subsubsection{Một số vấn đề khác trong mạng SSD}
-	\subsubsection*{Tăng cường dữ liệu\footnote{Data Augumentation}}
-	
-	Ngay trước quá trình kết hợp
-	
-	\subsubsection*{Cân bằng nhãn\footnote{Hard Negative Mining}}	
-	
-	\subsection{Bộ phân tích cú pháp Draculae}
+	\subsection{Phân tích cú pháp}
 	
 	Bộ phân tích cú pháp này có nhiệm vụ chuyển dữ liệu dự đoán là các ô bọc sang dữ liệu biểu thức toán học dạng latex.\\
 	
@@ -590,8 +647,8 @@
 			\hline
 			\makecell{Centered \\ Ký tự trung tâm \\ o, n, u, \}, ) ... } & $\frac{1}{2}H$ &  $tH$ & $H-tH$ & $tH$ & $H- tH$
 			\\ \hline
-
-
+			
+			
 		\end{tabular}
 	\end{center}
 	
@@ -605,11 +662,15 @@
 	
 	Bảng trên thể hiện quy tắc để kiểm tra hai ký tự có vị trí tương đối như thế nào với nhau, cụ thể:
 	\begin{itemize}
-		\item A và B liền kề nếu như trọng tâm của B có tung độ nằm trong khoảng từ ngưỡng chỉ số dưới đến ngưỡng chỉ số trên của A.
+		
+		\item B chứa trong A (dành cho trường hợp ký tự căn: $\sqrt{}$) khi B có tung độ nằm trong khoảng từ ngưỡng chỉ số dưới đến ngưỡng chỉ số trên của A và hoành độ trọng tâm của B nằm trong khoảng $(Min(X_B), Max(X_B)$.
+		
+		\item A và B liền kề nếu như trọng tâm của B có tung độ nằm trong khoảng từ ngưỡng chỉ số dưới đến ngưỡng chỉ số trên của A và hoành độ trọng tâm của B lớn hơn $Max(X_A)$.
+		
 		\item B là chỉ số trên của A nếu như trọng tâm của B lớn hơn ngưỡng chỉ số trên của A.
 		
 		\item B là ký tự phân số thống trị A khi trọng tâm của A có hoành độ nằm trong khoảng $(Min(X_B), Max(X_B)$
-	
+		
 	\end{itemize}
 	
 	Trước khi tiến hành sinh cây BST, danh sách ô bọc cần phải được sắp xếp theo chiều tăng dần hoành độ của mép phải ô bọc $x$ (hay cụ thể hơn là $min(x)$). \\
@@ -623,7 +684,7 @@
 	
 	Để tìm ký tự chủ đạo, ta cần thực hiện những công đoạn sau:
 	\begin{itemize}
-		\item Trước hết, ta tìm ký tự nằm bên trái nhất dựa trên $min(X)$ của ô bọc.
+		\item Trước hết, ta tìm ký tự nằm bên trái nhất dựa trên $min(X)$ của ô bọc, xem tất cả các ký tự là nút con của nút gốc.
 		\item Kiếm tra ký tự hiện tại có phải là Variable Range (lớp này có đặc tính có thể viết cả ở bên trên và bên dưới, đây là nguồn gốc gây khó khăn trong việc xác định ký tự chủ đạo). Nếu đúng thì ta kiểm tra xem ký tự đó có bị thống trị bởi một phân số hay không, nếu có thì ký tự chủ đạo là ký tự phân số, nếu không thì ký tự chủ đạo là ký tự Variable Range vừa tìm được. Nếu ký tự vừa tìm được không phải là Variable Range, thì ta tìm kiếm ký tự Variable Range nằm bên trái nhất và sang bước tiếp theo.
 		
 		\item Nếu không còn ký tự Variable Range nào khác, thì ký tự bên trái nhất vừa tìm được ở bước trên được kiểm tra bị thống trị bởi phân số hay không và trả về ký tự chủ đạo (ký tự đó hoặc ký tự phân số). Nếu còn một ký tự Variable Range khác trong biểu thức, ta tiếp tục với bước kế tiếp.
@@ -634,21 +695,69 @@
 	
 	\subsubsection*{Xác định ký tự trên đường cơ sở}
 	
-	Sau khi đã có được ký tự chủ đạo, ta cần phải tìm những ký tự liền kề theo chiều ngang với ký tự vừa tìm được, những ký tự này chính là ký tự trên đường cơ sở. Việc xác định các ký tự trên đường cơ sở được thực hiện qua các bước:\\
+	Sau khi đã có được ký tự chủ đạo, ta cần phải tìm những ký tự liền kề theo chiều ngang với ký tự vừa tìm được, những ký tự này chính là ký tự trên đường cơ sở. Để xác định các ký tự trên đường cơ sở, ta lấy ký tự chủ đạo vừa xác định được để xét:
 	
-	Ta lấy ký tự đầu tiên trong danh sách các ký tự chưa được xử lý (chưa được xác định xem có nằm trên đường cơ sở hay không)
+	\begin{enumerate}
+		\item Nếu như ký tự đang xét là ký tự cuối cùng hoặc ký tự duy nhất được xét, thì chuyển sang bước kế tiếp (bước tái phân vùng).
+		\item Ta phần vùng các ký tự nằm ở vùng bên trên, bên dưới, góc trên bên trái và góc dưới bên trái (không phân vùng các ký tự nằm bên phải) vào nút con của nút đang xét.
+		\item Nếu như ký tự đang xét thuộc lớp Non-script, ký tự đó được đánh dấu nằm trên đường chủ đạo, ta quay lại tìm ký tự chủ đạo trong các ký tự còn lại và xác định các ký tự trên đường cơ sở với ký tự chủ đạo đó (quay lại bước 1).
+		\item Ta kiểm tra danh sách các ký tự còn lại xem có ký tự nào liền kề bên phải với ký tự đang xét hay không, nếu có, ta kiểm tra ký tự đó có bị thống trị bởi ký tự khác hay không và quay lại bước 1 với ký tự được xét là ký tự thống trị nhất (hoặc chính ký tự liền kề nhất vừa tìm được đối với trường hợp nó không bị thống trị bởi ký tự nào).
+		\item Nếu hệ thống chạy đến bước này thì có nghĩa là trong các ký tự còn lại, không còn ký tự nào liền kề với ký tự đang xét, vì vậy ta tiến hành phân vùng đưa các ký tự còn lại vào nút con góc trên bên phải (chỉ số trên) và góc dưới bên phải (chỉ số dưới) của nút đang xét.
+	\end{enumerate}
+	
+	Sau khi thực hiện bước này lần đầu tiên, ta thu được một cây có ba tầng, tầng đầu chứa nút gốc, tầng thứ hai chứa các ký tự nằm trên đường cơ sở, tầng thứ ba chứa các nút con của các nút chứa ký tự nằm trên đường cơ sở, các nút con này có thể chứa một hoặc nhiều ký tự, chưa là một cây.
+	
+	\subsubsection*{Tái phân vùng}
+	Ở bước trước, nút con được phân vào vùng góc trên bên trái và góc dưới bên trái, điều này không có ý nghĩa đối với ngữ nghĩa của biểu thức toán học và khó khăn trong việc sinh cây Lexed BST sau này. Vì vậy ở bước này, các nút con sẽ được thay đổi vị trí cho phù hợp với ngữ nghĩa của biểu thức, chương trình sẽ kiểm tra từng cặp ký tự liền kề theo thứ tự từ trái sang phải, ta gọi ký tự bên trái là $A$ và ký tự bên phải là $B$:\\
 	
 	\begin{itemize}
-		\item 
+		\item Nếu $B$ không thuộc lớp Variable Range, và $B$ không có nút con ở vùng bên trên, ta gắn nút góc trên bên trái của ký tự $B$ vào nút góc trên bên phải (chỉ số trên) của $A$. 
+		\item Nếu $B$ thuộc lớp Variable Range thì ta sẽ phân vùng những ký tự liền kề với ký tự đầu tiên trong nút con góc trên bên trái của $B$ vào vùng bên trên của $B$. 
+		\item Nếu $A$ thuộc lớp Variable Range thì ta phải tiến hành gộp các vùng góc trên bên trái, bên trên và góc trên bên phải thành một vùng bên trên duy nhất.
 	\end{itemize}
+	
+	Sau đó ta tiến hành làm tương tự với vùng bên dưới. Với cách phân vùng này, với một số biểu thức đặc biệt hoặc nhập nhằng thì việc phân vùng sẽ không chính xác, để khắc phục điều này, ta cần phải có thêm công đoạn hậu xử lý.\\
+	
+	\subsubsection*{Đệ quy}
+	
+	Tới bước này, ta đã có một cây có ba tầng với tầng thứ hai có phân vùng nút con khá chuẩn xác. Nhiệm vụ bây giờ là phải tiếp tục phân vùng cho các nút con của các ký tự trên đường cơ sở. Việc này được thực hiện bằng cách xem từng nút con là từng vùng ảnh mới riêng biệt và thực hiện lại ba bước trên để thu được các cây con. \\
+	
+	Sau quá trình này, ta thu được một cây BST biểu thị vị trí tương đối giữa các nút. Cây này tiếp tục được đi qua [Lexical Pass] để thu được Lexed - BST.
+	
+	\subsubsection{Sinh cây Lexed - BST}
+	
+	Sau khi đã thu được cây BST từ danh sách các ô bọc, nhiệm vụ còn lại là không quá phức tạp. Trước khi tạo được chuỗi Latex, ta cần phải sinh ra được một cây Lexed - BST, cây này chứa các thông tin như "nhóm ký tự" và cấu trúc biểu thức:
+	
+	\begin{itemize}
+		\item Nhóm ký tự: Ban đầu, các ký tự được gom thành từng nhóm có nghĩa (Ví dụ các ký tự "s", "i", "n" thì sẽ được gộp lại thành một ký tự "sin" duy nhất.
+		\item Ta sử dụng các luật khác nhau để sinh ra cây Lexed - BST.
+	\end{itemize}
+	
+	\subsubsection*{Luật sinh}
+	
 
-	\section{Công việc thực hiện}
+	Để chuyển từ cây BST sang cây lexed - BST, nhóm có đề xuất một số luật sinh: \\
+	Gọi ký tự đang xét là $A$
+	\begin{itemize}
+		\item Nếu cây BST $B$ nằm trong nút con góc phải bên dưới của $A$ thì sinh ra một nút sub(A, B)
+		\item Nếu cây BST $B$ nằm trong nút con góc phải bên trên của $A$ thì sinh ra một nút sup(A, B)
+		\item Nếu cây BST $B$ nằm trong nút con bên trong của $A$ và $A$ là ký tự căn ($\sqrt{}$) thì sinh ra một nút sqrt(B)
+		\item Nếu $A$ có nút con bên trên hoặc bên dưới (hoặc cả hai), thì tùy thuộc vào ký tự $A$ mà ta sinh ra các nút khác nhau (Ví dụ như các ký tự $\sum$, $\lim$, $\prod$ , $\int$, $\rightarrow$ và quan trọng nhất là dấu gạch ngang trong phân số)
+		
+	\end{itemize}
+	
+	Sau khi sinh được cây Lexed - BST, hệ thống sẽ duyệt qua cây theo chiều tiền thứ tự để sinh mã Latex
+	
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+	\section{Hiện thực, đánh giá}
 	
 	Để xây dựng hệ thống nhận diện biểu thức toán học viết tay, nhóm cần hoàn thành ba công việc chính bao gồm thu thập dữ liệu, huấn luyện mạng SSD và xây dựng chương trình sinh mã latex.
 	
 	\subsection{Chuẩn bị dữ liệu}
 	
-	\subsection{Huấn luyện mạng SSD}
+	\subsection{Hiện thực hệ thống}
 	
 	\subsubsection{Quá trình tiền huấn luyện}
 	Như đã trình bày ở trên, mạng SSD mà nhóm lựa chọn có sử dụng mạng cơ sở là VGG16, đây là một mạng phân lớp\footnote{Thuật ngữ tiếng anh: Classification}. Để đạt được kết quả huấn luyện cho mạng SSD tốt hơn, tác giả đã khuyến cáo sử dụng phương pháp học chuyển tiếp\footnote{Thuật ngữ tiếng anh: Transfer Learning}
