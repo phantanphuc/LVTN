@@ -603,6 +603,15 @@
 		\item $t$ Là ngưỡng cho chỉ số trên, dưới và chỉ phần bên trên, bên dưới. Tham số này biểu thị sự nhạy cảm đối với những ký tự trên dưới, tham số này càng lớn thì các ký tự khi được phân tích vị trí càng dễ được xếp vào chỉ số trên, chỉ số dưới.
 	\end{itemize}
 	
+	Bảng trên thể hiện quy tắc để kiểm tra hai ký tự có vị trí tương đối như thế nào với nhau, cụ thể:
+	\begin{itemize}
+		\item A và B liền kề nếu như trọng tâm của B có tung độ nằm trong khoảng từ ngưỡng chỉ số dưới đến ngưỡng chỉ số trên của A.
+		\item B là chỉ số trên của A nếu như trọng tâm của B lớn hơn ngưỡng chỉ số trên của A.
+		
+		\item B là ký tự phân số thống trị A khi trọng tâm của A có hoành độ nằm trong khoảng $(Min(X_B), Max(X_B)$
+	
+	\end{itemize}
+	
 	Trước khi tiến hành sinh cây BST, danh sách ô bọc cần phải được sắp xếp theo chiều tăng dần hoành độ của mép phải ô bọc $x$ (hay cụ thể hơn là $min(x)$). \\
 	
 	\subsubsection*{Tìm ký tự chủ đạo}
@@ -610,8 +619,7 @@
 	Trong hầu hết trường hợp, ký tự chủ đạo là ký tự nằm bên trái nhất, tuy vậy, ta vẫn cần phải kháng được những trường hợp người dùng viết chữ không chuẩn gây thụt ra ngoài, hoặc những ký tự có dạng như:
 	
 	$$ \sum^{n = 100000} a $$
-	Thì ký tự chủ đạo là $\sum$ nhưng ký tự bên trái nhất lại là $n$, Draculae được thế kế để có thể chống lại những trường hợp như vậy.
-	
+	Thì ký tự chủ đạo là $\sum$ nhưng ký tự bên trái nhất lại là $n$, Draculae được thế kế để có thể chống lại những trường hợp như vậy.\\
 	
 	Để tìm ký tự chủ đạo, ta cần thực hiện những công đoạn sau:
 	\begin{itemize}
@@ -620,10 +628,18 @@
 		
 		\item Nếu không còn ký tự Variable Range nào khác, thì ký tự bên trái nhất vừa tìm được ở bước trên được kiểm tra bị thống trị bởi phân số hay không và trả về ký tự chủ đạo (ký tự đó hoặc ký tự phân số). Nếu còn một ký tự Variable Range khác trong biểu thức, ta tiếp tục với bước kế tiếp.
 		
-		\item Ta kiểm tra xem ký tự Variable Range khác đó có ký tự nào nằm liền kề bên phải không.
+		\item Ta kiểm tra xem ký tự Variable Range khác đó có ký tự nào nằm liền kề bên trái không. Nếu không thì tự Variable Range được kiểm tra xem có bị thống trị bởi ký tự phân số hay không và chọn ký tự chủ đạo ký tự phù hợp. Nếu tồn tại ký tự liền kề bên trái, thì ký tự bên trái nhất được kiểm tra có bị thống trị bởi phân số không và chọn ký tự chủ đạo phù hợp.
 		
 	\end{itemize}
 	
+	\subsubsection*{Xác định ký tự trên đường cơ sở}
+	
+	Sau khi đã có được ký tự chủ đạo, ta cần phải tìm những ký tự liền kề theo chiều ngang với ký tự vừa tìm được, những ký tự này chính là ký tự trên đường cơ sở. Việc xác định các ký tự trên đường cơ sở được thực hiện qua các bước:\\
+	
+	\begin{itemize}
+		\item Ta lấy ký tự đầu tiên trong danh sách các ký tự chưa được xử lý (chưa được xác định xem có nằm trên đường cơ sở hay không)
+	\end{itemize}
+
 	\section{Công việc thực hiện}
 	
 	Để xây dựng hệ thống nhận diện biểu thức toán học viết tay, nhóm cần hoàn thành ba công việc chính bao gồm thu thập dữ liệu, huấn luyện mạng SSD và xây dựng chương trình sinh mã latex.
