@@ -334,9 +334,9 @@
 	
 	\subsection{Mạng Single Shot Multibox Detector (SSD)}
 	
-	SSD như là một mạng cải tiến phương pháp phát hiện bằng cửa sổ trượt\footnote{Thuật ngữ tiếng Anh: Sliding Window}. Thay vì sử dụng một (một số) cửa sổ có kích thước cố định, thì SSD sinh ra một số lượng hữu hạn các ô chuẩn \footnote{Thuật ngữ tiếng Anh: Default box} để rồi từ các ô chuẩn đó để hệ thống có thể xác định vị trí các ký tự cần nhận diện cho quá trình huấn luyện, qua đó mạng cần phải học cách dự đoán cả kích thước của các ô bọc quanh ký tự thay vì chỉ chấp nhận kích thước cho trước. SSD cũng sử dụng các lớp tích chập để trích đặc trưng, tạo tiền đề cho việc phát hiện và phân loại ký tự. \\
+	SSD\cite{liu2016ssd} như là một mạng cải tiến phương pháp phát hiện bằng cửa sổ trượt\footnote{Thuật ngữ tiếng Anh: Sliding Window}. Thay vì sử dụng một (một số) cửa sổ có kích thước cố định, thì SSD sinh ra một số lượng hữu hạn các ô chuẩn \footnote{Thuật ngữ tiếng Anh: Default box} để rồi từ các ô chuẩn đó để hệ thống có thể xác định vị trí các ký tự cần nhận diện cho quá trình huấn luyện, qua đó mạng cần phải học cách dự đoán cả kích thước của các ô bọc quanh ký tự thay vì chỉ chấp nhận kích thước cho trước. SSD cũng sử dụng các lớp tích chập để trích đặc trưng, tạo tiền đề cho việc phát hiện và phân loại ký tự. \\
 	
-	Nhóm xin phép được tách quá trình huấn luyện thành ba giai đoạn: mã hóa \footnote{Thuật ngữ tiếng Anh: Encoder}, phát hiện - phân loại và tính giá trị mất mát. Và song song với huấn luyện, quá trình kiểm tra, kiểm định, chạy thực tiễn cũng được chia thành ba giai đoạn: trích đặc trưng - phân loại và giải mã \footnote{Thuật ngữ tiếng Anh: Decoder}
+	Nhóm xin phép được tách quá trình huấn luyện thành ba giai đoạn: mã hóa \footnote{Thuật ngữ tiếng Anh: Encoder}, phát hiện - phân loại và tính giá trị lỗi. Và song song với huấn luyện, quá trình kiểm tra, kiểm định, chạy thực tiễn cũng được chia thành ba giai đoạn: trích đặc trưng - phân loại và giải mã \footnote{Thuật ngữ tiếng Anh: Decoder}
 	
 	\subsubsection{Bộ mã hóa (Encoder)}
 	Bộ mã hóa chỉ được sử dụng trong quá trình huấn luyện nhằm mã hóa, chuyển đổi từ "đáp án" \footnote{Thuật ngữ tiếng Anh: Ground truth} thô (được lưu trong tệp tin txt hoặc xml) sang "đáp án" mà mạng SSD có thể hiểu được.
@@ -361,7 +361,7 @@
 	
 	\begin{itemize}
 		
-		\item Mỗi ô chuẩn đều được liên kết với một pixel trên feature map, ta cũng đã tính được danh sách khoảng cách trọng tâm theo đề cập ở trên. Từ đó ta dễ dàng tính được tọa độ của các trọng tâm của các ô chuẩn trong ảnh theo công thức:
+		\item Mỗi ô chuẩn đều được liên kết với một điểm ảnh trên feature map, ta cũng đã tính được danh sách khoảng cách trọng tâm theo đề cập ở trên. Từ đó ta dễ dàng tính được tọa độ của các trọng tâm của các ô chuẩn trong ảnh theo công thức:
 		$$ (x, y) =\left( \left(i + \frac{1}{2} \right) \times step, \left(j + \frac{1}{2} \right) \times step \right)$$
 		Trong đó: x, y là tọa độ của các trọng tâm, i, j là các số nguyên dương nằm trong khoảng từ 0 đến kích thước feature map đang xét và step là khoảng cách giữa hai trọng tâm liền kề trong mức kích thước đang xét.
 		
@@ -381,22 +381,29 @@
 	
 	Sau khi hoàn tất sinh ô chuẩn, bộ phận encoder có nhiệm vụ kết hợp dữ liệu thô là các ô bọc \footnote{Thuật ngữ tiếng Anh: Bounding box} từ "đáp án"\footnote{Thuật ngữ tiếng Anh: Ground truth} qua các ô chuẩn vừa được tạo. Kết quả là ta sẽ thu được một tập nhiều vector, mỗi vector đại diện cho mỗi ô chuẩn chứa thông tin gồm tọa độ trọng tâm, kích thước của ô chuẩn và nhãn của ô chuẩn đó là gì (có thể là phần nền - không có gì cả, hoặc một ký tự nào đó cần được nhận diện). \\
 	
-	Việc kết hợp được thực hiện bằng cách so sánh từng ô chuẩn với từng ô bọc trong "đáp án" bằng cách tính chỉ số Jackard, nếu chỉ số này thỏa điều kiện thì ô chuẩn đó được gán nội dung là kí tự chứa trong ô bọc phù hợp nhất, nếu không thì ô chuẩn được gán nội dung là "nền".\\
+	Việc kết hợp được thực hiện bằng cách so sánh từng ô chuẩn với từng ô bọc trong "đáp án" bằng cách tính chỉ số Jaccard, nếu chỉ số này thỏa điều kiện thì ô chuẩn đó được gán nội dung là kí tự chứa trong ô bọc phù hợp nhất, nếu không thì ô chuẩn được gán nội dung là "nền".\\
 	
-	Chỉ số Jackard giữa hai ô bọc được tính bằng công thức:
+	Chỉ số Jaccard giữa hai ô bọc được tính bằng công thức:
 	
 	$$  J(A, B) = \frac{A \cap B }{ A \cup B } $$
 	
-	Trong đó, A, B lần lượt là phần ảnh mà ô bọc A và ô bọc B chiếm. Công thức này mang ý nghĩa hai ô bọc có kích thước càng tương đồng và phần trùng nhau càng nhiều thì có chỉ số Jackard càng gần giá trị 1.\\
+	Trong đó, A, B lần lượt là phần ảnh mà ô bọc A và ô bọc B chiếm. Công thức này mang ý nghĩa hai ô bọc có kích thước càng tương đồng và phần trùng nhau càng nhiều thì có chỉ số Jaccard càng gần giá trị 1.\\
 	
-	Các ô bọc chỉ là thành phần trung gian để mạng SSD có thể tính được giá trị mất mát cũng như thực hiện quá trình lan truyền ngược, vì vậy để thuận tiện cho việc tính mất mát sau này, từ dữ liệu vị trí và kích thước của ô bọc, bộ mã hóa tạo ra các vector có các giá trị biểu diễn sự mất mát của các ô bọc so với các ô chuẩn, sau đó nhiệm vụ của mạng là dự đoán ra sự mất mát đó (Vấn đề này sẽ được đề cập rõ hơn trong [hần tính giá trị mất mát).
+	\begin{center}
+		\centering
+		\includegraphics[width=0.5\linewidth]{Intersection_over_Union_-_visual_equation.png}
+		\vspace{0.5cm}
+		\captionof{figure}{Mô phỏng chỉ số Jaccard}
+	\end{center}
+	
+	Các ô bọc chỉ là thành phần trung gian để mạng SSD có thể tính được giá trị lỗi cũng như thực hiện quá trình lan truyền ngược, vì vậy để thuận tiện cho việc tính giá trị lỗi sau này, từ dữ liệu vị trí và kích thước của ô bọc, bộ mã hóa tạo ra các vector có các giá trị biểu diễn độ lệch của các ô bọc so với các ô chuẩn, sau đó nhiệm vụ của mạng là dự đoán ra độ lệch đó đó (Vấn đề này sẽ được đề cập rõ hơn trong phần tính giá trị lỗi).
 	
 	\subsubsection{Bộ phát hiện - phân loại}
 	Đây là bộ phận có nhiệm vụ trích đặc trưng từ ảnh thô đầu vào, tạo ra các feature map để đưa vào quá trình phân loại ký tự.
 	
 	\subsubsection*{Trích đặc trưng (Hay mạng cơ sở \footnote{Thuật ngữ tiếng Anh: Base Network})}
 	
-	Mạng cơ sở của SSD là một mạng nơron tích chập bất kỳ, có thể là VGG\cite{Simonyan14c} hoặc lenet\cite{yanlecun}, ... Hầu hết những mạng này có mục đích phân loại\footnote{Thuật ngữ tiếng Anh: Classification}, vì vậy ở phía cuối mạng thường có các lớp liên kết đầy đủ nhằm giảm kích thước feature map và tạo ra dữ liệu đầu ra có kích thước phù hợp (bằng với số nhãn cần dự đoán). Khi kết hợp với mạng SSD, các lớp liên kết đầy đủ này sẽ được thay thế bằng các lớp tích chập và song hành là các bước trích ra feature map để đưa vào lớp Multibox, chi tiết phần này sẽ được để cập ở mục tiếp theo.
+	Mạng cơ sở của SSD là một mạng nơron tích chập bất kỳ, có thể là VGG\cite{Simonyan14c} hoặc lenet\cite{yanlecun}, ... Hầu hết những mạng này có mục đích phân loại\footnote{Thuật ngữ tiếng Anh: Classification}, vì vậy ở phía cuối mạng thường có các lớp liên kết đầy đủ nhằm giảm kích thước feature map và tạo ra dữ liệu đầu ra có kích thước phù hợp (bằng với số nhãn cần dự đoán). Khi kết hợp với mạng SSD, các lớp liên kết đầy đủ này sẽ được thay thế bằng các lớp tích chập và song hành là các bước trích ra feature map để đưa vào lớp Multibox \cite{erhan2014scalable}, chi tiết phần này sẽ được để cập ở mục tiếp theo.
 	
 	\subsubsection* {Phân loại}
 	
@@ -414,9 +421,9 @@
 	$$3 \times 3 \times (n \times (classes + 4))$$
 	Với $n$ là số lượng tỉ lệ diện mạo với fearture map tương ứng và $classes$ là số lượng nhãn cần nhận diện, số $4$ trong công thức đại diện cho 4 thông số về vị trí của ô bọc (tọa độ trọng tâm và kích thước). Do kích thước của các kernel không đồng nhất (vì số lượng tỉ lệ diện mạo ứng với từng feature map có thể khác nhau), nên để tạo ra dữ liệu đầu ra phù hợp với các ô chuẩn đã tạo từ trước thì các vector dự đoán sẽ được sắp xếp lại sao cho dữ liệu đầu ra chỉ có $classes + 4$ kênh và vị trí của các vector phải tương ứng với vị trí các ô chuẩn đã sinh từ trước.
 	
-	\subsubsection{Tính giá trị mất mát}
+	\subsubsection{Tính giá trị lỗi}
 	
-	Giá trị mất mát được tính bằng tổng có trọng số giữa mất mát về vị trí\footnote{Thuật ngữ tiếng Anh: Localization Loss} và mất mát về độ tin cậy\footnote{Thuật ngữ tiếng Anh: Confidence Loss}
+	Giá trị lỗi được tính bằng tổng có trọng số giữa lỗi về vị trí\footnote{Thuật ngữ tiếng Anh: Localization Loss} và lỗi về độ tin cậy\footnote{Thuật ngữ tiếng Anh: Confidence Loss}
 	
 	$$ L(x,c,l,g) = \frac{1}{N} (L_{conf}(x,c) + \alpha L_{loc}(x,l,g) ) $$
 	Trong đó:
@@ -427,13 +434,13 @@
 		\item $g$ biểu thị ô bọc "đáp án".
 	\end{itemize}
 	
-	Hàm mất mát về vị trí có thể được biểu diễn bằng công thức:
+	Hàm lỗi về vị trí có thể được biểu diễn bằng công thức:
 	$$L_{loc}(x,l,g) = \sum^N_{i \in Pos} \sum_{m \in \{ cx, cy, w, g \}} x^k_{ij} smooth_{L1} (l^m_i - \hat{g}^m_j) $$
 	Trong đó:
 	\begin{itemize}
-		\item N là số lượng phép kết hợp giữa ô chuẩn và ô bọc có ý nghĩa (nhãn của phép kết hợp không phải là "nền". Nếu như $N = 0$ thì ta đặt giá trị mất mát bằng 0.
+		\item N là số lượng phép kết hợp giữa ô chuẩn và ô bọc có ý nghĩa (nhãn của phép kết hợp không phải là "nền". Nếu như $N = 0$ thì ta đặt giá trị lỗi bằng 0.
 		\item Pos là tập hợp các phép kết hợp có ý nghĩa.
-		\item $smooth_{L1}$ là một hàm tính mất mát được định nghĩa là 
+		\item $smooth_{L1}$ (theo \cite{girshick2015fast}) là một hàm tính lỗi được định nghĩa là 
 		$$L(x) = \begin{cases} 0.5x^2 \quad if |x| < 1 \\ |x| - 0.5 \quad otherwise \end{cases} $$
 		\item $\hat{g}_j^{cx} = (g_j^{cx} - d_i^{cx}) / d^w_i$ Với $d$ biểu thị cho ô chuẩn.
 		\item $\hat{g}_j^{cy} = (g_j^{cy} - d_i^{cy}) / d^h_i$
@@ -441,9 +448,11 @@
 		\item $\hat{g}^h_j = \log \left( \frac{g_j^h}{d_i^h} \right)$
 	\end{itemize}
 	
-	Vậy ta có thể thấy khi tính giá trại mất mát về vị trí, ta tính dựa trên sai lệch so với ô chuẩn mà ô bọc "đáp án" ban đầu kết hợp được thay vì tính mất mát trực tiếp.\\
+	Bốn công thức $\hat{g}$ trên chính là độ lệch giữa ô đang xét và ô chuẩn, mà chúng tôi đã đề cập ở mục trước.
 	
-	hàm mất mát về độ tin cậy có thể được tính theo công thức:
+	Vậy ta có thể thấy khi tính giá trại lỗi về vị trí, ta tính dựa trên sai lệch so với ô chuẩn mà ô bọc "đáp án" ban đầu kết hợp được thay vì tính lỗi trực tiếp.\\
+	
+	hàm lỗi về độ tin cậy có thể được tính theo công thức:
 	
 	$$L_{conf}(x, c) = - \sum^N_{i \in Pos} x^p_{ij} \log (\hat{c}^p_i) - \sum_{i \in Neg} \log (\hat{c}^0_i) $$
 	
@@ -482,9 +491,9 @@
 	\end{itemize}
 	
 	
-	\subsection{WHOOOOOO  : Watch, Attend and Parse: An End-to-end Neural Network Based Approach to Handwritten Mathematical Expression Recognition} 
+	\subsection{WHOOOOOO \cite{zhang2017watch}  : Watch, Attend and Parse: An End-to-end Neural Network Based Approach to Handwritten Mathematical Expression Recognition} 
 	
-	Khác với những bài báo đi trước sử dụng phương pháp phân vùng hay dựa trên ngữ pháp, bài báo này sử dụng phương pháp mang tên Watch, Attend, Parse dựa trên bài toán chú thích cho ảnh \footnote{Thuật ngữ tiếng anh: Image Captioning}. Hệ thống này là sự kết hợp giữa CNN, RNN và một hệ thống ANN (Cụ thể là GRU\footnote{Viết tắt: Gated recurrent unit}), CNN đặc trưng cho Watcher sẽ trích đặc trưng ảnh, ANN đặc trưng cho Attend mang nhiệm vụ điều hướng cho mạng biết được vị trí nào sẽ tập trung vào và RNN đặc trưng cho Parser mang nhiệm vụ sinh ra chuỗi Latex chính là đầu ra của hệ thống\\
+	Khác với những bài báo đi trước sử dụng phương pháp phân vùng hay dựa trên ngữ pháp, bài báo này sử dụng phương pháp mang tên Watch, Attend, Parse dựa trên bài toán chú thích cho ảnh \footnote{Thuật ngữ tiếng anh: Image Captioning}. Hệ thống này là sự kết hợp giữa CNN, RNN và một hệ thống ANN (Cụ thể là GRU[trích dẫn]\footnote{Viết tắt: Gated recurrent unit}), CNN đặc trưng cho Watcher sẽ trích đặc trưng ảnh, ANN đặc trưng cho Attend mang nhiệm vụ điều hướng cho mạng biết được vị trí nào sẽ tập trung vào và RNN đặc trưng cho Parser mang nhiệm vụ sinh ra chuỗi Latex chính là đầu ra của hệ thống\\
 	
 	Cấu trúc mạng này được chia thành ba phần:
 	\subsubsection{Watcher}
@@ -822,12 +831,13 @@
 	Trong hầu hết trường hợp, ký tự chủ đạo là ký tự nằm bên trái nhất, tuy vậy, ta vẫn cần phải kháng được những trường hợp người dùng viết chữ không chuẩn gây thụt ra ngoài, hoặc những ký tự có dạng như:
 	
 	$$ \sum^{n = 100000} a $$
-	Thì ký tự chủ đạo là $\sum$ nhưng ký tự bên trái nhất lại là $n$, Draculae được thế kế để có thể chống lại những trường hợp như vậy.\\
+	Thì ký tự chủ đạo là $\sum$ nhưng ký tự bên trái nhất lại là $n$, Draculae được thiết kế để có thể chống lại những trường hợp như vậy.\\
 	
+
 	Để tìm ký tự chủ đạo, ta cần thực hiện những công đoạn sau:
 	\begin{itemize}
-		\item Trước hết, ta tìm ký tự nằm bên trái nhất dựa trên $min(X)$ của ô bọc, xem tất cả các ký tự là nút con của nút gốc.
-		\item Kiếm tra ký tự hiện tại có phải là Variable Range (lớp này có đặc tính có thể viết cả ở bên trên và bên dưới, đây là nguồn gốc gây khó khăn trong việc xác định ký tự chủ đạo). Nếu đúng thì ta kiểm tra xem ký tự đó có bị thống trị bởi một phân số hay không, nếu có thì ký tự chủ đạo là ký tự phân số, nếu không thì ký tự chủ đạo là ký tự Variable Range vừa tìm được. Nếu ký tự vừa tìm được không phải là Variable Range, thì ta tìm kiếm ký tự Variable Range nằm bên trái nhất và sang bước tiếp theo.
+		\item Trước hết, ta tìm ký tự nằm bên trái nhất.
+		\item Kiếm tra ký tự đó có phải là Variable Range. Nếu đúng thì ta kiểm tra xem ký tự đó có bị thống trị bởi một phân số hay không, nếu có thì ký tự chủ đạo là ký tự phân số, nếu không thì ký tự chủ đạo là ký tự Variable Range vừa tìm được. Nếu ký tự vừa tìm được không phải là Variable Range, thì ta tìm kiếm ký tự Variable Range nằm bên trái nhất và sang bước tiếp theo.
 		
 		\item Nếu không còn ký tự Variable Range nào khác, thì ký tự bên trái nhất vừa tìm được ở bước trên được kiểm tra bị thống trị bởi phân số hay không và trả về ký tự chủ đạo (ký tự đó hoặc ký tự phân số). Nếu còn một ký tự Variable Range khác trong biểu thức, ta tiếp tục với bước kế tiếp.
 		
@@ -840,9 +850,8 @@
 	Sau khi đã có được ký tự chủ đạo, ta cần phải tìm những ký tự liền kề theo chiều ngang với ký tự vừa tìm được, những ký tự này chính là ký tự trên đường cơ sở. Để xác định các ký tự trên đường cơ sở, ta lấy ký tự chủ đạo vừa xác định được để xét:
 	
 	\begin{enumerate}
-		\item Nếu như ký tự đang xét là ký tự cuối cùng hoặc ký tự duy nhất được xét, thì chuyển sang bước kế tiếp (bước tái phân vùng).
 		\item Ta phần vùng các ký tự nằm ở vùng bên trên, bên dưới, góc trên bên trái và góc dưới bên trái (không phân vùng các ký tự nằm bên phải) vào nút con của nút đang xét.
-		\item Nếu như ký tự đang xét thuộc lớp Non-script, ký tự đó được đánh dấu nằm trên đường chủ đạo, ta quay lại tìm ký tự chủ đạo trong các ký tự còn lại và xác định các ký tự trên đường cơ sở với ký tự chủ đạo đó (quay lại bước 1).
+		\item Nếu như ký tự đang xét thuộc lớp Non-script, ký tự đó được đánh dấu nằm trên đường chủ đạo, ta quay lại tìm ký tự chủ đạo trong các ký tự còn lại và xác định các ký tự trên đường cơ sở với ký tự chủ đạo đó.
 		\item Ta kiểm tra danh sách các ký tự còn lại xem có ký tự nào liền kề bên phải với ký tự đang xét hay không, nếu có, ta kiểm tra ký tự đó có bị thống trị bởi ký tự khác hay không và quay lại bước 1 với ký tự được xét là ký tự thống trị nhất (hoặc chính ký tự liền kề nhất vừa tìm được đối với trường hợp nó không bị thống trị bởi ký tự nào).
 		\item Nếu hệ thống chạy đến bước này thì có nghĩa là trong các ký tự còn lại, không còn ký tự nào liền kề với ký tự đang xét, vì vậy ta tiến hành phân vùng đưa các ký tự còn lại vào nút con góc trên bên phải (chỉ số trên) và góc dưới bên phải (chỉ số dưới) của nút đang xét.
 	\end{enumerate}
@@ -850,7 +859,15 @@
 	Sau khi thực hiện bước này lần đầu tiên, ta thu được một cây có ba tầng, tầng đầu chứa nút gốc, tầng thứ hai chứa các ký tự nằm trên đường cơ sở, tầng thứ ba chứa các nút con của các nút chứa ký tự nằm trên đường cơ sở, các nút con này có thể chứa một hoặc nhiều ký tự, chưa là một cây.
 	
 	\subsubsection*{Tái phân vùng}
-	Ở bước trước, nút con được phân vào vùng góc trên bên trái và góc dưới bên trái, điều này không có ý nghĩa đối với ngữ nghĩa của biểu thức toán học và khó khăn trong việc sinh cây Lexed BST sau này. Vì vậy ở bước này, các nút con sẽ được thay đổi vị trí cho phù hợp với ngữ nghĩa của biểu thức, chương trình sẽ kiểm tra từng cặp ký tự liền kề theo thứ tự từ trái sang phải, ta gọi ký tự bên trái là $A$ và ký tự bên phải là $B$:\\
+	Ở bước trước, nút con được phân vào vùng góc trên bên trái và góc dưới bên trái, điều này không có ý nghĩa đối với ngữ nghĩa của biểu thức toán học và khó khăn trong việc sinh cây Lexed BST sau này. Vì vậy ở bước này, các nút con sẽ được thay đổi vị trí cho phù hợp với ngữ nghĩa của biểu thức. Cụ thể:
+	
+	\begin{itemize}
+		\item Các nút con thuộc vùng góc trên bên trái và góc dưới bên trái sẽ được phân vùng vào vùng góc trên bên phải và góc dưới bên phải của ký tự trước đó.
+		\item Riêng đối với các ký tự Variable Range, hệ thống thực hiện thêm bước kiểm tra sự liền kề đối với những ký tự trong vùng con để phân vùng phù hợp.
+	\end{itemize}
+	
+	\iffalse
+	, chương trình sẽ kiểm tra từng cặp ký tự liền kề theo thứ tự từ trái sang phải, ta gọi ký tự bên trái là $A$ và ký tự bên phải là $B$:\\
 	
 	\begin{itemize}
 		\item Nếu $B$ không thuộc lớp Variable Range, và $B$ không có nút con ở vùng bên trên, ta gắn nút góc trên bên trái của ký tự $B$ vào nút góc trên bên phải (chỉ số trên) của $A$. 
@@ -858,9 +875,11 @@
 		\item Nếu $A$ thuộc lớp Variable Range thì ta phải tiến hành gộp các vùng góc trên bên trái, bên trên và góc trên bên phải thành một vùng bên trên duy nhất.
 	\end{itemize}
 	
-	Sau đó ta tiến hành làm tương tự với vùng bên dưới. Với cách phân vùng này, với một số biểu thức đặc biệt hoặc nhập nhằng thì việc phân vùng sẽ không chính xác, để khắc phục điều này, ta cần phải có thêm công đoạn hậu xử lý.\\
+	Với một số biểu thức đặc biệt hoặc nhập nhằng thì việc phân vùng sẽ không chính xác, để khắc phục điều này, ta cần phải có thêm công đoạn hậu xử lý.\\
 	
-	\subsubsection*{Đệ quy}
+	\fi
+	
+	\subsubsection*{Xử lý nút con}
 	
 	Tới bước này, ta đã có một cây có ba tầng với tầng thứ hai có phân vùng nút con khá chuẩn xác. Nhiệm vụ bây giờ là phải tiếp tục phân vùng cho các nút con của các ký tự trên đường cơ sở. Việc này được thực hiện bằng cách xem từng nút con là từng vùng ảnh mới riêng biệt và thực hiện lại ba bước trên để thu được các cây con. \\
 	
@@ -933,43 +952,20 @@
 	\begin{itemize}
 		\item Hệ thống có thể nhận diện được ký tự ở nhiều kích thước khác nhau.
 		\item Nhận diện được nhiều biểu thức mà nếu chỉ dùng kỹ thuật phân vùng thì khó có thể làm được (ví dụ như biểu thức có ký tự dính nhau).
-		\item Số lượng ký tự nhận diện được khá đa dạng
+		\item Số lượng ký tự nhận diện được khá đa dạng.
 	\end{itemize}
 	
 	\subsubsection{Nhược điểm}
 	
 	\begin{itemize}
-		\item Hệ thống có thể nhận diện được ký tự ở nhiều kích thước khác nhau.
-		\item Nhận diện được nhiều biểu thức mà nếu chỉ dùng kỹ thuật phân vùng thì khó có thể làm được (ví dụ như biểu thức có ký tự dính nhau).
-		\item Số lượng ký tự nhận diện được khá đa dạng
+		\item Khi có nhiều ký tự trong ảnh với mật độ lớn thì hệ thống nhận diện gặp nhiều khó khăn.
+		\item Tốc độ xử lý một ảnh còn chậm.
+		\item Hậu xử lý vẫn còn chưa thật sự hiệu quả.
 	\end{itemize}
 	
 	\section{Tổng kết}
-	\subsection{Công việc đã làm được}
-	\subsubsection{Chuẩn bị cơ sở lý thuyết}
 	
-	\begin{itemize}
-		\item Hiểu được luận văn của nhóm sinh viên khóa 2011 ở mức độ hiện thực lại được.
-		\item Tìm hiiểu về mạng CNN ở mức độ hiểu được quy tắc truyền xuôi và truyền ngược.
-		\item Đã tìm hiểu được cách hiện thực mạng CNN của caffe.
-		\item Đọc và hiểu được các phương pháp giải quyết cho vấn đề nhận dạng biểu thức toán học được nêu trong các công trình nghiên cứu gần đây nhất.
-		
-	\end{itemize} 
-	
-	
-	\vspace{0.5cm}
-	\subsection{Nhận xét bản thử nghiệm hiện tại}
-	
-	Một số vấn đề còn tồn đọng: 
-	\begin{itemize}
-		\item Hệ thống không thể nhận diện các ảnh có nhiễu lớn.
-		\item Hệ thống không thể nhận diện các ảnh có quá nhiều ký tự.
-	\end{itemize}
-	
-	Đây cũng là vấn đề chưa giải quyết được trong luận văn của nhóm sinh viên khoá 2011.
-	\subsection{Kế hoạch trong giai đoạn tới}
-	
-	
+
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	

@@ -9,40 +9,36 @@
 \contentsline {subsection}{\numberline {1}M\IeC {\d a}ng n\IeC {\ohorn }-ron t\IeC {\'\i }ch ch\IeC {\d \acircumflex }p (CNN)}{10}{subsection.2.1}
 \contentsline {subsection}{\numberline {2}M\IeC {\d a}ng Single Shot Multibox Detector (SSD)}{10}{subsection.2.2}
 \contentsline {subsubsection}{\numberline {2.1}B\IeC {\d \ocircumflex } m\IeC {\~a} h\IeC {\'o}a (Encoder)}{10}{subsubsection.2.2.1}
-\contentsline {subsubsection}{\numberline {2.2}B\IeC {\d \ocircumflex } ph\IeC {\'a}t hi\IeC {\d \ecircumflex }n - ph\IeC {\^a}n lo\IeC {\d a}i}{12}{subsubsection.2.2.2}
-\contentsline {subsubsection}{\numberline {2.3}T\IeC {\'\i }nh gi\IeC {\'a} tr\IeC {\d i} m\IeC {\'\acircumflex }t m\IeC {\'a}t}{13}{subsubsection.2.2.3}
+\contentsline {subsubsection}{\numberline {2.2}B\IeC {\d \ocircumflex } ph\IeC {\'a}t hi\IeC {\d \ecircumflex }n - ph\IeC {\^a}n lo\IeC {\d a}i}{13}{subsubsection.2.2.2}
+\contentsline {subsubsection}{\numberline {2.3}T\IeC {\'\i }nh gi\IeC {\'a} tr\IeC {\d i} l\IeC {\~\ocircumflex }i}{14}{subsubsection.2.2.3}
 \contentsline {subsubsection}{\numberline {2.4}B\IeC {\d \ocircumflex } gi\IeC {\h a}i m\IeC {\~a} (Decoder)}{15}{subsubsection.2.2.4}
 \contentsline {subsubsection}{\numberline {2.5}M\IeC {\d \ocircumflex }t s\IeC {\'\ocircumflex } v\IeC {\'\acircumflex }n \IeC {\dj }\IeC {\`\ecircumflex } kh\IeC {\'a}c trong m\IeC {\d a}ng SSD}{15}{subsubsection.2.2.5}
 \contentsline {section}{\numberline {Ch\IeC {\uhorn }\IeC {\ohorn }ng 3}C\IeC {\^o}ng tr\IeC {\`\i }nh li\IeC {\^e}n quan}{16}{section.3}
 \contentsline {subsection}{\numberline {1}C\IeC {\'a}i nh\IeC {\`\i }n to\IeC {\`a}n c\IeC {\h a}nh}{16}{subsection.3.1}
-\contentsline {subsection}{\numberline {2}WHOOOOOO : Watch, Attend and Parse: An End-to-end Neural Network Based Approach to Handwritten Mathematical Expression Recognition}{17}{subsection.3.2}
+\contentsline {subsection}{\numberline {2}WHOOOOOO \cite {zhang2017watch} : Watch, Attend and Parse: An End-to-end Neural Network Based Approach to Handwritten Mathematical Expression Recognition}{17}{subsection.3.2}
 \contentsline {subsubsection}{\numberline {2.1}Watcher}{17}{subsubsection.3.2.1}
 \contentsline {subsubsection}{\numberline {2.2}Attend}{17}{subsubsection.3.2.2}
 \contentsline {subsubsection}{\numberline {2.3}Parser}{17}{subsubsection.3.2.3}
 \contentsline {subsection}{\numberline {3}Wenhao He\cite {context}: Context-aware Recognition}{17}{subsection.3.3}
 \contentsline {subsection}{\numberline {4}QAK\cite {qak}}{19}{subsection.3.4}
-\contentsline {section}{\numberline {Ch\IeC {\uhorn }\IeC {\ohorn }ng 4}M\IeC {\^o} h\IeC {\`\i }nh \IeC {\dj }\IeC {\`\ecircumflex } xu\IeC {\'\acircumflex }t}{20}{section.4}
-\contentsline {subsection}{\numberline {1}T\IeC {\h \ocircumflex }ng quan}{20}{subsection.4.1}
-\contentsline {subsection}{\numberline {2}Ph\IeC {\'a}t hi\IeC {\d \ecircumflex }n k\IeC {\'y} t\IeC {\d \uhorn }}{20}{subsection.4.2}
-\contentsline {subsubsection}{\numberline {2.1}M\IeC {\d a}ng c\IeC {\ohorn } s\IeC {\h \ohorn }}{20}{subsubsection.4.2.1}
-\contentsline {subsubsection}{\numberline {2.2}Th\IeC {\^a}n m\IeC {\d a}ng SSD}{20}{subsubsection.4.2.2}
-\contentsline {subsubsection}{\numberline {2.3}C\IeC {\'a}c thay \IeC {\dj }\IeC {\h \ocircumflex }i}{23}{subsubsection.4.2.3}
-\contentsline {subsection}{\numberline {3}Ph\IeC {\^a}n t\IeC {\'\i }ch c\IeC {\'u} ph\IeC {\'a}p}{25}{subsection.4.3}
-\contentsline {subsubsection}{\numberline {3.1}Sinh c\IeC {\^a}y BST}{25}{subsubsection.4.3.1}
-\contentsline {subsubsection}{\numberline {3.2}Sinh c\IeC {\^a}y Lexed - BST}{29}{subsubsection.4.3.2}
-\contentsline {section}{\numberline {Ch\IeC {\uhorn }\IeC {\ohorn }ng 5}Hi\IeC {\d \ecircumflex }n th\IeC {\d \uhorn }c, \IeC {\dj }\IeC {\'a}nh gi\IeC {\'a}}{30}{section.5}
-\contentsline {subsection}{\numberline {1}Chu\IeC {\h \acircumflex }n b\IeC {\d i} d\IeC {\~\uhorn } li\IeC {\d \ecircumflex }u}{30}{subsection.5.1}
-\contentsline {subsection}{\numberline {2}Hi\IeC {\d \ecircumflex }n th\IeC {\d \uhorn }c h\IeC {\d \ecircumflex } th\IeC {\'\ocircumflex }ng}{30}{subsection.5.2}
-\contentsline {subsubsection}{\numberline {2.1}Qu\IeC {\'a} tr\IeC {\`\i }nh ti\IeC {\`\ecircumflex }n hu\IeC {\'\acircumflex }n luy\IeC {\d \ecircumflex }n}{30}{subsubsection.5.2.1}
+\contentsline {section}{\numberline {Ch\IeC {\uhorn }\IeC {\ohorn }ng 4}M\IeC {\^o} h\IeC {\`\i }nh \IeC {\dj }\IeC {\`\ecircumflex } xu\IeC {\'\acircumflex }t}{21}{section.4}
+\contentsline {subsection}{\numberline {1}T\IeC {\h \ocircumflex }ng quan}{21}{subsection.4.1}
+\contentsline {subsection}{\numberline {2}Ph\IeC {\'a}t hi\IeC {\d \ecircumflex }n k\IeC {\'y} t\IeC {\d \uhorn }}{21}{subsection.4.2}
+\contentsline {subsubsection}{\numberline {2.1}M\IeC {\d a}ng c\IeC {\ohorn } s\IeC {\h \ohorn }}{21}{subsubsection.4.2.1}
+\contentsline {subsubsection}{\numberline {2.2}Th\IeC {\^a}n m\IeC {\d a}ng SSD}{21}{subsubsection.4.2.2}
+\contentsline {subsubsection}{\numberline {2.3}C\IeC {\'a}c thay \IeC {\dj }\IeC {\h \ocircumflex }i}{24}{subsubsection.4.2.3}
+\contentsline {subsection}{\numberline {3}Ph\IeC {\^a}n t\IeC {\'\i }ch c\IeC {\'u} ph\IeC {\'a}p}{26}{subsection.4.3}
+\contentsline {subsubsection}{\numberline {3.1}Sinh c\IeC {\^a}y BST}{26}{subsubsection.4.3.1}
+\contentsline {subsubsection}{\numberline {3.2}Sinh c\IeC {\^a}y Lexed - BST}{30}{subsubsection.4.3.2}
+\contentsline {section}{\numberline {Ch\IeC {\uhorn }\IeC {\ohorn }ng 5}Hi\IeC {\d \ecircumflex }n th\IeC {\d \uhorn }c, \IeC {\dj }\IeC {\'a}nh gi\IeC {\'a}}{31}{section.5}
+\contentsline {subsection}{\numberline {1}Chu\IeC {\h \acircumflex }n b\IeC {\d i} d\IeC {\~\uhorn } li\IeC {\d \ecircumflex }u}{31}{subsection.5.1}
+\contentsline {subsection}{\numberline {2}Hi\IeC {\d \ecircumflex }n th\IeC {\d \uhorn }c h\IeC {\d \ecircumflex } th\IeC {\'\ocircumflex }ng}{31}{subsection.5.2}
+\contentsline {subsubsection}{\numberline {2.1}Qu\IeC {\'a} tr\IeC {\`\i }nh ti\IeC {\`\ecircumflex }n hu\IeC {\'\acircumflex }n luy\IeC {\d \ecircumflex }n}{31}{subsubsection.5.2.1}
 \contentsline {subsection}{\numberline {3}X\IeC {\^a}y d\IeC {\d \uhorn }ng b\IeC {\h a}n th\IeC {\h \uhorn } nghi\IeC {\d \ecircumflex }m}{31}{subsection.5.3}
 \contentsline {subsection}{\numberline {4}\IeC {\DJ }\IeC {\'a}nh gi\IeC {\'a} \IeC {\uhorn }u, nh\IeC {\uhorn }\IeC {\d \ohorn }c \IeC {\dj }i\IeC {\h \ecircumflex }m}{32}{subsection.5.4}
 \contentsline {subsubsection}{\numberline {4.1}\IeC {\UHORN }u \IeC {\dj }i\IeC {\h \ecircumflex }m}{32}{subsubsection.5.4.1}
 \contentsline {subsubsection}{\numberline {4.2}Nh\IeC {\uhorn }\IeC {\d \ohorn }c \IeC {\dj }i\IeC {\h \ecircumflex }m}{32}{subsubsection.5.4.2}
-\contentsline {section}{\numberline {Ch\IeC {\uhorn }\IeC {\ohorn }ng 6}T\IeC {\h \ocircumflex }ng k\IeC {\'\ecircumflex }t}{32}{section.6}
-\contentsline {subsection}{\numberline {1}C\IeC {\^o}ng vi\IeC {\d \ecircumflex }c \IeC {\dj }\IeC {\~a} l\IeC {\`a}m \IeC {\dj }\IeC {\uhorn }\IeC {\d \ohorn }c}{32}{subsection.6.1}
-\contentsline {subsubsection}{\numberline {1.1}Chu\IeC {\h \acircumflex }n b\IeC {\d i} c\IeC {\ohorn } s\IeC {\h \ohorn } l\IeC {\'y} thuy\IeC {\'\ecircumflex }t}{32}{subsubsection.6.1.1}
-\contentsline {subsection}{\numberline {2}Nh\IeC {\d \acircumflex }n x\IeC {\'e}t b\IeC {\h a}n th\IeC {\h \uhorn } nghi\IeC {\d \ecircumflex }m hi\IeC {\d \ecircumflex }n t\IeC {\d a}i}{32}{subsection.6.2}
-\contentsline {subsection}{\numberline {3}K\IeC {\'\ecircumflex } ho\IeC {\d a}ch trong giai \IeC {\dj }o\IeC {\d a}n t\IeC {\'\ohorn }i}{33}{subsection.6.3}
+\contentsline {section}{\numberline {Ch\IeC {\uhorn }\IeC {\ohorn }ng 6}T\IeC {\h \ocircumflex }ng k\IeC {\'\ecircumflex }t}{33}{section.6}
 \contentsline {section}{\numberline {Ch\IeC {\uhorn }\IeC {\ohorn }ng 7}K\IeC {\'\ecircumflex }t lu\IeC {\d \acircumflex }n}{33}{section.7}
 \contentsline {subsection}{\numberline {1}K\IeC {\'\ecircumflex }t lu\IeC {\d \acircumflex }n}{33}{subsection.7.1}
 \contentsline {subsection}{\numberline {2}H\IeC {\uhorn }\IeC {\'\ohorn }ng ph\IeC {\'a}t tri\IeC {\h \ecircumflex }n trong t\IeC {\uhorn }\IeC {\ohorn }ng lai}{33}{subsection.7.2}
