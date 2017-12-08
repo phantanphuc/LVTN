@@ -402,6 +402,14 @@
 	
 	Bộ phận phân loại có nhiệm vụ đưa ra dự đoán về vị trí và nhãn của các ký tự có trong ảnh. Để làm được điều đó, bộ phân loại phải sinh ra các feature map ứng với từng mức kích thước khác nhau, các feature map đó được đưa vào lớp Multibox để sinh ra các vị trí dự đoán và nhãn tương ứng. Các feature map được lấy sau một (một số) lớp tích chập. Danh sách feature map có được ở giai đoạn sinh ô chuẩn chính là được lấy từ đây. \\
 	
+	\begin{center}
+		
+		\centering
+		\includegraphics[width=0.8\linewidth]{SSD_Struture.png}
+		\vspace{0.5cm}
+		\captionof{figure}{Cấu tạo của một mạng SSD}
+	\end{center}
+	
 	Sau khi có được các feature map, lớp Multibox sẽ tiến hành đưa ra dự đoán về ô bọc và nhãn gắn với ô bọc đó. Mỗi feature map sử dụng một tập hợp các lớp tích chập sẽ cho ra một số lượng dự đoán nhất định. Với mỗi vị trí trên feature map được kernel trượt qua, thì một dự đoán về ký tự được sinh ra. Kernel có kích thước:
 	$$3 \times 3 \times (n \times (classes + 4))$$
 	Với $n$ là số lượng tỉ lệ diện mạo với fearture map tương ứng và $classes$ là số lượng nhãn cần nhận diện, số $4$ trong công thức đại diện cho 4 thông số về vị trí của ô bọc (tọa độ trọng tâm và kích thước). Do kích thước của các kernel không đồng nhất (vì số lượng tỉ lệ diện mạo ứng với từng feature map có thể khác nhau), nên để tạo ra dữ liệu đầu ra phù hợp với các ô chuẩn đã tạo từ trước thì các vector dự đoán sẽ được sắp xếp lại sao cho dữ liệu đầu ra chỉ có $classes + 4$ kênh và vị trí của các vector phải tương ứng với vị trí các ô chuẩn đã sinh từ trước.
@@ -547,7 +555,7 @@
 	
 	\subsection{Phát hiện ký tự}
 	
-
+	\subsubsection{Mạng cơ sở}
 	
 	Về cấu trúc của SSD, nhóm đã sử dụng mạng VGG16 [trích dẫn] cho phần mạng cơ sở. Cấu trúc của mạng VGG16 gồm tổ hợp các lớp tích chập và lớp pooling xếp chồng lên nhau, ở cuối mạng có các lớp liên kết đầy đủ \footnote{Thuật ngữ tiếng Anh: Fully connected layer} để giảm kích thước tensor và cuối cùng là xuất ra vector có số chiều phù hợp (có số chiều bằng với số lớp đối tượng cần dự đoán).
 	
@@ -559,14 +567,16 @@
 		\captionof{figure}{Cấu tạo mạng VGG16}
 	\end{center}
 	
-	Như hình vẽ bên trên, các lớp tích chập và lớp pooling được gom lại thành các cụm, sau hai đến ba lớp tích chập là một lớp pooling. Số kênh của tensor chạy trong mạng được nâng dần từ 64 lên 512 về phía cuối mạng. Khi đưa mạng cơ sở vào mạng SSD, các lớp liên kết đầy đủ sẽ được bỏ đi và bộ phận phân loại sẽ được chèn vào vị trí tương ứng. Khi đó, ta cần phải chuyển model của mạng VGG sang mạng SSD, phần này sẽ được đề cập chi tiết hơn trong phần hiện thực.\\
+	Như hình vẽ bên trên, các lớp tích chập và lớp pooling được gom lại thành các cụm, sau hai đến ba lớp tích chập là một lớp pooling. Số kênh của tensor chạy trong mạng được nâng dần từ 64 lên 512 về phía cuối mạng. Khi đưa mạng cơ sở vào mạng SSD, các lớp liên kết đầy đủ sẽ được bỏ đi và bộ phận phân loại sẽ được chèn vào vị trí tương ứng. Khi đó, ta cần phải chuyển model của mạng VGG sang mạng SSD, phần này sẽ được đề cập chi tiết hơn trong phần hiện thực.
+	
+	\subsubsection{Thân mạng SSD}
 	
 	Khi tiếp hợp vào mạng SSD, các lớp liên kết đầy đủ của VGG16 được lược bỏ, thay vào đó là những lớp tích chập, mô hình cụ thể của mạng SSD nhóm để xuất được thể hiện ở ảnh dưới.
 	
 	\begin{center}
 		
 		\centering
-		\includegraphics[width=0.6\linewidth]{SSD_Layers.png}
+		\includegraphics[width=0.8\linewidth]{SSD_Layers.png}
 		\vspace{0.5cm}
 		\captionof{figure}{Sơ đồ các lớp trong mạng SSD}
 	\end{center}
@@ -601,22 +611,76 @@
 		\end{tabular}
 	\end{center}
 	
+	Riêng khối Conv\_4 trong ảnh là lớp tích chập thứ 10 trong mạng VGG.\\
+	
 	Các lớp tích chập đều sử dụng hàm truyền là hàm ReLu, riêng ở sau các lớp Conv\_10\_1, Conv\_10\_2, Conv\_11\_1, Conv\_11\_2 thì có thêm một lớp dropout với hệ số dropout là 0.2.
 	
-	Feature map được trích ra từ hai vị trí:
+	Các feature map được trích ra để thực hiện phát hiện, phân loại từ các mủi tên màu đỏ trên hình, cụ thể:
 	
 	\begin{itemize}
-		\item Ngay sau khối tích chập - pooling 512 thứ nhất trong mạng VGG
-		\item Ở phần thay thế các lớp liên kết đầy đủ trong mạng VGG cũ (Như ảnh dưới). Cấu trúc phần này là các lớp tích chập xếp chồng lên nhau, kích thước các lớp này liên tục giảm xuống với mỗi feature map được sinh ra, điều này giúp cho mạng có thể phát hiện được ký tự ở nhiều kích thước khác nhau.
+		\item Ngay sau khối tích chập - pooling 512 thứ nhất trong mạng VGG (hay sau lớp pooling của lớp tích chập thứ 10 của mạng VGG - hay Conv\_4).
+		\item Sau các khối tích chập Conv\_7, Conv\_8, Conv\_9, Conv\_10, Conv\_11.
 	\end{itemize}
 	
+	Đối với mạng SSD300[trích dẫn] nguyên thủy, kích thước của các feature map ứng với số dự đoán được thể hiện ở bảng sau:
+	
 	\begin{center}
-		
-		\centering
-		\includegraphics[width=0.8\linewidth]{SSD_Struture.png}
-		\vspace{0.5cm}
-		\captionof{figure}{Cấu tạo mạng SSD}
+		\begin{tabular}{||c | c | c | c ||} 
+			\hline
+			\makecell{ Feature map \\ Sinh bởi } & \makecell{ Kích thước} & \makecell{Tỉ lệ \\ diện mạo } &  \makecell{ Số dự đoán } \\ [0.5ex] 
+			\hline\hline
+			Conv\_4 & $512 \times 38 \times 38$ & $ \{ 1, \frac{1}{2} , 2\} $ & 5776 \\ 
+			\hline
+			Conv\_7 & $1024 \times 19 \times 19$ & $ \{ 1, \frac{1}{2} , 2, \frac{1}{3}, 3\} $ & 2166 \\ 
+			\hline
+			Conv\_8 & $512 \times 10 \times 10$ &  $ \{ 1, \frac{1}{2} , 2, \frac{1}{3}, 3\} $ & 600 \\ 
+			\hline
+			Conv\_9 & $256 \times 5 \times 5 $ &  $ \{ 1, \frac{1}{2} , 2, \frac{1}{3}, 3\} $ & 150  \\ 
+			\hline
+			Conv\_10 & $256 \times 3 \times 3$ & $ \{ 1, \frac{1}{2} , 2\} $ & 36 \\ 
+			\hline
+			Conv\_11 & $256 \times 1 \times 1$ & $ \{ 1, \frac{1}{2} , 2\} $ & 4 \\ 
+			\hline
+		\end{tabular}
 	\end{center}
+	
+	Như vậy, ứng với mỗi ảnh, hệ thống sinh ra 8732 dự đoán. Tương ứng, bộ phận mã hóa của mạng SSD300 cũng có những thông số:
+	
+	\begin{itemize}
+		\item Danh sách kích thước feature map: (38, 19, 10, 5, 3, 1)
+		\item Danh sách kích thước các ổ chuẩn (với $s_{min} = 0.2$ và $s_{max} = 0.9$): (30, 60, 111, 162, 213, 264, 315)
+		\item Ngưỡng Jaccard: 0.5.
+	\end{itemize}
+	
+	\subsubsection{Các thay đổi}
+	
+	Do bản chất mạng SSD300 gặp rất nhiều khó khăn trong việc nhận dạng ký tự nhỏ do một số lý do:
+	\begin{itemize}
+		\item Trong quá trình kết hợp, các ô bọc "đáp án" kết hợp với ô chuẩn phải có chỉ số Jaccard lớn hơn 0.5, nhưng kích thước tối thiểu của ô chuẩn lại là $30 \times 30$ pixel, vì vậy nhiều ký tự nhỏ không thể kết hợp được (Trường hợp này xãy ra với hầu hết những ảnh có chữ nhỏ, ví dụ như ảnh dưới)
+		\begin{center}
+			\centering
+			\includegraphics[resolution=300]{HMER_2017_TEST1_MINH_01_2A.png}
+			\vspace{0.5cm}
+			\captionof{figure}{Ảnh ví dụ chữ nhỏ (với kích thước thật)}
+		\end{center}
+		Khi không thể kết hợp được thì vùng ký tự đó được hiểu là phần nền, điều này gây bất lợi lớn cho quá trình huấn luyện do vùng ảnh không trống nhưng lúc là nền lúc lại được gắn nhãn.
+			
+		\item Nhiều ký tự có tỉ lệ diện mạo đặc biệt (Ví dụ như ký tự dấu $-$ trong phân số hoặc $\int$) cũng gặp nhiều khó khăn trong việc kết hợp do không đạt được ngưỡng Jaccard.
+	\end{itemize}
+	
+	Vì vậy, nhóm đã sửa một số thông số để tìm cách giải quyết vấn đề trên, trong nhiều bộ thông số thì có 3 mô hình nổi bật.
+	
+	\subsubsection*{Giảm kích thước các ô chuẩn}
+	
+	Mô hình này dựa trên mô hình SSD300 nguyên thủy, chỉ chỉnh sửa kích thước các ô bọc thông qua chỉnh hai thông số $s_{min} = 0.08$ và $s_{max} = 0.5$, từ đó danh sách kích thước các ô chuẩn được thay đổi thành (9, 24, 54, 84, 114, 144, 174). So với mô hình nguyên thủy, mô hình này không thể kết hợp tốt các ký tự lớn (lớn hơn khoảng $200 \times 200$ pixel). Tuy vậy, đối với bài toán về phát hiện các ký tự trong một ảnh, thì kích thước các ký tự không thể quá lớn, nên những ký tự đặc biệt lớn như vậy có thể được xem xét ở độ ưu tiên thấp hơn.\\
+	
+	Việc thay đổi tham số ở mô hình này không làm ảnh hưởng lớn đến cấu trúc mạng cũng như quá trình mã hóa, giải mã. Số lượng dự đoán không thay đổi.\\
+	
+	Mục đích chính của thay đổi này là để quá trình kết hợp diễn ra tốt hơn khi kích thước của ô chuẩn nhỏ nhất là $9 \times 9$, điều này 
+	
+	\subsubsection*{Giảm kích thước các ô chuẩn và tăng kích thước ảnh đầu vào}
+	
+	Ở mô hình này
 	
 	\subsection{Phân tích cú pháp}
 	
