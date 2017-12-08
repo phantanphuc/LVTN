@@ -1,15 +1,10 @@
 This is BibTeX, Version 0.99dThe top-level auxiliary file: report.aux
 The style file: ieeetr.bst
-I couldn't open database file ref.bib
----line 82 of file report.aux
- : \bibdata{ref
- :             }
-I'm skipping whatever remains of this command
-I found no database files---while reading file report.aux
-Warning--I didn't find a database entry for "zanibbi"
-Warning--I didn't find a database entry for "context"
-Warning--I didn't find a database entry for "qak"
-Warning--I didn't find a database entry for "yanlecun"
-Warning--I didn't find a database entry for "segment"
-Warning--I didn't find a database entry for "anderson"
-(There were 2 error messages)
+Database file #1: ref.bib
+Warning--empty journal in context
+Warning--empty publisher in qak
+Name 1 in "J. Ha, R. Haralick, and I. Phillips" has a comma at the end for entry XY
+while executing---line 969 of file ieeetr.bst
+Warning--empty journal in XY
+Warning--empty journal in projection
+(There was 1 error message)

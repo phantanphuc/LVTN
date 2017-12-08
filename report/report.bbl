@@ -1,3 +1,44 @@
-\begin{thebibliography}{}
+\begin{thebibliography}{1}
+
+\bibitem{context}
+W.~He, Y.~Luo, and F.~Yin, ``Context-aware mathematical expression recognition:
+  An end-to-end framework and a benchmark,'' pp.~3235--3240, Dec. 2016.
+
+\bibitem{qak}
+A.~N. Quoc and K.~N. Anh, {\em Nhận dạng biểu thức toán học}.
+\newblock 2015.
+
+\bibitem{Simonyan14c}
+K.~Simonyan and A.~Zisserman, ``Very deep convolutional networks for
+  large-scale image recognition,'' {\em CoRR}, vol.~abs/1409.1556, 2014.
+
+\bibitem{yanlecun}
+Y.~Lecun, L.Boutou, and Y.Bengio, ``Gradient-based learning applied to document
+  recognition,'' {\em Proceedings of the IEEE}, vol.~88, no.~11, pp.~2278 --
+  2324, Nov. 1998.
+
+\bibitem{XY}
+R.~H. J.~Ha and I.~Phillips, ``Understanding mathematical expressions from
+  document images,'' 1995.
+
+\bibitem{projection}
+N.~Okamoto and M.~Bin, ``Recognition of mathematical expressions by using the
+  layout structures of symbols,'' 1991.
+
+\bibitem{zanibbi}
+R.~Zanibbi, D.~Blostein, and J.~Cordy, ``Recognizing mathematical expressions
+  using tree transformation,'' {\em IEEE Transactions on Pattern Analysis and
+  Machine Intelligence}, vol.~24, no.~11, pp.~1455 -- 1467, Nov. 2002.
+
+\bibitem{segment}
+K.-F. Chan and D.-Y. Yeung, ``Mathematical expression recognition: a survey,''
+  {\em International Journal on Document Analysis and Recognition}, vol.~3,
+  no.~1, pp.~3--15, Aug. 2000.
+
+\bibitem{anderson}
+R.~H. Anderson, ``Syntax-directed recognition of hand-printed two-dimensional
+  mathematics,'' {\em Symposium on Interactive Systems for Experimental Applied
+  Mathematics: Proceedings of the Association for Computing Machinery Inc.
+  Symposium}, pp.~436--459, Aug. 1967.
 
 \end{thebibliography}

@@ -334,18 +334,18 @@
 	
 	\subsection{Mạng Single Shot Multibox Detector (SSD)}
 	
-	SSD như là một mạng cải tiến phương pháp phát hiện bằng cửa sổ trượt\footnote{Thuật ngữ tiếng Anh: Sliding Window}. Thay vì sử dụng một (một số) cửa sổ có kích thước cố định, thì SSD sinh ra một số lượng hữu hạn các ô chuẩn \footnote{Thuật ngữ tiếng Anh: Default box} để rồi từ các ô chuẩn đó để hệ thống có thể xác định vị trí các ký tự cần nhận diện cho quá trình huấn luyện, qua đó mạng cần phải học cách dự đoán cả kích thước của các ô bọc quanh ký tự thay vì chỉ chấp nhận kích thước cho trước. SSD cũng sử dụng các lớp tích chập để trích đặc trưng, tạo tiền đề cho việc phân loại ký tự. \\
+	SSD như là một mạng cải tiến phương pháp phát hiện bằng cửa sổ trượt\footnote{Thuật ngữ tiếng Anh: Sliding Window}. Thay vì sử dụng một (một số) cửa sổ có kích thước cố định, thì SSD sinh ra một số lượng hữu hạn các ô chuẩn \footnote{Thuật ngữ tiếng Anh: Default box} để rồi từ các ô chuẩn đó để hệ thống có thể xác định vị trí các ký tự cần nhận diện cho quá trình huấn luyện, qua đó mạng cần phải học cách dự đoán cả kích thước của các ô bọc quanh ký tự thay vì chỉ chấp nhận kích thước cho trước. SSD cũng sử dụng các lớp tích chập để trích đặc trưng, tạo tiền đề cho việc phát hiện và phân loại ký tự. \\
 	
-	Nhóm xin phép được tách quá trình huấn luyện thành ba giai đoạn: mã hóa \footnote{Thuật ngữ tiếng Anh: Encoder}, trích đặc trưng - phân loại và tính giá trị mất mát. Và song song với huấn luyện, quá trình kiểm tra, kiểm định, chạy thực tiễn cũng được chia thành ba giai đoạn: trích đặc trưng - phân loại và giải mã \footnote{Thuật ngữ tiếng Anh: Decoder}
+	Nhóm xin phép được tách quá trình huấn luyện thành ba giai đoạn: mã hóa \footnote{Thuật ngữ tiếng Anh: Encoder}, phát hiện - phân loại và tính giá trị mất mát. Và song song với huấn luyện, quá trình kiểm tra, kiểm định, chạy thực tiễn cũng được chia thành ba giai đoạn: trích đặc trưng - phân loại và giải mã \footnote{Thuật ngữ tiếng Anh: Decoder}
 	
 	\subsubsection{Bộ mã hóa (Encoder)}
 	Bộ mã hóa chỉ được sử dụng trong quá trình huấn luyện nhằm mã hóa, chuyển đổi từ "đáp án" \footnote{Thuật ngữ tiếng Anh: Ground truth} thô (được lưu trong tệp tin txt hoặc xml) sang "đáp án" mà mạng SSD có thể hiểu được.
 	
 	\subsubsection*{Sinh ô chuẩn}
 	
-	Để mã hóa "đáp án", mã hóa trước hết có nhiệm vụ sinh ra nhiều ô chuẩn có nhiều kích thước khác nhau, để làm được điều này, mạng cần phải được cung cấp một số thông số:\\
+	Để mã hóa "đáp án", bộ mã hóa trước hết có nhiệm vụ sinh ra nhiều ô chuẩn có nhiều kích thước khác nhau, để làm được điều này, mạng cần phải được cung cấp một số thông số:\\
 	\begin{itemize}
-		\item Danh sách kích thước của các feature map (Phần này sẽ được giải thích rõ hơn ở mục sau). Mỗi feature map trong danh sách tưng ứng với một mức kích thước\footnote{Thuật ngữ tiếng Anh: Scale} về mặt kích thước trong việc phát hiện ảnh. Trong một mức kích thước, tất cả các ô chuẩn đều có kích thước như nhau và cách đều nhau, mỗi pixel trong feature map thể hiện một (một số ô chuẩn), vì vậy, ta có thể tính được danh sách khoảng cách giữa trọng tâm giữa các ô chuẩn bằng cách lấy kích thước ảnh chia cho kích thước của feature map ở mức kích thước tương ứng. Tất cả các dữ liệu liên quan đến kích thước sau đó sẽ được chuyển về tập giá trị $\{x \in R | x \in [0, 1] \} $ 
+		\item Danh sách kích thước của các feature map (Phần này sẽ được giải thích rõ hơn ở mục sau): Mỗi feature map trong danh sách tương ứng với một mức kích thước\footnote{Thuật ngữ tiếng Anh: Scale} trong việc phát hiện ảnh. Trong một mức kích thước, tất cả các ô chuẩn đều có kích thước như nhau và cách đều nhau, mỗi pixel trong feature map thể hiện một (một số ô chuẩn), vì vậy, ta có thể tính được danh sách khoảng cách giữa trọng tâm giữa các ô chuẩn bằng cách lấy kích thước ảnh chia cho kích thước của feature map ở mức kích thước tương ứng. Tất cả các dữ liệu liên quan đến kích thước sau đó sẽ được chuyển về tập giá trị $\{x \in R | x \in [0, 1] \} $ 
 		\item Danh sách các tỉ lệ diện mạo\footnote{Thuật ngữ tiếng Anh: Aspect ratio} ứng với mỗi mức kích thước. Mạng SSD dựa vào các tỉ lệ diện mạo đó để tạo ra các ô chuẩn có hình dạng khác nhau tại cùng một vị trí (trọng tâm của các ô chuẩn có cùng một vị trí).
 		\item Kích thước nhỏ nhất và lớn nhất của các ô chuẩn.
 	\end{itemize} 
@@ -355,7 +355,7 @@
 	
 	$$s_k = s_{min} + \frac{s_{max} - s_{min}}{m - 1}(k - 1) $$
 	
-	Trong đó $s_{min}$ và $s_{max}$ là kích thước nhỏ nhất và lớn nhất của ô chuẩn, m là số lượng feature map.
+	Trong đó $s_{min}$ và $s_{max}$ là kích thước nhỏ nhất và lớn nhất của ô chuẩn, m là số lượng feature map. Việc chọn các thông số này khá quan trọng vì nó sẽ ảnh hưởng đến các ký tự có thể nhận diện được sau này, các kích thước cần được chọn sao cho không quá lớn cũng như không quá nhỏ đối với những đối tượng được kỳ vọng nhận diện được.
 	
 	Ứng với mỗi mức kích thước:
 	
@@ -379,7 +379,7 @@
 	
 	\subsubsection*{Kết hợp\footnote{Thuật ngữ tiếng Anh: Matching}}
 	
-	Sau khi hoàn tất sinh ô chuẩn, bộ phận encoder có nhiệm vụ kết hợp dữ liệu thô là các ô bọc \footnote{Thuật ngữ tiếng Anh: Bounding box} từ "đáp án" qua các ô chuẩn vừa được tạo. Kết quả là ta sẽ thu được một tập nhiều vector, mỗi vector đại diện cho mỗi ô chuẩn chứa thông tin gồm tọa độ trọng tâm, kích thước của ô chuẩn và nội dung ô chuẩn đó chứa gì (có thể là phần nền - không có gì cả, hoặc một ký tự nào đó cần được nhận diện). \\
+	Sau khi hoàn tất sinh ô chuẩn, bộ phận encoder có nhiệm vụ kết hợp dữ liệu thô là các ô bọc \footnote{Thuật ngữ tiếng Anh: Bounding box} từ "đáp án"\footnote{Thuật ngữ tiếng Anh: Ground truth} qua các ô chuẩn vừa được tạo. Kết quả là ta sẽ thu được một tập nhiều vector, mỗi vector đại diện cho mỗi ô chuẩn chứa thông tin gồm tọa độ trọng tâm, kích thước của ô chuẩn và nhãn của ô chuẩn đó là gì (có thể là phần nền - không có gì cả, hoặc một ký tự nào đó cần được nhận diện). \\
 	
 	Việc kết hợp được thực hiện bằng cách so sánh từng ô chuẩn với từng ô bọc trong "đáp án" bằng cách tính chỉ số Jackard, nếu chỉ số này thỏa điều kiện thì ô chuẩn đó được gán nội dung là kí tự chứa trong ô bọc phù hợp nhất, nếu không thì ô chuẩn được gán nội dung là "nền".\\
 	
@@ -391,12 +391,12 @@
 	
 	Các ô bọc chỉ là thành phần trung gian để mạng SSD có thể tính được giá trị mất mát cũng như thực hiện quá trình lan truyền ngược, vì vậy để thuận tiện cho việc tính mất mát sau này, từ dữ liệu vị trí và kích thước của ô bọc, bộ mã hóa tạo ra các vector có các giá trị biểu diễn sự mất mát của các ô bọc so với các ô chuẩn, sau đó nhiệm vụ của mạng là dự đoán ra sự mất mát đó (Vấn đề này sẽ được đề cập rõ hơn trong [hần tính giá trị mất mát).
 	
-	\subsubsection{Bộ trích đặc trưng - phân loại}
-	Đây là bộ phận có nhiệm vụ trích đặc trưng từ ảnh thô đầu và, tạo ra các feature map để đưa vào quá trình phân loại ký tự
+	\subsubsection{Bộ phát hiện - phân loại}
+	Đây là bộ phận có nhiệm vụ trích đặc trưng từ ảnh thô đầu vào, tạo ra các feature map để đưa vào quá trình phân loại ký tự.
 	
 	\subsubsection*{Trích đặc trưng (Hay mạng cơ sở \footnote{Thuật ngữ tiếng Anh: Base Network})}
 	
-	Mạng cơ sở của SSD là một mạng nơron tích chập bất kỳ, có thể là VGG hoặc lenet, ... Hầu hết những mạng này có mục đích phân loại\footnote{Thuật ngữ tiếng Anh: Classification}, vì vậy ở phía cuối mạng thường có các lớp liên kết đầy đủ nhằm giảm kích thước feature map và tạo ra dữ liệu đầu ra có kích thước phù hợp (bằng với số nhãn cần dự đoán). Khi kết hợp với mạng SSD, các lớp liên kết đầy đủ này sẽ được thay thế bằng các lớp tích chập và song hành là lớp Multibox, chi tiết phần này sẽ được để cập ở mục tiếp theo.
+	Mạng cơ sở của SSD là một mạng nơron tích chập bất kỳ, có thể là VGG\cite{Simonyan14c} hoặc lenet\cite{yanlecun}, ... Hầu hết những mạng này có mục đích phân loại\footnote{Thuật ngữ tiếng Anh: Classification}, vì vậy ở phía cuối mạng thường có các lớp liên kết đầy đủ nhằm giảm kích thước feature map và tạo ra dữ liệu đầu ra có kích thước phù hợp (bằng với số nhãn cần dự đoán). Khi kết hợp với mạng SSD, các lớp liên kết đầy đủ này sẽ được thay thế bằng các lớp tích chập và song hành là các bước trích ra feature map để đưa vào lớp Multibox, chi tiết phần này sẽ được để cập ở mục tiếp theo.
 	
 	\subsubsection* {Phân loại}
 	
@@ -445,16 +445,23 @@
 	
 	hàm mất mát về độ tin cậy có thể được tính theo công thức:
 	
+	$$L_{conf}(x, c) = - \sum^N_{i \in Pos} x^p_{ij} \log (\hat{c}^p_i) - \sum_{i \in Neg} \log (\hat{c}^0_i) $$
+	
+	Với $\hat{c}_i^p = \frac{\exp{c_i^p}}{\sum_p \exp{c)i^p}}$
+	
 	\subsubsection{Bộ giải mã (Decoder)}
 	
-	Bản chất của bộ giải mã khá đơn giản, nó có chức năng chuyển dữ liệu các ô bọc mà mạng dự đoán (tức là những ô bọc được tính kích thước và tọa độ theo ô chuẩn mà ô bọc đó được kết hợp vào) sang dữ liệu tọa độ của ảnh (có gốc tọa độ nằm ở góc trên bên phải và tọa độ nằm trong miền $[0, 1]$
+	Bản chất của bộ giải mã khá đơn giản, nó có chức năng chuyển dữ liệu các ô bọc mà mạng dự đoán (tức là những ô bọc được tính kích thước và tọa độ theo ô chuẩn mà ô bọc đó được kết hợp vào) sang dữ liệu tọa độ của ảnh (có gốc tọa độ nằm ở góc trên bên phải và tọa độ nằm trong miền $[0, 1]$. Dữ liệu này cần thiết để trực quan hóa các ký tự mà hệ thống dự đoán và để đưa vào bộ phân tích cú pháp để sinh mã Latex.
 	
 	\subsubsection{Một số vấn đề khác trong mạng SSD}
 	\subsubsection*{Tăng cường dữ liệu\footnote{Data Augumentation}}
 	
-	Ngay trước quá trình kết hợp
+	Ngay trước quá trình kết hợp, ảnh và các ô bọc được đi qua một bước gọi là cắt ngẫu nhiên\footnote{Thuật ngữ tiếng Anh: Random Crop}. Ở bước này, ảnh được cắt đi một số phần ngẫu nhiên (có tác dụng giống như phóng to (zoom) ảnh. Điều này giúp làm đa dạng dữ liệu huấn luyện và làm giảm bớt hiện tượng overfit.
 	
 	\subsubsection*{Cân bằng nhãn\footnote{Hard Negative Mining}}	
+	
+	Ngay sau bước kết hợp, hầu hết các ô 
+	
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	
@@ -467,15 +474,15 @@
 	Trong suốt hơn 50 năm hành trình, rất nhiều phương pháp nhận diện biểu thức toán học khác nhau đã được đề xuất, tuy vậy, bài toán này có thể được phân ra thành một số hướng tiếp cận khác nhau:
 	
 	\begin{itemize}
-		\item Nhận diện theo hướng phân vùng\footnote{Thuật ngữ tiếng Anh: Segmentation.}. Ở hướng này, bài toán được chia ra thành nhiều bài toán nhỏ hơn thông qua việc phân chia vùng ảnh biểu thức toán học một cách có quy tắc. Một số ví dụ cho phương pháp này như giải thuật X-Y cut [trích dẫn] hay dùng phương pháp projection profiles. Đối với phương pháp này, bài toán sẽ trở nên vô cùng khó khăn với những ký tự dính liền nhau hoặc với những bài toán có dấu căn.
+		\item Nhận diện theo hướng phân vùng\footnote{Thuật ngữ tiếng Anh: Segmentation.}. Ở hướng này, bài toán được chia ra thành nhiều bài toán nhỏ hơn thông qua việc phân chia vùng ảnh biểu thức toán học một cách có quy tắc. Một số ví dụ cho phương pháp này như giải thuật X-Y cut \cite{XY} hay dùng phương pháp projection profiles \cite{projection}. Đối với phương pháp này, bài toán sẽ trở nên vô cùng khó khăn với những ký tự dính liền nhau hoặc với những bài toán có dấu căn.
 		
-		\item Nhận diện dựa trên cấu trúc cây hoặc đồ thị. Ở hướng này, dựa vào vị trí các ký tự cũng như cấu trúc tổng thể của biểu thức, biểu thức toán học được biểu diễn theo cấu trúc cây hoặc đồ thị. Một số ví dụ cho phương pháp này như Tapia and Rojas Đã đề xuất một phương pháp nhận diện dựa trên cây trải dài\footnote{Thuật ngữ tiếng Anh: Spanning tree.} và ký tự chủ đạo\footnote{Thuật ngữ tiếng Anh: Dominate symbol.}, Zanibbi cho ra đời phương pháp nhận diện bằng một chuỗi các bước biến đổi cây. Phương pháp này khá hoàn thiện nhưng vẫn có một số vướng mắc như việc nhận diện ký tự một cách phi ngữ cảnh vẫn mang đến sự thiếu tự nhiên, hay phương pháp đọc từ trái sang phải vẫn để lại nhiều lỗ hổng trong việc nhận diện biểu thức.
+		\item Nhận diện dựa trên cấu trúc cây hoặc đồ thị. Ở hướng này, dựa vào vị trí các ký tự cũng như cấu trúc tổng thể của biểu thức, biểu thức toán học được biểu diễn theo cấu trúc cây hoặc đồ thị. Một số ví dụ cho phương pháp này như Tapia and Rojas Đã đề xuất một phương pháp nhận diện dựa trên cây trải dài\footnote{Thuật ngữ tiếng Anh: Spanning tree.} và ký tự chủ đạo\footnote{Thuật ngữ tiếng Anh: Dominate symbol.}, Zanibbi cho ra đời phương pháp nhận diện bằng một chuỗi các bước biến đổi cây\cite{zanibbi}. Phương pháp này khá hoàn thiện nhưng vẫn có một số vướng mắc như việc nhận diện ký tự một cách phi ngữ cảnh vẫn mang đến sự thiếu tự nhiên, hay phương pháp đọc từ trái sang phải vẫn để lại nhiều lỗ hổng trong việc nhận diện biểu thức.
 		
 		\item Nhận diện dựa trên ngữ pháp toán học. Ở hướng này, ngữ pháp được đưa vào quá trình nhận diện, ví dụ như sử dụng ngữ pháp để hậu xử lý, loại bỏ, hiệu chỉnh các ý tự nhận diện sai hoặc sử dụng các mô hình ngữ pháp để dự đoán ký tự tiếp theo trong biểu thức.
 	\end{itemize}
 	
 	
-	\subsection{WHOOOOOO ? \cite{zanibbi} : Watch, Attend and Parse: An End-to-end Neural Network Based Approach to Handwritten Mathematical Expression Recognition} 
+	\subsection{WHOOOOOO  : Watch, Attend and Parse: An End-to-end Neural Network Based Approach to Handwritten Mathematical Expression Recognition} 
 	
 	Khác với những bài báo đi trước sử dụng phương pháp phân vùng hay dựa trên ngữ pháp, bài báo này sử dụng phương pháp mang tên Watch, Attend, Parse dựa trên bài toán chú thích cho ảnh \footnote{Thuật ngữ tiếng anh: Image Captioning}. Hệ thống này là sự kết hợp giữa CNN, RNN và một hệ thống ANN (Cụ thể là GRU\footnote{Viết tắt: Gated recurrent unit}), CNN đặc trưng cho Watcher sẽ trích đặc trưng ảnh, ANN đặc trưng cho Attend mang nhiệm vụ điều hướng cho mạng biết được vị trí nào sẽ tập trung vào và RNN đặc trưng cho Parser mang nhiệm vụ sinh ra chuỗi Latex chính là đầu ra của hệ thống\\
 	
@@ -524,7 +531,7 @@
 	QAK là tên dự án được thực hiện bởi nhóm sinh viên khoá 2011 cũng về đề tài nhận dạng biểu thức toán học.
 	
 	Phương pháp nhóm sinh viên này xây dựng dựa trên nghiên cứu chính từ hai công trình của Aderson\cite{anderson} và Zanibbi\cite{zanibbi}. Do đó, qua trình nhận dạng biểu thức toán học vẫn đi theo 2 bước chuẩn đó là phân tách ký hiệu và phân tích cấu trúc như đã trình bày ở mục \ref{subsec: context}. 
-	\newpage
+	
 	Dưới đây là mô hình phương pháp mà nhóm đã đề xuất:
 	%\vspace{3cm}
 	
@@ -664,7 +671,7 @@
 			\captionof{figure}{Ảnh ví dụ chữ nhỏ (với kích thước thật)}
 		\end{center}
 		Khi không thể kết hợp được thì vùng ký tự đó được hiểu là phần nền, điều này gây bất lợi lớn cho quá trình huấn luyện do vùng ảnh không trống nhưng lúc là nền lúc lại được gắn nhãn.
-			
+		
 		\item Nhiều ký tự có tỉ lệ diện mạo đặc biệt (Ví dụ như ký tự dấu $-$ trong phân số hoặc $\int$) cũng gặp nhiều khó khăn trong việc kết hợp do không đạt được ngưỡng Jaccard.
 	\end{itemize}
 	
@@ -676,19 +683,90 @@
 	
 	Việc thay đổi tham số ở mô hình này không làm ảnh hưởng lớn đến cấu trúc mạng cũng như quá trình mã hóa, giải mã. Số lượng dự đoán không thay đổi.\\
 	
-	Mục đích chính của thay đổi này là để quá trình kết hợp diễn ra tốt hơn khi kích thước của ô chuẩn nhỏ nhất là $9 \times 9$, điều này 
+	Mục đích chính của thay đổi này là để quá trình kết hợp diễn ra tốt hơn khi kích thước của ô chuẩn nhỏ nhất là $9 \times 9$, điều này giúp cho những ký tự rất nhỏ vẫn có thể được kết hợp, tránh hiện tượng bỏ sót ký tự như mạng SSD300 nguyên thủy.
 	
 	\subsubsection*{Giảm kích thước các ô chuẩn và tăng kích thước ảnh đầu vào}
 	
-	Ở mô hình này
+	Để có được mô hình này, nhóm cần phải có hai thay đổi so với mạng SSD300 nguyên thủy:
+	\begin{itemize}
+		\item Thay vì sử dụng ảnh $300 \times 300$ như nguyên thủy, ảnh sẽ được phóng to lên kích thước $500 \times 500$.
+		\item Như ở mô hình đề xuất trước, nhóm thay đổi $s_{min} = 0.08$ và $s_{max} = 0.5$ từ đó thu được danh sách kích thước (15.0, 40, 80, 120, 160., 200, 240, 280).
+	\end{itemize}
+	
+	Những thay đổi trên có làm thay đổi đến cấu trúc mạng SSD, khi tăng kích thước ảnh đầu vào nghĩa là kích thước của các feature map thu thập được cũng tăng lên, từ đó kéo số lượng dự đoán trong một ảnh tăng lên như bảng dưới.\\
+	
+	\begin{center}
+		\begin{tabular}{||c | c | c | c ||} 
+			\hline
+			\makecell{ Feature map \\ Sinh bởi } & \makecell{ Kích thước} & \makecell{Tỉ lệ \\ diện mạo } &  \makecell{ Số dự đoán } \\ [0.5ex] 
+			\hline\hline
+			Conv\_4 & $512 \times 63 \times 63$ & $ \{ 1, \frac{1}{2} , 2\} $ & 15876 \\ 
+			\hline
+			Conv\_7 & $1024 \times 32 \times 32$ & $ \{ 1, \frac{1}{2} , 2, \frac{1}{3}, 3\} $ & 6144 \\ 
+			\hline
+			Conv\_8 & $512 \times 16 \times 16$ &  $ \{ 1, \frac{1}{2} , 2, \frac{1}{3}, 3\} $ & 1536 \\ 
+			\hline
+			Conv\_9 & $256 \times 8 \times 8 $ &  $ \{ 1, \frac{1}{2} , 2, \frac{1}{3}, 3\} $ & 384  \\ 
+			\hline
+			Conv\_10 & $256 \times 4 \times 4$ & $ \{ 1, \frac{1}{2} , 2\} $ & 144 \\ 
+			\hline
+			Conv\_11 & $256 \times 2 \times 2$ & $ \{ 1, \frac{1}{2} , 2\} $ & 64 \\ 
+			\hline
+		\end{tabular}
+	\end{center}
+	
+	Như vậy với mỗi ảnh, hệ thống sinh ra 24148 dự đoán, gấp gần 3 lần so với ảnh SSD300 nguyên thủy. Với những thay đổi này ô bọc thậm chí còn có thể kết hợp với những ô chuẩn nhỏ hơn, bên cạnh đó, mật độ các ô chuẩn cũng dày đặc hơn nhiều so với mạng SSD nguyên thủy.
+	
+	\subsubsection*{Giảm kích thước các ô chuẩn, tăng kích thước ảnh đầu vào và thêm lớp tích chập}
+	
+	Mô hình này thừa kế các thay đổi ở hai mô hình trước, tuy nhiên ở phần thân mạng SSD, nhóm đã gắn thêm 2 lớp tích chập ở cuối với các tham số: \\
+	
+	\begin{center}
+		\begin{tabular}{||c | c | c | c | c | c ||} 
+			\hline
+			Khối & \makecell{ Số kênh \\ đầu vào } & \makecell{ Số kênh \\ đầu ra} & Kích thước nhân &  \makecell{ Chèn thêm \\ (Padding) } &  \makecell{ Bước \\ (Stride) } \\ [0.5ex] 
+			\hline\hline
+			Conv\_12\_1 & 256 & 128 & 1 & 0 & 1 \\ 
+			\hline
+			Conv\_12\_2 & 128 & 256 & 3 & 0 & 1 \\ 
+			\hline
+		\end{tabular}
+	\end{center}
+	Hai lớp tích chập này cũng có hàm truyền là hàm relu và đi chung với lớp drop out với hệ số drop out là 0.2. \\
+	
+	Thay đổi này cũng làm thay đổi cấu trúc mạng:
+	
+	\begin{center}
+		\begin{tabular}{||c | c | c | c ||} 
+			\hline
+			\makecell{ Feature map \\ Sinh bởi } & \makecell{ Kích thước} & \makecell{Tỉ lệ \\ diện mạo } &  \makecell{ Số dự đoán } \\ [0.5ex] 
+			\hline\hline
+			Conv\_4 & $512 \times 63 \times 63$ & $ \{ 1, \frac{1}{2} , 2\} $ & 15876 \\ 
+			\hline
+			Conv\_7 & $1024 \times 32 \times 32$ & $ \{ 1, \frac{1}{2} , 2, \frac{1}{3}, 3\} $ & 6144 \\ 
+			\hline
+			Conv\_8 & $512 \times 16 \times 16$ &  $ \{ 1, \frac{1}{2} , 2, \frac{1}{3}, 3\} $ & 1536 \\ 
+			\hline
+			Conv\_9 & $256 \times 8 \times 8 $ &  $ \{ 1, \frac{1}{2} , 2, \frac{1}{3}, 3\} $ & 384  \\ 
+			\hline
+			Conv\_10 & $256 \times 4 \times 4$ & $ \{ 1, \frac{1}{2} , 2\} $ & 160 \\ 
+			\hline
+			Conv\_11 & $256 \times 2 \times 2$ & $ \{ 1, \frac{1}{2} , 2\} $ & 40 \\ 
+			\hline
+			Conv\_12 & $256 \times 2 \times 1$ & $ \{ 1, \frac{1}{2} , 2\} $ & 10 \\ 
+			\hline
+		\end{tabular}
+	\end{center}
+	
+	Lớp Conv\_12 được thêm vào cuối mạng với mục đích tăng độ dài danh sách feature map đưa vào lớp Multibox, điều này giúp trong quá trình kết hợp, các ký tự lớn hơn có thể được kết hợp.
 	
 	\subsection{Phân tích cú pháp}
 	
-	Bộ phân tích cú pháp này có nhiệm vụ chuyển dữ liệu dự đoán là các ô bọc sang dữ liệu biểu thức toán học dạng latex.\\
+	Bộ phân tích cú pháp này có nhiệm vụ chuyển dữ liệu dự đoán là các ô bọc sang dữ liệu biểu thức toán học dạng latex. Trong quá trình phân tích cú pháp, biểu thức được lưu trữ dưới dạng cây BST\footnote{Viết tắt: baseline Syntax Tree: Cây cú pháp dựa trên đường cơ sở} là một cấu trúc cây dựa trên các đường cơ sở, các nhánh của cây thể hiện một phân vùng bên trên, bên dưới, ... của nút và là một phân vùng ảnh có đường cơ sở riêng và Lexed - BST là một cấu trúc cây tương tự như BST nhưng thay vì chỉ biểu thị vị trí bên trên, bên dưới thì cây biểu thị quan hệ phân số, chỉ số trên, chỉ số dưới, ...\\
 	
 	\subsubsection{Sinh cây BST}
 	
-	Đây là giai đoạn phức tạp nhất và cũng là quan trọng nhất, ở giai đoạn này, dữ liệu đầu ra từ mạng SSD là danh sách các ô bọc sẽ được phân tích và xây dựng một cây BST. Công việc này có thể được phân ra thành bốn công đoạn: Tìm ký tự chủ đạo, xác định những ký tự trên đường cơ sở, tái phân vùng và đệ quy\\
+	Đây là giai đoạn phức tạp nhất và cũng là quan trọng nhất, ở giai đoạn này, dữ liệu đầu ra từ mạng SSD là danh sách các ô bọc sẽ được phân tích và xây dựng một cây BST. Công việc này có thể được phân ra thành bốn công đoạn: Tìm ký tự chủ đạo, xác định những ký tự trên đường cơ sở, tái phân vùng và xử lý nút con\\
 	
 	Trước khi tiến hành sinh cây, ta cần phải phân loại các ký tự vào những thể loại khác nhau, điều này có mục đích giúp xác định vị trí trọng tâm tốt hơn, xác định được vùng ảnh gắn với chỉ số trên, chỉ số dưới và giúp phân biệt một số loại ký tự có thể có cấu trức đặc biệt trong biểu thức (ví dụ như ký tự $\sum$ thì có thể có ký tự nằm trên và bên dưới, nhưng ký tự $sin$ thì gần như không bao giờ có). Các ký tự được phân vào các lớp như bảng dưới:
 	
@@ -799,7 +877,7 @@
 	
 	\subsubsection*{Luật sinh}
 	
-
+	
 	Để chuyển từ cây BST sang cây lexed - BST, nhóm có đề xuất một số luật sinh: \\
 	Gọi ký tự đang xét là $A$
 	\begin{itemize}
@@ -828,7 +906,7 @@
 	
 	\subsubsection*{Học chuyển tiếp}
 	
-	Để thực hiện phương pháp này, ta cần phải chuẩn bị một tập dữ liệu riêng gồm các ảnh ... <<<<<<<<<<<<<<<<<<<<\\
+	Để thực hiện phương pháp này, ta cần phải chuẩn bị một tập dữ liệu riêng gồm các ảnh kích thước $32 \times 32$. Các ảnh này được lấy từ tập huấn luyện của đề tài QAK.\\
 	
 	Khi đã thu được một mô hình phù hợp (Huấn luyện tập tiền huấn luyện đã hội tụ), nhiệm vụ kế tiếp là ta phải chuyển các tham số đã học được sang một mô hình của mạng SSD.\\
 	
@@ -836,8 +914,35 @@
 	
 	Sau khi đã thu được mô hình mạng SSD, ta có thể bước tiếp đến công đoạn huấn luyện mạng SSD.
 	
-	\subsection{Xây dựng chương trình sinh mã latex}
+	\subsection{Xây dựng bản thử nghiệm}
 	
+	Khi đã thu được mô hình hoàn thiện của SSD, nhóm xây dựng một bản thử nghiệm bằng python. Giao diện khá đơn giản, người dùng chỉ việc chọn thư mục chứa ảnh, sau đó chọn ảnh cần nhận diện. Chương trình sẽ xử lý và đưa ra 3 ảnh gồm ảnh gốc ban đầu, ảnh thể hiện các ô bọc mà mạng dự đoán và ảnh biểu thức toán học được tạo ra từ đoạn mã Latex.
+	
+	\begin{center}
+		
+		\centering
+		\includegraphics[width=0.8\linewidth]{demoImg.png}
+		\vspace{0.5cm}
+		\captionof{figure}{Giao diện bản thử nghiệm}
+	\end{center}
+	
+	\subsection{Đánh giá ưu, nhược điểm}
+	
+	\subsubsection{Ưu điểm}
+	
+	\begin{itemize}
+		\item Hệ thống có thể nhận diện được ký tự ở nhiều kích thước khác nhau.
+		\item Nhận diện được nhiều biểu thức mà nếu chỉ dùng kỹ thuật phân vùng thì khó có thể làm được (ví dụ như biểu thức có ký tự dính nhau).
+		\item Số lượng ký tự nhận diện được khá đa dạng
+	\end{itemize}
+	
+	\subsubsection{Nhược điểm}
+	
+	\begin{itemize}
+		\item Hệ thống có thể nhận diện được ký tự ở nhiều kích thước khác nhau.
+		\item Nhận diện được nhiều biểu thức mà nếu chỉ dùng kỹ thuật phân vùng thì khó có thể làm được (ví dụ như biểu thức có ký tự dính nhau).
+		\item Số lượng ký tự nhận diện được khá đa dạng
+	\end{itemize}
 	
 	\section{Tổng kết}
 	\subsection{Công việc đã làm được}
@@ -851,48 +956,34 @@
 		
 	\end{itemize} 
 	
-	\subsubsection{Xây dựng bản thử nghiệm}
 	
-	Nhóm đã thử viết lại một bản demo để nhận diện một số biểu thức đơn giản theo giải thuật của nhóm sinh viên khóa 2011. Dữ liệu sử dụng là tập các hình ảnh được thu thập và xử lý trong đề tài nhận dạng biểu thức toán học của nhóm sinh viên trên.
-	
-	Ảnh dưới: cây cú pháp nhóm đã xây dựng được từ hình ảnh biểu thức toán học, và các số trong ô màu đỏ chính là ký tự mà hệ thống đoán được.\par
-	
-	\begin{center}
-		
-		\centering
-		\includegraphics[width=0.8\linewidth]{kq_1_1.png}
-		\vspace{0.5cm}
-		\captionof{figure}{Sơ đồ mô tả kết quả demo 1}
-	\end{center}
-	
-	\newpage
-	\begin{center}
-		
-		\centering
-		\includegraphics[width=0.8\linewidth]{kq_2_1.png}
-		\vspace{0.5cm}
-		\captionof{figure}{Sơ đồ mô tả kết quả demo 2}
-	\end{center}
 	\vspace{0.5cm}
 	\subsection{Nhận xét bản thử nghiệm hiện tại}
 	
 	Một số vấn đề còn tồn đọng: 
 	\begin{itemize}
-		\item Khi nhận diện các ký tự toán học, hệ thống chưa phân biệt được ký tự chuẩn và các chỉ số.
-		\item Nhược điểm lớn nhất của hệ thống là không thể phân tách được các ký tự dính liền nhau.
 		\item Hệ thống không thể nhận diện các ảnh có nhiễu lớn.
+		\item Hệ thống không thể nhận diện các ảnh có quá nhiều ký tự.
 	\end{itemize}
 	
 	Đây cũng là vấn đề chưa giải quyết được trong luận văn của nhóm sinh viên khoá 2011.
 	\subsection{Kế hoạch trong giai đoạn tới}
-	Vì những nhược điểm kể trên của phương pháp hiện tại, cộng với gợi ý hướng đi của giáo viên hướng dẫn, nhóm quyết định sử dụng một hướng tiếp cận mới.
-	Ở giai đoạn tiếp đến, nhóm có kế hoạch:
+	
+	
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+	\section{Kết luận}
+	
+	\subsection{Kết luận}
+	
+	\subsection{Hướng phát triển trong tương lai}
+	
+	Hệ thống vẫn còn nhiều điểm có thể cải thiện thêm, trong tương lai, có thể:
 	\begin{itemize}
-		\item Trong tháng đầu của giai đoạn hè: Tìm hiểu về các phương án và chốt phương án hiện thực.
-		\item Trong phần còn lại của giai đoạn hè và tháng đầu của giai đoạn luận văn (tuần 1 đến tuần 4): Vừa tìm hiểu về phương án vừa tiến hành hiện thực một số module cơ bản.
-		\item Trong tháng kế tiếp (tuần 5 đến tuần 8): Củng cố cơ sở lý thuyết, tiến hành huấn luyện mạng và bắt đầu thiết kế demo.
-		\item Trong tháng kế tiếp (tuần 9 đến tuần 13): hiện thực demo và tiến hành lên sản phẩm (trước hội nghị tháng 10).
-		\item Thời gian còn lại tiến hành hiệu chỉnh tham số để thử nghiệm độ hiệu quả, sửa lỗi trong hệ thống và viết báo cáo.
+		\item Thêm phần hậu xử lý ở các giai đoạn nhận diện ký tự và sinh cây Lexed - BST.
+		\item Tăng thêm số lượng ký tự có thể nhận diện.
+		\item Cải thiện khả năng nhận diện các ký tự có tỉ lệ diện mạo đặc biệt
 	\end{itemize}
 	
 	
