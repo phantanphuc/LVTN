@@ -230,6 +230,7 @@
 	\tableofcontents
 	\newpage
 	\listoffigures
+	\listoftables
 	\newpage
 	
 	\subsection*{Danh mục từ viết tắt}
@@ -252,7 +253,7 @@
 	\section{Giới thiệu}
 	\subsection{Giới thiệu đề tài}
 	\label{subsec: introduce}
-	Khoa học công nghệ phát triển đồng nghĩa với việc xã hội " trở nên tự động hoá" bởi lẽ con người ngày càng có nhu cầu tìm kiếm sự hỗ trợ từ các thiết bị công nghệ và hạn chế dùng sức lực của chính mình. Dựa trên nền tảng công nghệ và nhu cầu của xã hội, hàng loạt những thiết bị, ứng dụng công nghệ ra đời. Chúng phục vụ nhu cầu của con người trong đời sống hằng ngày cũng như trong hầu hết mọi lĩnh vực của xã hội từ giao thông, y tế, thương mại,... đến giáo dục. Trong lĩnh vực y tế, phải kể đến ứng dụng giám sát sức khoẻ người dùng trên những chiếc đồng hồ thông minh của Apple hay SamSung. Với giao thông, những ứng dụng chỉ đường, định vị và giám sát xe đề phòng trộm ngày càng phổ biến và giúp ích thực sự cho con người. Riêng với giáo dục, vấn đề thường gặp đối với các bạn học sinh là giải, trực quan hoá các phương trình, hàm số toán học hay soạn các giáo án chứa nhiều công thức, ký hiệu phức tạp đối với thầy cô. Họ cần một giải pháp nào đó giúp giảm thiểu công sức trong những tình huống như vậy. Giải pháp này cần phải giải quyết những vấn đề cơ bản sau:
+	Khoa học công nghệ phát triển đồng nghĩa với việc xã hội "trở nên tự động hoá" bởi lẽ con người ngày càng có nhu cầu tìm kiếm sự hỗ trợ từ các thiết bị công nghệ và hạn chế dùng sức lực của chính mình. Dựa trên nền tảng công nghệ và nhu cầu của xã hội, hàng loạt những thiết bị, ứng dụng công nghệ ra đời. Chúng phục vụ nhu cầu của con người trong đời sống hằng ngày cũng như trong hầu hết mọi lĩnh vực của xã hội từ giao thông, y tế, thương mại,... đến giáo dục. Trong lĩnh vực y tế, phải kể đến ứng dụng giám sát sức khoẻ người dùng trên những chiếc đồng hồ thông minh của Apple hay SamSung. Với giao thông, những ứng dụng chỉ đường, định vị và giám sát xe đề phòng trộm ngày càng phổ biến và giúp ích thực sự cho con người. Riêng với giáo dục, vấn đề thường gặp đối với các bạn học sinh là giải, trực quan hoá các phương trình, hàm số toán học hay soạn các giáo án chứa nhiều công thức, ký hiệu phức tạp đối với thầy cô. Họ cần một giải pháp nào đó giúp giảm thiểu công sức trong những tình huống như vậy. Giải pháp này cần phải giải quyết những vấn đề cơ bản sau:
 	
 	\begin{itemize}
 		\item Số hoá các công thức in trong sách hay được viết tay.
@@ -280,11 +281,14 @@
 	
 	\subsection{Phạm vi đề tài}
 	
-	\textendash \hspace{0.3cm}Nhận dạng biểu thức toán học viết tay dạng offline\footnote{Nhận dạng từ ảnh chứa biểu thức toán học}.\\
-	%\vspace{0.2cm}
-	%\vspace{0.5cm}
-	\textendash \hspace{0.3cm}Chuyển biểu thức từ dạng hình ảnh sang dạng máy có thể hiểu được (Latex).\\
-	%\vspace{3cm}
+	\begin{itemize}
+		\item Nhận dạng biểu thức toán học viết tay dạng offline\footnote{Nhận dạng từ ảnh chứa biểu thức toán học}.
+		\item Chuyển biểu thức từ dạng hình ảnh sang dạng máy có thể hiểu được (Latex).
+		\item Ảnh nhận diện ít nhiễu và không bị xoay quá nhiều.
+		\item Nhận diện được các cấu trúc đơn giản (tích phân, tổng, chỉ số trên, chỉ số dưới, phân số, giới hạn, ...)
+		
+	\end{itemize}
+
 	\subsection{Quá trình thực hiện}
 	Bước 1: Tìm hiểu những công trình trong nước và nước ngoài liên quan đến vấn đề nhận dạng biểu thức toán học.
 	\begin{itemize}
@@ -396,19 +400,19 @@
 	
 	\subsection{Mạng Single Shot Multibox Detector (SSD)}
 	
-	SSD\cite{liu2016ssd} như là một mạng cải tiến phương pháp phát hiện bằng cửa sổ trượt\footnote{Thuật ngữ tiếng Anh: Sliding Window}. Thay vì sử dụng một (một số) cửa sổ có kích thước cố định, thì SSD sinh ra một số lượng hữu hạn các ô chuẩn \footnote{Thuật ngữ tiếng Anh: Default box} để rồi từ các ô chuẩn đó để hệ thống có thể xác định vị trí các ký tự cần nhận diện cho quá trình huấn luyện, qua đó mạng cần phải học cách dự đoán cả kích thước của các ô bọc quanh ký tự thay vì chỉ chấp nhận kích thước cho trước. SSD cũng sử dụng các lớp tích chập để trích đặc trưng, tạo tiền đề cho việc phát hiện và phân loại ký tự. \\
+	SSD\cite{liu2016ssd} như là một mạng cải tiến phương pháp phát hiện bằng cửa sổ trượt\footnote{Thuật ngữ tiếng Anh: Sliding Window}. Thay vì sử dụng một (một số) cửa sổ có kích thước cố định, thì SSD\cite{liu2016ssd} sinh ra một số lượng hữu hạn các ô chuẩn \footnote{Thuật ngữ tiếng Anh: Default box} để rồi từ các ô chuẩn đó để hệ thống có thể xác định vị trí các ký tự cần nhận diện cho quá trình huấn luyện, qua đó mạng cần phải học cách dự đoán cả kích thước của các ô bọc quanh ký tự thay vì chỉ chấp nhận kích thước cho trước. SSD\cite{liu2016ssd} cũng sử dụng các lớp tích chập (hay cụ thể hơn là các mạng nơ-ron tích chập) để trích đặc trưng, tạo tiền đề cho việc phát hiện và phân loại ký tự. \\
 	
 	Nhóm xin phép được tách quá trình huấn luyện thành ba giai đoạn: mã hóa \footnote{Thuật ngữ tiếng Anh: Encoder}, phát hiện - phân loại và tính giá trị lỗi. Và song song với huấn luyện, quá trình kiểm tra, kiểm định, chạy thực tiễn cũng được chia thành ba giai đoạn: trích đặc trưng - phân loại và giải mã \footnote{Thuật ngữ tiếng Anh: Decoder}
 	
 	\subsubsection{Bộ mã hóa (Encoder)}
-	Bộ mã hóa chỉ được sử dụng trong quá trình huấn luyện nhằm mã hóa, chuyển đổi từ "đáp án" \footnote{Thuật ngữ tiếng Anh: Ground truth} thô (được lưu trong tệp tin txt hoặc xml) sang "đáp án" mà mạng SSD có thể hiểu được.
+	Bộ mã hóa chỉ được sử dụng trong quá trình huấn luyện nhằm mã hóa, chuyển đổi từ "đáp án" \footnote{Thuật ngữ tiếng Anh: Ground truth} thô (được lưu trong tệp tin txt hoặc xml) sang "đáp án" mà mạng SSD\cite{liu2016ssd} có thể hiểu được.
 	
 	\subsubsection*{Sinh ô chuẩn}
 	
 	Để mã hóa "đáp án", bộ mã hóa trước hết có nhiệm vụ sinh ra nhiều ô chuẩn có nhiều kích thước khác nhau, để làm được điều này, mạng cần phải được cung cấp một số thông số:\\
 	\begin{itemize}
 		\item Danh sách kích thước của các feature map (Phần này sẽ được giải thích rõ hơn ở mục sau): Mỗi feature map trong danh sách tương ứng với một mức kích thước\footnote{Thuật ngữ tiếng Anh: Scale} trong việc phát hiện ảnh. Trong một mức kích thước, tất cả các ô chuẩn đều có kích thước như nhau và cách đều nhau, mỗi pixel trong feature map thể hiện một (một số ô chuẩn), vì vậy, ta có thể tính được danh sách khoảng cách giữa trọng tâm giữa các ô chuẩn bằng cách lấy kích thước ảnh chia cho kích thước của feature map ở mức kích thước tương ứng. Tất cả các dữ liệu liên quan đến kích thước sau đó sẽ được chuyển về tập giá trị $\{x \in R | x \in [0, 1] \} $ 
-		\item Danh sách các tỉ lệ diện mạo\footnote{Thuật ngữ tiếng Anh: Aspect ratio} ứng với mỗi mức kích thước. Mạng SSD dựa vào các tỉ lệ diện mạo đó để tạo ra các ô chuẩn có hình dạng khác nhau tại cùng một vị trí (trọng tâm của các ô chuẩn có cùng một vị trí).
+		\item Danh sách các tỉ lệ diện mạo\footnote{Thuật ngữ tiếng Anh: Aspect ratio} ứng với mỗi mức kích thước. Mạng SSD\cite{liu2016ssd} dựa vào các tỉ lệ diện mạo đó để tạo ra các ô chuẩn có hình dạng khác nhau tại cùng một vị trí (trọng tâm của các ô chuẩn có cùng một vị trí).
 		\item Kích thước nhỏ nhất và lớn nhất của các ô chuẩn.
 	\end{itemize} 
 	
@@ -458,14 +462,15 @@
 		\captionof{figure}{Mô phỏng chỉ số Jaccard}
 	\end{center}
 	
-	Các ô bọc chỉ là thành phần trung gian để mạng SSD có thể tính được giá trị lỗi cũng như thực hiện quá trình lan truyền ngược, vì vậy để thuận tiện cho việc tính giá trị lỗi sau này, từ dữ liệu vị trí và kích thước của ô bọc, bộ mã hóa tạo ra các vector có các giá trị biểu diễn độ lệch của các ô bọc so với các ô chuẩn, sau đó nhiệm vụ của mạng là dự đoán ra độ lệch đó đó (Vấn đề này sẽ được đề cập rõ hơn trong phần tính giá trị lỗi).
+	Các ô bọc này có bản chất như một "hệ quy chiếu" cho các ô bọc, sau quá trình kết hợp, các ô bọc "đáp án" được tính độ lệch so với các ô chuẩn tương ứng và khi huấn luyện, mạng SSD\cite{liu2016ssd} có nhiệm vụ dự đoán các ô bọc theo các độ lệch đó. Giá trị hàm lỗi được tính dựa trên độ lêch của ô bọc "đáp án" và độ lệch của ô bọc dự đoán được. Cách tính độ lệch sẽ được đề cập rõ hơn ở phần tính giá trị lỗi.
+	
 	
 	\subsubsection{Bộ phát hiện - phân loại}
 	Đây là bộ phận có nhiệm vụ trích đặc trưng từ ảnh thô đầu vào, tạo ra các feature map để đưa vào quá trình phân loại ký tự.
 	
 	\subsubsection*{Trích đặc trưng (Hay mạng cơ sở \footnote{Thuật ngữ tiếng Anh: Base Network})}
 	
-	Mạng cơ sở của SSD là một mạng nơron tích chập bất kỳ, có thể là VGG\cite{Simonyan14c} hoặc lenet\cite{yanlecun}, ... Hầu hết những mạng này có mục đích phân loại\footnote{Thuật ngữ tiếng Anh: Classification}, vì vậy ở phía cuối mạng thường có các lớp liên kết đầy đủ nhằm giảm kích thước feature map và tạo ra dữ liệu đầu ra có kích thước phù hợp (bằng với số nhãn cần dự đoán). Khi kết hợp với mạng SSD, các lớp liên kết đầy đủ này sẽ được thay thế bằng các lớp tích chập và song hành là các bước trích ra feature map để đưa vào lớp Multibox \cite{erhan2014scalable}, chi tiết phần này sẽ được để cập ở mục tiếp theo.
+	Mạng cơ sở của SSD\cite{liu2016ssd} là một mạng nơron tích chập bất kỳ, có thể là VGG\cite{Simonyan14c} hoặc lenet\cite{yanlecun}, ... Hầu hết những mạng này có mục đích phân loại\footnote{Thuật ngữ tiếng Anh: Classification}, vì vậy ở phía cuối mạng thường có các lớp liên kết đầy đủ nhằm giảm kích thước feature map và tạo ra dữ liệu đầu ra có kích thước phù hợp (bằng với số nhãn cần dự đoán). Khi kết hợp với mạng SSD\cite{liu2016ssd}, các lớp liên kết đầy đủ này sẽ được thay thế bằng các lớp tích chập và song hành là các bước trích ra feature map để đưa vào lớp Multibox \cite{erhan2014scalable}, chi tiết phần này sẽ được để cập ở mục tiếp theo.
 	
 	\subsubsection* {Phân loại}
 	
@@ -476,7 +481,7 @@
 		\centering
 		\includegraphics[width=0.8\linewidth]{SSD_Struture.png}
 		\vspace{0.5cm}
-		\captionof{figure}{Cấu tạo của một mạng SSD}
+		\captionof{figure}{Cấu tạo của một mạng SSD\cite{liu2016ssd}}
 	\end{center}
 	
 	Sau khi có được các feature map, lớp Multibox sẽ tiến hành đưa ra dự đoán về ô bọc và nhãn gắn với ô bọc đó. Mỗi feature map sử dụng một tập hợp các lớp tích chập sẽ cho ra một số lượng dự đoán nhất định. Với mỗi vị trí trên feature map được kernel trượt qua, thì một dự đoán về ký tự được sinh ra. Kernel có kích thước:
@@ -524,7 +529,7 @@
 	
 	Bản chất của bộ giải mã khá đơn giản, nó có chức năng chuyển dữ liệu các ô bọc mà mạng dự đoán (tức là những ô bọc được tính kích thước và tọa độ theo ô chuẩn mà ô bọc đó được kết hợp vào) sang dữ liệu tọa độ của ảnh (có gốc tọa độ nằm ở góc trên bên phải và tọa độ nằm trong miền $[0, 1]$. Dữ liệu này cần thiết để trực quan hóa các ký tự mà hệ thống dự đoán và để đưa vào bộ phân tích cú pháp để sinh mã Latex.
 	
-	\subsubsection{Một số vấn đề khác trong mạng SSD}
+	\subsubsection{Một số vấn đề khác trong mạng SSD\cite{liu2016ssd}}
 	\subsubsection*{Tăng cường dữ liệu\footnote{Data Augumentation}}
 	
 	Ngay trước quá trình kết hợp, ảnh và các ô bọc được đi qua một bước gọi là cắt ngẫu nhiên\footnote{Thuật ngữ tiếng Anh: Random Crop}. Ở bước này, ảnh được cắt đi một số phần ngẫu nhiên (có tác dụng giống như phóng to (zoom) ảnh. Điều này giúp làm đa dạng dữ liệu huấn luyện và làm giảm bớt hiện tượng overfit.
@@ -555,7 +560,7 @@
 	
 	\subsection{WHOOOOOO \cite{zhang2017watch}  : Watch, Attend and Parse: An End-to-end Neural Network Based Approach to Handwritten Mathematical Expression Recognition} 
 	
-	Khác với những bài báo đi trước sử dụng phương pháp phân vùng hay dựa trên ngữ pháp, bài báo này sử dụng phương pháp mang tên Watch, Attend, Parse dựa trên bài toán chú thích cho ảnh \footnote{Thuật ngữ tiếng anh: Image Captioning}. Hệ thống này là sự kết hợp giữa CNN, RNN và một hệ thống ANN (Cụ thể là GRU[trích dẫn]\footnote{Viết tắt: Gated recurrent unit}), CNN đặc trưng cho Watcher sẽ trích đặc trưng ảnh, ANN đặc trưng cho Attend mang nhiệm vụ điều hướng cho mạng biết được vị trí nào sẽ tập trung vào và RNN đặc trưng cho Parser mang nhiệm vụ sinh ra chuỗi Latex chính là đầu ra của hệ thống\\
+	Khác với những bài báo đi trước sử dụng phương pháp phân vùng hay dựa trên ngữ pháp, bài báo này sử dụng phương pháp mang tên Watch, Attend, Parse dựa trên bài toán chú thích cho ảnh \footnote{Thuật ngữ tiếng anh: Image Captioning}. Hệ thống này là sự kết hợp giữa CNN, RNN và một hệ thống ANN (Cụ thể là GRU\cite{cho2014properties}\footnote{Viết tắt: Gated recurrent unit}), CNN đặc trưng cho Watcher sẽ trích đặc trưng ảnh, ANN đặc trưng cho Attend mang nhiệm vụ điều hướng cho mạng biết được vị trí nào sẽ tập trung vào và RNN đặc trưng cho Parser mang nhiệm vụ sinh ra chuỗi Latex chính là đầu ra của hệ thống\\
 	
 	Cấu trúc mạng này được chia thành ba phần:
 	\subsubsection{Watcher}
@@ -565,7 +570,7 @@
 	Bộ phận này hoạt động giống như một hệ thống tổng hợp thông tin, nó có chức năng lấy dữ liệu ký tự vừa được dự đoán từ Parser (sẽ được giải thích bên dưới), từ các vector đặc trưng đã có được từ Watcher và ghi nhận các vị trí đã được xử lý trong ảnh, từ đó dự đoán vị trí tiếp theo để xử lý.
 	
 	\subsubsection{Parser}
-	Bản chất của bộ phận này là một mạng GRU nhận dữ liệu đầu vào từ hai bộ phận còn lại, từ đó sinh ra chuỗi Latex
+	Bản chất của bộ phận này là một mạng GRU\cite{cho2014properties} nhận dữ liệu đầu vào từ hai bộ phận còn lại, từ đó sinh ra chuỗi Latex
 	
 	\subsection{Wenhao He\cite{context}: Context-aware Recognition}
 	\label{subsec: context}
@@ -629,37 +634,37 @@
 	
 	\subsection{Tổng quan}
 	
-	Nhóm quyết định sử dụng mạng SSD\footnote{Thuật ngữ tiếng Anh: Single Shot Detector} để phát hiện các ký tự trong ảnh và sau đó sử dụng bộ phân tích cú pháp DRACULAE để sinh ra chuỗi Latex.
+	Nhóm quyết định sử dụng mạng SSD\cite{liu2016ssd}để phát hiện các ký tự trong ảnh và sau đó sử dụng bộ phân tích cú pháp DRACULAE\cite{zanibbi} để sinh ra chuỗi Latex.
 	
 	\subsection{Phát hiện ký tự}
 	
 	\subsubsection{Mạng cơ sở}
 	
-	Về cấu trúc của SSD, nhóm đã sử dụng mạng VGG16 [trích dẫn] cho phần mạng cơ sở. Cấu trúc của mạng VGG16 gồm tổ hợp các lớp tích chập và lớp pooling xếp chồng lên nhau, ở cuối mạng có các lớp liên kết đầy đủ \footnote{Thuật ngữ tiếng Anh: Fully connected layer} để giảm kích thước tensor và cuối cùng là xuất ra vector có số chiều phù hợp (có số chiều bằng với số lớp đối tượng cần dự đoán).
+	Về cấu trúc của SSD\cite{liu2016ssd}, nhóm đã sử dụng mạng VGG16\cite{simonyan2014very} cho phần mạng cơ sở. Cấu trúc của mạng VGG16\cite{simonyan2014very} gồm tổ hợp các lớp tích chập và lớp pooling xếp chồng lên nhau, ở cuối mạng có các lớp liên kết đầy đủ \footnote{Thuật ngữ tiếng Anh: Fully connected layer} để giảm kích thước tensor và cuối cùng là xuất ra vector có số chiều phù hợp (có số chiều bằng với số lớp đối tượng cần dự đoán).
 	
 	\begin{center}
 		
 		\centering
 		\includegraphics[width=0.8\linewidth]{vgg16.png}
 		\vspace{0.5cm}
-		\captionof{figure}{Cấu tạo mạng VGG16}
+		\captionof{figure}{Cấu tạo mạng VGG16\cite{simonyan2014very}}
 	\end{center}
 	
-	Như hình vẽ bên trên, các lớp tích chập và lớp pooling được gom lại thành các cụm, sau hai đến ba lớp tích chập là một lớp pooling. Số kênh của tensor chạy trong mạng được nâng dần từ 64 lên 512 về phía cuối mạng. Khi đưa mạng cơ sở vào mạng SSD, các lớp liên kết đầy đủ sẽ được bỏ đi và bộ phận phân loại sẽ được chèn vào vị trí tương ứng. Khi đó, ta cần phải chuyển model của mạng VGG sang mạng SSD, phần này sẽ được đề cập chi tiết hơn trong phần hiện thực.
+	Như hình vẽ bên trên, các lớp tích chập và lớp pooling được gom lại thành các cụm, sau hai đến ba lớp tích chập là một lớp pooling. Số kênh của tensor chạy trong mạng được nâng dần từ 64 lên 512 về phía cuối mạng. Khi đưa mạng cơ sở vào mạng SSD\cite{liu2016ssd}, các lớp liên kết đầy đủ sẽ được bỏ đi và bộ phận phân loại sẽ được chèn vào vị trí tương ứng. Khi đó, ta cần phải chuyển model của mạng VGG\cite{simonyan2014very} sang mạng SSD\cite{liu2016ssd}, phần này sẽ được đề cập chi tiết hơn trong phần hiện thực.
 	
-	\subsubsection{Thân mạng SSD}
+	\subsubsection{Thân mạng SSD\cite{liu2016ssd}}
 	
-	Khi tiếp hợp vào mạng SSD, các lớp liên kết đầy đủ của VGG16 được lược bỏ, thay vào đó là những lớp tích chập, mô hình cụ thể của mạng SSD nhóm để xuất được thể hiện ở ảnh dưới.
+	Khi tiếp hợp vào mạng SSD\cite{liu2016ssd}, các lớp liên kết đầy đủ của VGG16\cite{simonyan2014very} được lược bỏ, thay vào đó là những lớp tích chập, mô hình cụ thể của mạng SSD\cite{liu2016ssd} nhóm để xuất được thể hiện ở ảnh dưới.
 	
 	\begin{center}
 		
 		\centering
 		\includegraphics[width=0.8\linewidth]{SSD_Layers.png}
 		\vspace{0.5cm}
-		\captionof{figure}{Sơ đồ các lớp trong mạng SSD}
+		\captionof{figure}{Sơ đồ các lớp trong mạng SSD\cite{liu2016ssd}}
 	\end{center}
 	
-	Trong đó Khối VGG16 là phần mạng VGG16 đã được lược bỏ các lớp liên kết đầy đủ. Các khối còn lại được thể hiện trong bảng sau:
+	Trong đó Khối VGG16 là phần mạng VGG16\cite{simonyan2014very} đã được lược bỏ các lớp liên kết đầy đủ. Các khối còn lại được thể hiện trong bảng sau:
 	
 	\begin{center}
 		\begin{tabular}{||c | c | c | c | c | c ||} 
@@ -687,20 +692,21 @@
 			Conv\_11\_2 & 128 & 256 & 3 & 0 & 1 \\ 
 			\hline
 		\end{tabular}
+		\captionof{table}{Cấu hình các lớp tích chập trong mạng SSD300\cite{liu2016ssd}}
 	\end{center}
 	
-	Riêng khối Conv\_4 trong ảnh là lớp tích chập thứ 10 trong mạng VGG.\\
+	Riêng khối Conv\_4 trong ảnh là lớp tích chập thứ 10 trong mạng VGG\cite{simonyan2014very}.\\
 	
-	Các lớp tích chập đều sử dụng hàm truyền là hàm ReLu, riêng ở sau các lớp Conv\_10\_1, Conv\_10\_2, Conv\_11\_1, Conv\_11\_2 thì có thêm một lớp dropout với hệ số dropout là 0.2.
+	Các lớp tích chập đều sử dụng hàm truyền là hàm ReLu, riêng ở sau các lớp Conv\_10\_1, Conv\_10\_2, Conv\_11\_1, Conv\_11\_2 thì có thêm một lớp dropout\cite{srivastava2014dropout} với hệ số dropout là 0.2.
 	
 	Các feature map được trích ra để thực hiện phát hiện, phân loại từ các mủi tên màu đỏ trên hình, cụ thể:
 	
 	\begin{itemize}
-		\item Ngay sau khối tích chập - pooling 512 thứ nhất trong mạng VGG (hay sau lớp pooling của lớp tích chập thứ 10 của mạng VGG - hay Conv\_4).
+		\item Ngay sau khối tích chập - pooling 512 thứ nhất trong mạng VGG\cite{simonyan2014very} (hay sau lớp pooling của lớp tích chập thứ 10 của mạng VGG\cite{simonyan2014very} - hay Conv\_4).
 		\item Sau các khối tích chập Conv\_7, Conv\_8, Conv\_9, Conv\_10, Conv\_11.
 	\end{itemize}
 	
-	Đối với mạng SSD300[trích dẫn] nguyên thủy, kích thước của các feature map ứng với số dự đoán được thể hiện ở bảng sau:
+	Đối với mạng SSD300\cite{liu2016ssd} , kích thước của các feature map ứng với số dự đoán được thể hiện ở bảng sau:
 	
 	\begin{center}
 		\begin{tabular}{||c | c | c | c ||} 
@@ -720,9 +726,10 @@
 			Conv\_11 & $256 \times 1 \times 1$ & $ \{ 1, \frac{1}{2} , 2\} $ & 4 \\ 
 			\hline
 		\end{tabular}
+		\captionof{table}{Thông tin của các feature map trích được từ mạng SSD300\cite{liu2016ssd}}
 	\end{center}
 	
-	Như vậy, ứng với mỗi ảnh, hệ thống sinh ra 8732 dự đoán. Tương ứng, bộ phận mã hóa của mạng SSD300 cũng có những thông số:
+	Như vậy, ứng với mỗi ảnh, hệ thống sinh ra 8732 dự đoán. Tương ứng, bộ phận mã hóa của mạng SSD300\cite{liu2016ssd} cũng có những thông số:
 	
 	\begin{itemize}
 		\item Danh sách kích thước feature map: (38, 19, 10, 5, 3, 1)
@@ -732,7 +739,7 @@
 	
 	\subsubsection{Các thay đổi}
 	
-	Do bản chất mạng SSD300 gặp rất nhiều khó khăn trong việc nhận dạng ký tự nhỏ do một số lý do:
+	Do bản chất mạng SSD300\cite{liu2016ssd} gặp rất nhiều khó khăn trong việc nhận dạng ký tự nhỏ do một số lý do:
 	\begin{itemize}
 		\item Trong quá trình kết hợp, các ô bọc "đáp án" kết hợp với ô chuẩn phải có chỉ số Jaccard lớn hơn 0.5, nhưng kích thước tối thiểu của ô chuẩn lại là $30 \times 30$ pixel, vì vậy nhiều ký tự nhỏ không thể kết hợp được (Trường hợp này xãy ra với hầu hết những ảnh có chữ nhỏ, ví dụ như ảnh dưới)
 		\begin{center}
@@ -750,21 +757,21 @@
 	
 	\subsubsection*{Giảm kích thước các ô chuẩn}
 	
-	Mô hình này dựa trên mô hình SSD300 nguyên thủy, chỉ chỉnh sửa kích thước các ô bọc thông qua chỉnh hai thông số $s_{min} = 0.08$ và $s_{max} = 0.5$, từ đó danh sách kích thước các ô chuẩn được thay đổi thành (9, 24, 54, 84, 114, 144, 174). So với mô hình nguyên thủy, mô hình này không thể kết hợp tốt các ký tự lớn (lớn hơn khoảng $200 \times 200$ pixel). Tuy vậy, đối với bài toán về phát hiện các ký tự trong một ảnh, thì kích thước các ký tự không thể quá lớn, nên những ký tự đặc biệt lớn như vậy có thể được xem xét ở độ ưu tiên thấp hơn.\\
+	Mô hình này dựa trên mô hình SSD300 nguyên thủy\cite{liu2016ssd}, chỉ chỉnh sửa kích thước các ô bọc thông qua chỉnh hai thông số $s_{min} = 0.08$ và $s_{max} = 0.5$, từ đó danh sách kích thước các ô chuẩn được thay đổi thành (9, 24, 54, 84, 114, 144, 174). So với mô hình nguyên thủy, mô hình này không thể kết hợp tốt các ký tự lớn (lớn hơn khoảng $200 \times 200$ pixel). Tuy vậy, đối với bài toán về phát hiện các ký tự trong một ảnh, thì kích thước các ký tự không thể quá lớn, nên những ký tự đặc biệt lớn như vậy có thể được xem xét ở độ ưu tiên thấp hơn.\\
 	
 	Việc thay đổi tham số ở mô hình này không làm ảnh hưởng lớn đến cấu trúc mạng cũng như quá trình mã hóa, giải mã. Số lượng dự đoán không thay đổi.\\
 	
-	Mục đích chính của thay đổi này là để quá trình kết hợp diễn ra tốt hơn khi kích thước của ô chuẩn nhỏ nhất là $9 \times 9$, điều này giúp cho những ký tự rất nhỏ vẫn có thể được kết hợp, tránh hiện tượng bỏ sót ký tự như mạng SSD300 nguyên thủy.
+	Mục đích chính của thay đổi này là để quá trình kết hợp diễn ra tốt hơn khi kích thước của ô chuẩn nhỏ nhất là $9 \times 9$, điều này giúp cho những ký tự rất nhỏ vẫn có thể được kết hợp, tránh hiện tượng bỏ sót ký tự như mạng SSD300 nguyên thủy\cite{liu2016ssd}.
 	
 	\subsubsection*{Giảm kích thước các ô chuẩn và tăng kích thước ảnh đầu vào}
 	
-	Để có được mô hình này, nhóm cần phải có hai thay đổi so với mạng SSD300 nguyên thủy:
+	Để có được mô hình này, nhóm cần phải có hai thay đổi so với mạng SSD300 nguyên thủy\cite{liu2016ssd}:
 	\begin{itemize}
 		\item Thay vì sử dụng ảnh $300 \times 300$ như nguyên thủy, ảnh sẽ được phóng to lên kích thước $500 \times 500$.
 		\item Như ở mô hình đề xuất trước, nhóm thay đổi $s_{min} = 0.08$ và $s_{max} = 0.5$ từ đó thu được danh sách kích thước (15.0, 40, 80, 120, 160., 200, 240, 280).
 	\end{itemize}
 	
-	Những thay đổi trên có làm thay đổi đến cấu trúc mạng SSD, khi tăng kích thước ảnh đầu vào nghĩa là kích thước của các feature map thu thập được cũng tăng lên, từ đó kéo số lượng dự đoán trong một ảnh tăng lên như bảng dưới.\\
+	Những thay đổi trên có làm thay đổi đến cấu trúc mạng SSD\cite{liu2016ssd}, khi tăng kích thước ảnh đầu vào nghĩa là kích thước của các feature map thu thập được cũng tăng lên, từ đó kéo số lượng dự đoán trong một ảnh tăng lên như bảng dưới.\\
 	
 	\begin{center}
 		\begin{tabular}{||c | c | c | c ||} 
@@ -784,13 +791,14 @@
 			Conv\_11 & $256 \times 2 \times 2$ & $ \{ 1, \frac{1}{2} , 2\} $ & 64 \\ 
 			\hline
 		\end{tabular}
+		\captionof{table}{Thông tin của các feature map trích được từ mạng SSD đã giảm kích thước ô chuẩn và tăng kích thước ảnh đầu vào}
 	\end{center}
 	
-	Như vậy với mỗi ảnh, hệ thống sinh ra 24148 dự đoán, gấp gần 3 lần so với ảnh SSD300 nguyên thủy. Với những thay đổi này ô bọc thậm chí còn có thể kết hợp với những ô chuẩn nhỏ hơn, bên cạnh đó, mật độ các ô chuẩn cũng dày đặc hơn nhiều so với mạng SSD nguyên thủy.
+	Như vậy với mỗi ảnh, hệ thống sinh ra 24148 dự đoán, gấp gần 3 lần so với ảnh SSD300 nguyên thủy\cite{liu2016ssd}. Với những thay đổi này ô bọc thậm chí còn có thể kết hợp với những ô chuẩn nhỏ hơn, bên cạnh đó, mật độ các ô chuẩn cũng dày đặc hơn nhiều so với mạng SSD nguyên thủy\cite{liu2016ssd}.
 	
 	\subsubsection*{Giảm kích thước các ô chuẩn, tăng kích thước ảnh đầu vào và thêm lớp tích chập}
 	
-	Mô hình này thừa kế các thay đổi ở hai mô hình trước, tuy nhiên ở phần thân mạng SSD, nhóm đã gắn thêm 2 lớp tích chập ở cuối với các tham số: \\
+	Mô hình này thừa kế các thay đổi ở hai mô hình trước, tuy nhiên ở phần thân mạng SSD\cite{liu2016ssd}, nhóm đã gắn thêm 2 lớp tích chập ở cuối với các tham số: \\
 	
 	\begin{center}
 		\begin{tabular}{||c | c | c | c | c | c ||} 
@@ -802,8 +810,9 @@
 			Conv\_12\_2 & 128 & 256 & 3 & 0 & 1 \\ 
 			\hline
 		\end{tabular}
+		\captionof{table}{Cấu hình các lớp tích chập thêm vào mạng SSD300\cite{liu2016ssd} để được mạng SSD chỉnh sửa}
 	\end{center}
-	Hai lớp tích chập này cũng có hàm truyền là hàm relu và đi chung với lớp drop out với hệ số drop out là 0.2. \\
+	Hai lớp tích chập này cũng có hàm truyền là hàm relu và đi chung với lớp dropout\cite{srivastava2014dropout} với hệ số dropout là 0.2. \\
 	
 	Thay đổi này cũng làm thay đổi cấu trúc mạng:
 	
@@ -827,19 +836,35 @@
 			Conv\_12 & $256 \times 2 \times 1$ & $ \{ 1, \frac{1}{2} , 2\} $ & 10 \\ 
 			\hline
 		\end{tabular}
+		\captionof{table}{Thông tin của các feature map trích được từ mạng SSD\cite{liu2016ssd} đã giảm kích thước ô chuẩn, tăng kích thước ảnh đầu vào và tăng số lớp tích chập}
 	\end{center}
 	
 	Lớp Conv\_12 được thêm vào cuối mạng với mục đích tăng độ dài danh sách feature map đưa vào lớp Multibox, điều này giúp trong quá trình kết hợp, các ký tự lớn hơn có thể được kết hợp.
 	
-	\subsection{Phân tích cú pháp}
+	\newpage
+	\subsection{Phân tích cú pháp (Draculae Parser \cite{zanibbi})}
 	
-	Bộ phân tích cú pháp này có nhiệm vụ chuyển dữ liệu dự đoán là các ô bọc sang dữ liệu biểu thức toán học dạng latex. Trong quá trình phân tích cú pháp, biểu thức được lưu trữ dưới dạng cây BST\footnote{Viết tắt: baseline Syntax Tree: Cây cú pháp dựa trên đường cơ sở} là một cấu trúc cây dựa trên các đường cơ sở, các nhánh của cây thể hiện một phân vùng bên trên, bên dưới, ... của nút và là một phân vùng ảnh có đường cơ sở riêng và Lexed - BST là một cấu trúc cây tương tự như BST nhưng thay vì chỉ biểu thị vị trí bên trên, bên dưới thì cây biểu thị quan hệ phân số, chỉ số trên, chỉ số dưới, ...\\
+	Bộ phân tích cú pháp Draculae\cite{zanibbi} này có nhiệm vụ chuyển dữ liệu dự đoán là các ô bọc sang dữ liệu biểu thức toán học dạng latex. Trong quá trình phân tích cú pháp, biểu thức được lưu trữ dưới dạng cây BST\cite{zanibbi}\footnote{Viết tắt: baseline Syntax Tree: Cây cú pháp dựa trên đường cơ sở} là một cấu trúc cây dựa trên các đường cơ sở, các nhánh của cây thể hiện một phân vùng bên trên, bên dưới, ... của nút và là một phân vùng ảnh có đường cơ sở riêng và Lexed - BST\cite{zanibbi} là một cấu trúc cây tương tự như BST nhưng thay vì chỉ biểu thị vị trí bên trên, bên dưới thì cây biểu thị quan hệ phân số, chỉ số trên, chỉ số dưới, ...\\
 	
-	\subsubsection{Sinh cây BST}
+	\begin{center}
+		\centering
+		\includegraphics[width=0.95\linewidth]{BST.png}
+		\vspace{0.5cm}
+		\captionof{figure}{Một cây BST\cite{zanibbi}}
+	\end{center}	
 	
-	Đây là giai đoạn phức tạp nhất và cũng là quan trọng nhất, ở giai đoạn này, dữ liệu đầu ra từ mạng SSD là danh sách các ô bọc sẽ được phân tích và xây dựng một cây BST. Công việc này có thể được phân ra thành bốn công đoạn: Tìm ký tự chủ đạo, xác định những ký tự trên đường cơ sở, tái phân vùng và xử lý nút con\\
+	\begin{center}
+		\centering
+		\includegraphics[width=0.85\linewidth]{LexBST.png}
+		\vspace{0.5cm}
+		\captionof{figure}{Một cây Lexed - BST\cite{zanibbi}}
+	\end{center}
 	
-	Trước khi tiến hành sinh cây, ta cần phải phân loại các ký tự vào những thể loại khác nhau, điều này có mục đích giúp xác định vị trí trọng tâm tốt hơn, xác định được vùng ảnh gắn với chỉ số trên, chỉ số dưới và giúp phân biệt một số loại ký tự có thể có cấu trức đặc biệt trong biểu thức (ví dụ như ký tự $\sum$ thì có thể có ký tự nằm trên và bên dưới, nhưng ký tự $sin$ thì gần như không bao giờ có). Các ký tự được phân vào các lớp như bảng dưới:
+	\subsubsection{Sinh cây BST\cite{zanibbi}}
+	
+	Đây là giai đoạn phức tạp nhất và cũng là quan trọng nhất, ở giai đoạn này, dữ liệu đầu ra từ mạng SSD\cite{liu2016ssd} là danh sách các ô bọc sẽ được phân tích và xây dựng một cây BST\cite{zanibbi}. Công việc này có thể được phân ra thành bốn công đoạn: Tìm ký tự chủ đạo, xác định những ký tự trên đường cơ sở, tái phân vùng và xử lý nút con\\
+	
+	Trước khi tiến hành sinh cây, ta cần phải phân loại các ký tự vào những thể loại khác nhau, điều này có mục đích giúp xác định vị trí trọng tâm tốt hơn, xác định được vùng ảnh gắn với chỉ số trên, chỉ số dưới và giúp phân biệt một số loại ký tự có thể có cấu trức đặc biệt trong biểu thức (ví dụ như ký tự $\sum$ thì có thể có ký tự nằm trên và bên dưới, nhưng ký tự $sin$ thì gần như không bao giờ có). Như Zanibbi đã đề xuất cho Draculae\cite{zanibbi}, các ký tự được phân vào các lớp như bảng dưới:
 	
 	\begin{center}
 		\begin{tabular}{||c | c | c c c c ||} 
@@ -863,6 +888,8 @@
 			
 			
 		\end{tabular}
+		\captionof{table}{Bảng phân lớp các ký tự cần nhận diện và các ngưỡng xác định phân vùng con}
+	
 	\end{center}
 	
 	Trong đó:
@@ -893,7 +920,7 @@
 	Trong hầu hết trường hợp, ký tự chủ đạo là ký tự nằm bên trái nhất, tuy vậy, ta vẫn cần phải kháng được những trường hợp người dùng viết chữ không chuẩn gây thụt ra ngoài, hoặc những ký tự có dạng như:
 	
 	$$ \sum^{n = 100000} a $$
-	Thì ký tự chủ đạo là $\sum$ nhưng ký tự bên trái nhất lại là $n$, Draculae được thiết kế để có thể chống lại những trường hợp như vậy.\\
+	Thì ký tự chủ đạo là $\sum$ nhưng ký tự bên trái nhất lại là $n$, Draculae\cite{zanibbi} được thiết kế để có thể chống lại những trường hợp như vậy.\\
 	
 
 	Để tìm ký tự chủ đạo, ta cần thực hiện những công đoạn sau:
@@ -921,7 +948,7 @@
 	Sau khi thực hiện bước này lần đầu tiên, ta thu được một cây có ba tầng, tầng đầu chứa nút gốc, tầng thứ hai chứa các ký tự nằm trên đường cơ sở, tầng thứ ba chứa các nút con của các nút chứa ký tự nằm trên đường cơ sở, các nút con này có thể chứa một hoặc nhiều ký tự, chưa là một cây.
 	
 	\subsubsection*{Tái phân vùng}
-	Ở bước trước, nút con được phân vào vùng góc trên bên trái và góc dưới bên trái, điều này không có ý nghĩa đối với ngữ nghĩa của biểu thức toán học và khó khăn trong việc sinh cây Lexed BST sau này. Vì vậy ở bước này, các nút con sẽ được thay đổi vị trí cho phù hợp với ngữ nghĩa của biểu thức. Cụ thể:
+	Ở bước trước, nút con được phân vào vùng góc trên bên trái và góc dưới bên trái, điều này không có ý nghĩa đối với ngữ nghĩa của biểu thức toán học và khó khăn trong việc sinh cây Lexed BST\cite{zanibbi} sau này. Vì vậy ở bước này, các nút con sẽ được thay đổi vị trí cho phù hợp với ngữ nghĩa của biểu thức. Cụ thể:
 	
 	\begin{itemize}
 		\item Các nút con thuộc vùng góc trên bên trái và góc dưới bên trái sẽ được phân vùng vào vùng góc trên bên phải và góc dưới bên phải của ký tự trước đó.
@@ -945,21 +972,21 @@
 	
 	Tới bước này, ta đã có một cây có ba tầng với tầng thứ hai có phân vùng nút con khá chuẩn xác. Nhiệm vụ bây giờ là phải tiếp tục phân vùng cho các nút con của các ký tự trên đường cơ sở. Việc này được thực hiện bằng cách xem từng nút con là từng vùng ảnh mới riêng biệt và thực hiện lại ba bước trên để thu được các cây con. \\
 	
-	Sau quá trình này, ta thu được một cây BST biểu thị vị trí tương đối giữa các nút. Cây này tiếp tục được đi qua [Lexical Pass] để thu được Lexed - BST.
+	Sau quá trình này, ta thu được một cây BST biểu thị vị trí tương đối giữa các nút. Cây này tiếp tục được đi qua [Lexical Pass] để thu được Lexed - BST\cite{zanibbi}.
 	
-	\subsubsection{Sinh cây Lexed - BST}
+	\subsubsection{Sinh cây Lexed - BST\cite{zanibbi}}
 	
-	Sau khi đã thu được cây BST từ danh sách các ô bọc, nhiệm vụ còn lại là không quá phức tạp. Trước khi tạo được chuỗi Latex, ta cần phải sinh ra được một cây Lexed - BST, cây này chứa các thông tin như "nhóm ký tự" và cấu trúc biểu thức:
+	Sau khi đã thu được cây BST từ danh sách các ô bọc, nhiệm vụ còn lại là không quá phức tạp. Trước khi tạo được chuỗi Latex, ta cần phải sinh ra được một cây Lexed - BST\cite{zanibbi}, cây này chứa các thông tin như "nhóm ký tự" và cấu trúc biểu thức:
 	
 	\begin{itemize}
 		\item Nhóm ký tự: Ban đầu, các ký tự được gom thành từng nhóm có nghĩa (Ví dụ các ký tự "s", "i", "n" thì sẽ được gộp lại thành một ký tự "sin" duy nhất.
-		\item Ta sử dụng các luật khác nhau để sinh ra cây Lexed - BST.
+		\item Ta sử dụng các luật khác nhau để sinh ra cây Lexed - BST\cite{zanibbi}.
 	\end{itemize}
 	
 	\subsubsection*{Luật sinh}
 	
 	
-	Để chuyển từ cây BST sang cây lexed - BST, nhóm có đề xuất một số luật sinh: \\
+	Để chuyển từ cây BST\cite{zanibbi} sang cây lexed - BST\cite{zanibbi}, nhóm có đề xuất một số luật sinh: \\
 	Gọi ký tự đang xét là $A$
 	\begin{itemize}
 		\item Nếu cây BST $B$ nằm trong nút con góc phải bên dưới của $A$ thì sinh ra một nút sub(A, B)
@@ -969,11 +996,11 @@
 		
 	\end{itemize}
 	
-	Sau khi sinh được cây Lexed - BST, hệ thống sẽ duyệt qua cây theo chiều tiền thứ tự để sinh mã Latex
+	Sau khi sinh được cây Lexed - BST\cite{zanibbi}, hệ thống sẽ duyệt qua cây theo chiều tiền thứ tự để sinh mã Latex
 	
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-	
+	\newpage
 	\section{Hiện thực, đánh giá}
 	
 	Để xây dựng hệ thống nhận diện biểu thức toán học viết tay, nhóm cần hoàn thành ba công việc chính bao gồm thu thập dữ liệu, huấn luyện mạng SSD và xây dựng chương trình sinh mã latex.
@@ -983,15 +1010,15 @@
 	\subsection{Hiện thực hệ thống}
 	
 	\subsubsection{Quá trình tiền huấn luyện}
-	Như đã trình bày ở trên, mạng SSD mà nhóm lựa chọn có sử dụng mạng cơ sở là VGG16, đây là một mạng phân lớp\footnote{Thuật ngữ tiếng anh: Classification}. Để đạt được kết quả huấn luyện cho mạng SSD tốt hơn, tác giả đã khuyến cáo sử dụng phương pháp học chuyển tiếp\footnote{Thuật ngữ tiếng anh: Transfer Learning}
+	Như đã trình bày ở trên, mạng SSD\cite{liu2016ssd} mà nhóm lựa chọn có sử dụng mạng cơ sở là VGG16\cite{simonyan2014very}, đây là một mạng phân lớp\footnote{Thuật ngữ tiếng anh: Classification}. Để đạt được kết quả huấn luyện cho mạng SSD\cite{liu2016ssd} tốt hơn, tác giả đã khuyến cáo sử dụng phương pháp học chuyển tiếp\footnote{Thuật ngữ tiếng anh: Transfer Learning}\cite{liu2016ssd}
 	
 	\subsubsection*{Học chuyển tiếp}
 	
 	Để thực hiện phương pháp này, ta cần phải chuẩn bị một tập dữ liệu riêng gồm các ảnh kích thước $32 \times 32$. Các ảnh này được lấy từ tập huấn luyện của đề tài QAK.\\
 	
-	Khi đã thu được một mô hình phù hợp (Huấn luyện tập tiền huấn luyện đã hội tụ), nhiệm vụ kế tiếp là ta phải chuyển các tham số đã học được sang một mô hình của mạng SSD.\\
+	Khi đã thu được một mô hình phù hợp (Huấn luyện tập tiền huấn luyện đã hội tụ), nhiệm vụ kế tiếp là ta phải chuyển các tham số đã học được sang một mô hình của mạng SSD\cite{liu2016ssd}.\\
 	
-	Quá trình này không quá phức tạp, nhóm đã viết một đoạn mã giúp tạo một mô hình mạng SSD rỗng, sau đó gán tham số từ mô hình mạng VGG16 vừa thu được sang mô hình mạng SSD mới. Ta bỏ qua các lớp liên kết đầy đủ do phần này đã được lược bỏ, lớp pooling cũng được bỏ qua do lớp này không có tham số. \\
+	Quá trình này không quá phức tạp, nhóm đã viết một đoạn mã giúp tạo một mô hình mạng SSD rỗng, sau đó gán tham số từ mô hình mạng VGG16\cite{simonyan2014very} vừa thu được sang mô hình mạng SSD mới. Ta bỏ qua các lớp liên kết đầy đủ do phần này đã được lược bỏ, lớp pooling cũng được bỏ qua do lớp này không có tham số. \\
 	
 	Sau khi đã thu được mô hình mạng SSD, ta có thể bước tiếp đến công đoạn huấn luyện mạng SSD.
 	
@@ -1023,15 +1050,14 @@
 		\item Khi có nhiều ký tự trong ảnh với mật độ lớn thì hệ thống nhận diện gặp nhiều khó khăn.
 		\item Tốc độ xử lý một ảnh còn chậm.
 		\item Hậu xử lý vẫn còn chưa thật sự hiệu quả.
+		\item Các ký tự hoàn toàn trùng lên nhau dễ bị bỏ sót (dấu căn).
 	\end{itemize}
-	
-	\section{Tổng kết}
-	
+
 
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-	
-	\section{Kết luận}
+	\newpage	
+	\section{Tổng kết}
 	
 	\subsection{Kết luận}
 	
@@ -1040,8 +1066,9 @@
 	Hệ thống vẫn còn nhiều điểm có thể cải thiện thêm, trong tương lai, có thể:
 	\begin{itemize}
 		\item Thêm phần hậu xử lý ở các giai đoạn nhận diện ký tự và sinh cây Lexed - BST.
-		\item Tăng thêm số lượng ký tự có thể nhận diện.
-		\item Cải thiện khả năng nhận diện các ký tự có tỉ lệ diện mạo đặc biệt
+		\item Mở rộng tập dữ liệu về cả số lượng ảnh và số lượng nhãn.
+		\item Cải thiện khả năng nhận diện các ký tự có tỉ lệ diện mạo đặc biệt.
+		\item Đưa biểu thức đã nhận dạng được vào ứng dụng (Như có thể vẽ đồ thị, giải phương trình).
 	\end{itemize}
 	
 	
