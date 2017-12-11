@@ -1006,7 +1006,74 @@
 	Để xây dựng hệ thống nhận diện biểu thức toán học viết tay, nhóm cần hoàn thành ba công việc chính bao gồm thu thập dữ liệu, huấn luyện mạng SSD và xây dựng chương trình sinh mã latex.
 	
 	\subsection{Chuẩn bị dữ liệu}
-	
+	Việc chuẩn bị dữ liệu bao gồm xây dựng tập ký tự viết tay thường dùng trong Toán học và xây dựng bộ những biểu thức Toán học viết tay sử dụng những ký hiệu đó.
+	\subsubsection{Xây dựng tập ký tự}
+	Như đã đề cập trong chương 1, nhóm sử dụng lại tập ký hiệu Toán viết tay bao gồm chữ cái, chữ số, các ký hiệu Hy Lạp của nhóm sinh viên khoá 2011\cite{qak}.\\
+	Một số thông tin về tập dữ liệu\footnote{Sử dụng thông tin được nêu trong luận văn \cite{qak}.}:
+	\begin{itemize}
+		\item Số người tham gia: khoảng 20
+		\item Số lượng ký hiệu: 46197
+		\item Số lượng nhãn: 88
+		\item Các ký hiệu trong tập dữ liệu: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, a, b, c, d, e, f, g, h, i,
+		j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y, z, A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, (, ), +, -, *, /, =, $\int$, $\alpha$, $\beta$, $\gamma$, $\delta$, $\epsilon$, $\theta$, $\lambda$, $\mu$, $\pi$, $\rho$, $\sigma$, $\phi$, $\omega$, $\Delta$, $\Pi$, $\Sigma$, $\Phi$, $\Omega$.
+	\end{itemize}
+	Tuy nhiên, nhóm đã bổ sung thêm 18 nhãn ký hiệu vào tập dữ liệu này dựa trên cách thu thập được giới thiệu trong luận văn của nhóm sinh viên khoá 2011\cite{qak}.\\
+	Thông tin mô tả tập ký hiệu được sử dụng cho đề tài:
+	\begin{itemize}
+		\item Số người tham gia: 36
+		\item Số lượng ký hiệu: 52353
+		\item Số lượng nhãn: 106
+		\item Các ký hiệu trong tập dữ liệu: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y, z, A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, (, ), +, -, *, /, =, $\int$, $\alpha$, $\beta$, $\gamma$, $\delta$, $\epsilon$, $\theta$, $\lambda$, $\mu$, $\pi$, $\rho$, $\sigma$, $\phi$, $\omega$, $\Delta$, $\Pi$, $\Sigma$, $\Phi$, $\Omega$, $\sin$, $\cos$, $\tan$, $\log$, $\lim$, $\surd$, $\rightarrow$, $\geq$, $\leq$, $\forall$, $\exists$, $\in$, !, ., $\ldots$, $\div$, $\neq$, $\infty$.
+		
+	\end{itemize}
+	\subsubsection{Xây dựng tập biểu thức}
+	Để phục vụ quá trình huấn luyện của mạng SSD được nêu trong Chương 4, ngoài tập ký tự nhóm cần phải xây dựng thêm tập ảnh các biểu thức Toán học viết tay.\\
+	Quá trình thu thập dữ liệu bao gồm các công việc:
+	\begin{itemize}
+		\item Tạo biểu mẫu để thu dữ liệu. Biễu mẫu này có 6 hàng và 2 cột như hình bên dưới. 
+		\begin{center}
+			\centering
+			\includegraphics[width=0.8\linewidth]{getExp}
+			\vspace{0.5cm}
+			\captionof{figure}{Biểu mẫu để thu thập dữ liệu.}
+		\end{center}
+		\item Chuẩn bị bộ biểu thức làm gợi ý cho người viết. Các biểu thức này được sao chép từ tập dữ liệu CROHME 2014\cite{crohme}. 
+		
+		\begin{center}
+			\centering
+			\includegraphics[width=0.9\linewidth]{Exp_sample1}
+			\vspace{0.5cm}
+			\captionof{figure}{Ví dụ mẫu biểu thức gợi ý cho người viết.}
+		\end{center}
+		\item Người tham gia viết sẽ nhận được biểu mẫu và công thức gợi ý. Sau đó họ sẽ viết lại những công thức này lên tờ biểu mẫu bằng chính nết chữ thường ngày của họ. 
+		\begin{center}
+			\centering
+			\includegraphics[width=0.8\linewidth]{Exp_sample_vd}
+			\vspace{0.5cm}
+			\captionof{figure}{Ví dụ một mẫu thu thập được từ người tham gia viết.}
+		\end{center}
+		\item Tập hợp lại các biểu mẫu sau khi cho người tham gia viết rồi mang đi scan. Sau đó xử lý qua một đoạn mã Matlab\cite{qak}\footnote{Đoạn mã này đã được chỉnh sửa để phù hợp với hình dạng mẫu lấy biểu thức của nhóm.} để từ một ảnh gồm nhiều biểu thức thu được ảnh chỉ chứa đúng một biểu thức như hình bên dưới.
+		\begin{center}
+			\centering
+			\includegraphics[width=0.5\linewidth]{EXP_2017_072_2A.png}
+			\vspace{0.5cm}
+			\captionof{figure}{Ví dụ một ảnh thu được sau khi xử lý biểu mẫu đã qua scan bằng đoạn mã Matlab.}
+		\end{center}
+		\item Thực hiện gán nhãn và xác định bounding box cho từng ký hiệu trong ảnh thu được từ bước trên bằng công cụ do nhóm tự thực hiện với giao diện như hình bên dưới. Công cụ này cho phép tải ảnh, xác định bounding boxes cho các đối tượng trong ảnh bằng cách kéo thả chuột từ góc trên bên trái đến góc dưới bên phải của từng đối tượng và nhập nhãn cho mỗi đối tượng đó. Quá trình này kết thúc sẽ thu được file với định dạng .txt lưu thông tin cần thiết về dữ liệu cho quá trình huấn luyện và kiểm tra. 
+		\begin{center}
+		\centering
+		\includegraphics[width=0.6\linewidth]{tool}
+		\vspace{0.5cm}
+		\captionof{figure}{Giao diện công cụ hỗ trợ quá trình gán nhãn và xác định bounding boxes. }
+		\end{center}
+		\end{itemize}
+	Thông tin mô tả tập dữ liệu biểu thức:
+	\begin{itemize}
+		\item Số người tham gia: khoảng 88 
+		\item Số lượng ảnh\footnote{Mỗi ảnh chỉ chứa một biểu thức.}:  2256. Trong đó có 1746 ảnh dùng cho training, 138 ảnh dùng cho quá trình validation và 372 ảnh để test.
+		\item Số loại biểu thức: khoảng 552
+		\item Số  người gán nhãn: 3
+	\end{itemize}
 	\subsection{Hiện thực hệ thống}
 	
 	\subsubsection{Quá trình tiền huấn luyện}
