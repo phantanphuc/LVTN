@@ -32,7 +32,7 @@
 \usepackage{multicol}
 \usepackage{rotating}
 \usepackage{graphics}
-
+\usepackage{subcaption}
 \usepackage{makecell}
 \usetikzlibrary{arrows,snakes,backgrounds}
 \usepackage[unicode]{hyperref}
@@ -1028,7 +1028,7 @@
 	\end{itemize}
 	\subsubsection{Xây dựng tập biểu thức}
 	Để phục vụ quá trình huấn luyện của mạng SSD được nêu trong Chương 4, ngoài tập ký tự nhóm cần phải xây dựng thêm tập ảnh các biểu thức Toán học viết tay.\\
-	Quá trình thu thập dữ liệu bao gồm các công việc:
+	\subsubsubsection{Quá trình thu thập dữ liệu bao gồm các công việc:}
 	\begin{itemize}
 		\item Tạo biểu mẫu để thu dữ liệu. Biễu mẫu này có 6 hàng và 2 cột như hình bên dưới. 
 		\begin{center}
@@ -1062,18 +1062,29 @@
 		\item Thực hiện gán nhãn và xác định bounding box cho từng ký hiệu trong ảnh thu được từ bước trên bằng công cụ do nhóm tự thực hiện với giao diện như hình bên dưới. Công cụ này cho phép tải ảnh, xác định bounding boxes cho các đối tượng trong ảnh bằng cách kéo thả chuột từ góc trên bên trái đến góc dưới bên phải của từng đối tượng và nhập nhãn cho mỗi đối tượng đó. Quá trình này kết thúc sẽ thu được file với định dạng .txt lưu thông tin cần thiết về dữ liệu cho quá trình huấn luyện và kiểm tra. 
 		\begin{center}
 		\centering
-		\includegraphics[width=0.6\linewidth]{tool}
+		\includegraphics[width=0.65\linewidth]{tool}
 		\vspace{0.5cm}
 		\captionof{figure}{Giao diện công cụ hỗ trợ quá trình gán nhãn và xác định bounding boxes. }
 		\end{center}
 		\end{itemize}
-	Thông tin mô tả tập dữ liệu biểu thức:
+	\subsubsubsection{Thông tin mô tả tập dữ liệu biểu thức:}
 	\begin{itemize}
 		\item Số người tham gia: khoảng 88 
 		\item Số lượng ảnh\footnote{Mỗi ảnh chỉ chứa một biểu thức.}:  2256. Trong đó có 1746 ảnh dùng cho training, 138 ảnh dùng cho quá trình validation và 372 ảnh để test.
 		\item Số loại biểu thức: khoảng 552
+		\item Tổng số ký tự trong tập huấn luyện: 13697
+		\item Tổng số ký tự trong tập kiểm tra: 2237
 		\item Số  người gán nhãn: 3
 	\end{itemize}
+	Hình minh hoạ cho sự phận phối số lượng ký tự trong từng nhãn đối với tập huấn luyện và tập kiểm tra.
+	\begin{figure}
+		\includegraphics[width=0.475\linewidth]{train_statis.png}
+		\hfill
+		\includegraphics[width=0.475\linewidth]{test_statis.png}
+		\vspace{0.5cm}
+		\captionof{figure}{Sự phân phối ký tự theo từng nhãn đối với tập huấn luyện và tập kiểm tra.}
+	\end{figure}
+	\newpage
 	\subsection{Hiện thực hệ thống}
 	
 	\subsubsection{Quá trình tiền huấn luyện}
@@ -1100,7 +1111,38 @@
 		\vspace{0.5cm}
 		\captionof{figure}{Giao diện bản thử nghiệm}
 	\end{center}
+	\subsection{Kết quả}
+	Trong quá trình thực hiện, nhóm đã xây dựng 4 mô hình huấn luyện dựa trên những thay đổi của 3 yếu tố sau:
+	\begin{itemize}
+		\item Kích thước ảnh đầu vào của mạng SSD.
+		\item Kích thước default boxes.
+		\item Số lượng default boxes.
+	\end{itemize}
+	Thông tin cụ thể như bảng bên dưới.
+	\begin{center}
+		\begin{tabular}{||c | c | c | c | c||} 
+			\hline
+			Mô hình & \makecell{  I } & \makecell{ II} & III &  \makecell{ IV}  \\ [0.5ex] 
+			\hline\hline
+			Kích thước ảnh đầu vào& 300x300 & 300x300 & 500x500 & 500x500 \\ 
+			\hline
+			Kích thước default boxes& \makecell{min\_ratio: 20\\max\_ration: 90\\min\_scale: 0.1} &  \makecell{min\_ratio: 8\\max\_ration: 50\\min\_scale: 0.03} & \makecell{min\_ratio: 8\\max\_ration: 50\\min\_scale: 0.03}  & \makecell{min\_ratio: 8\\max\_ration: 50\\min\_scale: 0.03}  \\ 
+			\hline
+			Số lượng default boxes & 8732 & 8732 & 24148 & 24024\\
+			\hline
+		\end{tabular}
+		\captionof{table}{Sự khác nhau giữa 4 mô hình thử nghiệm.}
+	\end{center}
+	Kết quả đánh giá của 4 mô hình thử nghiệm trên cùng một tập kiểm tra 
 	
+
+
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	\newpage	
+	\section{Tổng kết}
+	
+	\subsection{Kết luận}
 	\subsection{Đánh giá ưu, nhược điểm}
 	
 	\subsubsection{Ưu điểm}
@@ -1119,15 +1161,6 @@
 		\item Hậu xử lý vẫn còn chưa thật sự hiệu quả.
 		\item Các ký tự hoàn toàn trùng lên nhau dễ bị bỏ sót (dấu căn).
 	\end{itemize}
-
-
-	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-	\newpage	
-	\section{Tổng kết}
-	
-	\subsection{Kết luận}
-	
 	\subsection{Hướng phát triển trong tương lai}
 	
 	Hệ thống vẫn còn nhiều điểm có thể cải thiện thêm, trong tương lai, có thể:
