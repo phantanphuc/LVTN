@@ -404,45 +404,45 @@
 	
 	\subsection{Mạng Single Shot Multibox Detector\cite{liu2016ssd}}
 	
-	SSD như là một mạng cải tiến của phương pháp phát hiện bằng cửa sổ trượt\footnote{Thuật ngữ tiếng Anh: Sliding Window}. Thay vì sử dụng một (một số) cửa sổ có kích thước cố định, thì SSD sinh ra một số lượng hữu hạn các \textbf{ô chuẩn} \footnote{Thuật ngữ tiếng Anh: Default box} để rồi từ các ô chuẩn đó để hệ thống có thể xác định vị trí các ký tự cần nhận diện cho quá trình huấn luyện, qua đó mạng cần phải học cách dự đoán cả kích thước của các \textbf{ô bọc}\footnote{Thuật ngữ tiếng Anh: Bounding box} quanh ký tự thay vì chỉ chấp nhận kích thước cho trước. SSD cũng sử dụng các lớp tích chập\footnote{Thuật ngữ tiếng Anh: Convolution layer} (hay cụ thể hơn là các mạng nơ-ron tích chập\footnote{Convolutional neural network}) để trích đặc trưng, tạo tiền đề cho việc phát hiện và phân loại ký tự. \\
+	SSD\cite{liu2016ssd} như là một mạng cải tiến của phương pháp phát hiện bằng cửa sổ trượt\footnote{Thuật ngữ tiếng Anh: Sliding Window}. Thay vì sử dụng một (một số) cửa sổ có kích thước cố định, thì SSD sinh ra một số lượng hữu hạn các \textbf{default box} \footnote{Tiếng việt: Ô chuẩn} để rồi từ các default box đó để hệ thống có thể xác định vị trí các ký tự cần nhận diện cho quá trình huấn luyện, qua đó mạng cần phải học cách dự đoán cả kích thước của các \textbf{bounding box}\footnote{Tiếng việt: Ô Bọc} quanh ký tự thay vì chỉ chấp nhận kích thước cho trước. SSD\cite{liu2016ssd} cũng sử dụng các lớp tích chập\footnote{Thuật ngữ tiếng Anh: Convolution layer} (hay cụ thể hơn là các mạng nơ-ron tích chập\footnote{Convolutional neural network}) để trích đặc trưng, tạo tiền đề cho việc phát hiện và phân loại ký tự. \\
 	
 	Nhóm xin phép được tách quá trình huấn luyện thành ba giai đoạn: mã hóa, phát hiện - phân loại và tính giá trị lỗi. Và song song với huấn luyện, quá trình kiểm tra, kiểm định, chạy thực tiễn cũng được chia thành ba giai đoạn: trích đặc trưng - phân loại và giải mã.
 	
 	\subsubsection{Bộ mã hóa (Encoder)}
-	Bộ mã hóa chỉ được sử dụng trong quá trình huấn luyện nhằm mã hóa, chuyển đổi "đáp án" \footnote{Thuật ngữ tiếng Anh: Ground truth} thô (được lưu trong tệp tin định dạng txt hoặc xml) sang "đáp án" mà mạng SSD\cite{liu2016ssd} có thể hiểu được.
+	Bộ mã hóa chỉ được sử dụng trong quá trình huấn luyện nhằm mã hóa, chuyển đổi ground truth \footnote{Thuật ngữ tiếng Anh: Ground truth} thô (được lưu trong tệp tin định dạng txt hoặc xml) sang ground truth mà mạng SSD\cite{liu2016ssd} có thể hiểu được.
 	
-	\subsubsection*{Sinh ô chuẩn}
+	\subsubsection*{Sinh default box}
 	
-	Để mã hóa "đáp án", bộ mã hóa trước hết có nhiệm vụ sinh ra nhiều ô chuẩn có nhiều kích thước khác nhau, để làm được điều này, mạng cần phải được cung cấp một số thông số:\\
+	Để mã hóa ground truth, bộ mã hóa trước hết có nhiệm vụ sinh ra nhiều default box có nhiều kích thước khác nhau, để làm được điều này, mạng cần phải được cung cấp một số thông số:\\
 	\begin{itemize}
-		\item Danh sách kích thước của các feature map (Phần này sẽ được giải thích rõ hơn ở mục sau): Mỗi feature map trong danh sách tương ứng với một mức kích thước\footnote{Thuật ngữ tiếng Anh: Scale} trong việc phát hiện ảnh. Trong một mức kích thước, tất cả các ô chuẩn đều có kích thước như nhau và cách đều nhau, mỗi pixel trong feature map thể hiện một (một số ô chuẩn), vì vậy, ta có thể tính được danh sách khoảng cách giữa trọng tâm giữa các ô chuẩn bằng cách lấy kích thước ảnh chia cho kích thước của feature map ở mức kích thước tương ứng. Tất cả các dữ liệu liên quan đến kích thước sau đó sẽ được chuyển về tập giá trị $\{x \in R | x \in [0, 1] \} $ 
-		\item Danh sách các tỉ lệ diện mạo\footnote{Thuật ngữ tiếng Anh: Aspect ratio} ứng với mỗi mức kích thước. Mạng SSD dựa vào các tỉ lệ diện mạo đó để tạo ra các ô chuẩn có hình dạng khác nhau tại cùng một vị trí (trọng tâm của các ô chuẩn có cùng một vị trí).
-		\item Kích thước nhỏ nhất và lớn nhất của các ô chuẩn.
+		\item Danh sách kích thước của các feature map (Phần này sẽ được giải thích rõ hơn ở mục sau): Mỗi feature map trong danh sách tương ứng với một mức kích thước\footnote{Thuật ngữ tiếng Anh: Scale} trong việc phát hiện ảnh. Trong một mức kích thước, tất cả các default box đều có kích thước như nhau và cách đều nhau, mỗi pixel trong feature map thể hiện một (một số default box), vì vậy, ta có thể tính được danh sách khoảng cách giữa trọng tâm giữa các default box bằng cách lấy kích thước ảnh chia cho kích thước của feature map ở mức kích thước tương ứng. Tất cả các dữ liệu liên quan đến kích thước sau đó sẽ được chuyển về tập giá trị $\{x \in R | x \in [0, 1] \} $ 
+		\item Danh sách các aspect ratio\footnote{Tiếng việt: Tỉ lệ diện mạo} ứng với mỗi mức kích thước. Mạng SSD dựa vào các aspect ratio đó để tạo ra các default box có hình dạng khác nhau tại cùng một vị trí (trọng tâm của các default box có cùng một vị trí).
+		\item Kích thước nhỏ nhất và lớn nhất của các default box.
 	\end{itemize} 
 	
-	Từ những thông số trên, các ô chuẩn sẽ được sinh ra theo các bước sau: \\
+	Từ những thông số trên, các default box sẽ được sinh ra theo các bước sau: \\
 	Trước hết, bộ phận này tiến hành sinh ra kích thước của ổ chuẩn ứng với mỗi mức kích thước tương ứng bằng công thức: 
 	\begin{align}
 	s_k = s_{min} + \frac{s_{max} - s_{min}}{m - 1}(k - 1) 
 	\end{align}
-	Trong đó $s_{min}$ và $s_{max}$ là kích thước nhỏ nhất và lớn nhất của ô chuẩn, m là số lượng feature map. Việc chọn các thông số này khá quan trọng vì nó sẽ ảnh hưởng đến các ký tự có thể nhận diện được sau này, các kích thước cần được chọn sao cho không quá lớn cũng như không quá nhỏ đối với những đối tượng được kỳ vọng nhận diện được.\\
+	Trong đó $s_{min}$ và $s_{max}$ là kích thước nhỏ nhất và lớn nhất của default box, m là số lượng feature map. Việc chọn các thông số này khá quan trọng vì nó sẽ ảnh hưởng đến các ký tự có thể nhận diện được sau này, các kích thước cần được chọn sao cho không quá lớn cũng như không quá nhỏ đối với những đối tượng được kỳ vọng nhận diện được.\\
 	
 	Ứng với mỗi mức kích thước:
 	
 	\begin{itemize}
 		
-		\item Mỗi ô chuẩn đều được liên kết với một điểm ảnh trên feature map, ta cũng đã tính được danh sách khoảng cách trọng tâm theo đề cập ở trên. Từ đó ta dễ dàng tính được tọa độ của các trọng tâm của các ô chuẩn trong ảnh theo công thức:
+		\item Mỗi default box đều được liên kết với một điểm ảnh trên feature map, ta cũng đã tính được danh sách khoảng cách trọng tâm theo đề cập ở trên. Từ đó ta dễ dàng tính được tọa độ của các trọng tâm của các default box trong ảnh theo công thức:
 		\begin{align}
 		(x, y) =\left( \left(i + \frac{1}{2} \right) \times step, \left(j + \frac{1}{2} \right) \times step \right)
 		\end{align}
 		Trong đó: $x$, $y$ là tọa độ của các trọng tâm; $i$, $j$ là các số nguyên dương nằm trong khoảng từ 0 đến kích thước feature map đang xét và $step$ là khoảng cách giữa hai trọng tâm liền kề trong mức kích thước đang xét.
 		
-		\item Sau khi có được tọa độ của các trọng tâm, bộ phận mã hóa tiến hành sinh các ô chuẩn ứng với mỗi vị trí trọng tâm: 
+		\item Sau khi có được tọa độ của các trọng tâm, bộ phận mã hóa tiến hành sinh các default box ứng với mỗi vị trí trọng tâm: 
 		
 		\begin{itemize}
-			\item Tạo một ô chuẩn có kích thước $s_k$ là kích thước ứng với mức kích thươc $k$ hiện tại.
-			\item Tạo một ô chuẩn có kích thước bằng $\sqrt{s_k \times s_{k + 1}}$.
-			\item Với mỗi phần tử trong danh sách tỉ lệ diện mạo tương ứng, ta tạo một ô chuẩn có kích thước chiều rộng: 
+			\item Tạo một default box có kích thước $s_k$ là kích thước ứng với mức kích thươc $k$ hiện tại.
+			\item Tạo một default box có kích thước bằng $\sqrt{s_k \times s_{k + 1}}$.
+			\item Với mỗi phần tử trong danh sách aspect ratio tương ứng, ta tạo một default box có kích thước chiều rộng: 
 			\begin{align}
 			w = s_k \times \sqrt{aspect\_ratio}
 			\end{align} 
@@ -450,24 +450,24 @@
 			\begin{align}
 			h = s_k \div \sqrt{aspect\_ratio}
 			\end{align}
-			với $aspect\_ratio$ là tỉ lệ diện mạo đang xét.
+			với $aspect\_ratio$ là aspect ratio đang xét.
 		\end{itemize}
 		
 	\end{itemize}
 	
-	Như vậy, với mỗi vị trí được chọn để đặt trong tâm các ô chuẩn, bộ phận mã hóa sẽ sinh ra $2 + n$ ô chuẩn với $n$ là số tỉ lệ diện mạo ứng với mức kích thước hiện tại. Kết quả của quá trình sinh ô chuẩn là một tập hợp nhiều vector. Mỗi vector ứng với một ô chuẩn mang thông tin tọa độ trọng tâm, chiều dài, chiều rộng của ô chuẩn.
+	Như vậy, với mỗi vị trí được chọn để đặt trong tâm các default box, bộ phận mã hóa sẽ sinh ra $2 + n$ default box với $n$ là số aspect ratio ứng với mức kích thước hiện tại. Kết quả của quá trình sinh default box là một tập hợp nhiều vector. Mỗi vector ứng với một default box mang thông tin tọa độ trọng tâm, chiều dài, chiều rộng của default box.
 	
-	\subsubsection*{Kết hợp\footnote{Thuật ngữ tiếng Anh: Matching}}
+	\subsubsection*{Matching\footnote{Thuật ngữ tiếng Anh: Matching}}
 	
-	Sau khi hoàn tất sinh ô chuẩn, bộ phận encoder có nhiệm vụ kết hợp dữ liệu thô là các ô bọc \footnote{Thuật ngữ tiếng Anh: Bounding box} từ "đáp án"\footnote{Thuật ngữ tiếng Anh: Ground truth} qua các ô chuẩn vừa được tạo. Kết quả là ta sẽ thu được một tập nhiều vector, mỗi vector đại diện cho mỗi ô chuẩn chứa thông tin gồm tọa độ trọng tâm, kích thước của ô chuẩn và nhãn của ô chuẩn đó là gì (có thể là phần nền - không có gì cả, hoặc một ký tự nào đó cần được nhận diện). \\
+	Sau khi hoàn tất sinh default box, bộ phận encoder có nhiệm vụ matching dữ liệu thô là các bounding box \footnote{Thuật ngữ tiếng Anh: Bounding box} từ ground truth\footnote{Thuật ngữ tiếng Anh: Ground truth} qua các default box vừa được tạo. Kết quả là ta sẽ thu được một tập nhiều vector, mỗi vector đại diện cho mỗi default box chứa thông tin gồm tọa độ trọng tâm, kích thước của default box và nhãn của default box đó là gì (có thể là phần nền - không có gì cả, hoặc một ký tự nào đó cần được nhận diện). \\
 	
-	Việc kết hợp được thực hiện bằng cách so sánh từng ô chuẩn với từng ô bọc trong "đáp án" bằng cách tính chỉ số Jaccard\cite{Jaccard}, nếu chỉ số này thỏa điều kiện thì ô chuẩn đó được gán nội dung là kí tự chứa trong ô bọc phù hợp nhất, nếu không thì ô chuẩn được gán nội dung là "nền".\\
+	Việc matching được thực hiện bằng cách so sánh từng default box với từng bounding box trong ground truth bằng cách tính chỉ số Jaccard\cite{Jaccard}, nếu chỉ số này thỏa điều kiện thì default box đó được gán nội dung là kí tự chứa trong bounding box phù hợp nhất, nếu không thì default box được gán nội dung là "nền".\\
 	
-	Chỉ số Jaccard\cite{Jaccard} giữa hai ô bọc được tính bằng công thức:
+	Chỉ số Jaccard\cite{Jaccard} giữa hai bounding box được tính bằng công thức:
 	\begin{align}
 	J(A, B) = \frac{A \cap B }{ A \cup B }
 	\end{align}
-	Trong đó, A, B lần lượt là phần ảnh mà ô bọc A và ô bọc B chiếm. Công thức này mang ý nghĩa hai ô bọc có kích thước càng tương đồng và phần trùng nhau càng nhiều thì có chỉ số Jaccard\cite{Jaccard} càng gần giá trị 1.\\
+	Trong đó, A, B lần lượt là phần ảnh mà bounding box A và bounding box B chiếm. Công thức này mang ý nghĩa hai bounding box có kích thước càng tương đồng và phần trùng nhau càng nhiều thì có chỉ số Jaccard\cite{Jaccard} càng gần giá trị 1.\\
 	
 	\begin{center}
 		\centering
@@ -476,19 +476,19 @@
 		\captionof{figure}{Mô phỏng chỉ số Jaccard\cite{Jaccard}}
 	\end{center}
 	
-	Các ô bọc này có bản chất như một "hệ quy chiếu" cho các ô bọc, sau quá trình kết hợp, các ô bọc "đáp án" được tính độ lệch so với các ô chuẩn tương ứng và khi huấn luyện, mạng SSD\cite{liu2016ssd} có nhiệm vụ dự đoán các ô bọc theo các độ lệch đó. Giá trị hàm lỗi được tính dựa trên độ lêch của ô bọc "đáp án" và độ lệch của ô bọc dự đoán được. Cách tính độ lệch sẽ được đề cập rõ hơn ở phần tính giá trị lỗi.
+	Các bounding box này có bản chất như một "hệ quy chiếu" cho các bounding box, sau quá trình matching, các bounding box ground truth được tính độ lệch so với các default box tương ứng và khi huấn luyện, mạng SSD\cite{liu2016ssd} có nhiệm vụ dự đoán các bounding box theo các độ lệch đó. Giá trị hàm lỗi được tính dựa trên độ lêch của bounding box ground truth và độ lệch của bounding box dự đoán được. Cách tính độ lệch sẽ được đề cập rõ hơn ở phần tính giá trị lỗi.
 	
 	
 	\subsubsection{Bộ phát hiện - phân loại}
 	Đây là bộ phận có nhiệm vụ trích đặc trưng từ ảnh thô đầu vào, tạo ra các feature map để đưa vào quá trình phân loại ký tự.
 	
-	\subsubsection*{Trích đặc trưng (Hay mạng cơ sở \footnote{Thuật ngữ tiếng Anh: Base Network})}
+	\subsubsection*{Bộ phận trích đặc trưng (Hay mạng cơ sở \footnote{Thuật ngữ tiếng Anh: Base Network})}
 	
 	Mạng cơ sở của SSD\cite{liu2016ssd} là một mạng nơron tích chập bất kỳ, có thể là VGG\cite{Simonyan14c} hoặc lenet\cite{yanlecun},... Hầu hết những mạng này có mục đích phân loại\footnote{Thuật ngữ tiếng Anh: Classification}, vì vậy ở phía cuối mạng thường có các lớp liên kết đầy đủ nhằm giảm kích thước feature map và tạo ra dữ liệu đầu ra có kích thước phù hợp (bằng với số nhãn cần dự đoán). Khi kết hợp với mạng SSD\cite{liu2016ssd}, các lớp liên kết đầy đủ này sẽ được thay thế bằng các lớp tích chập và song hành là các bước trích ra feature map để đưa vào lớp Multibox \cite{erhan2014scalable}, chi tiết phần này sẽ được để cập ở mục tiếp theo.
 	
 	\subsubsection* {Phân loại}
 	
-	Bộ phận phân loại có nhiệm vụ đưa ra dự đoán về vị trí và nhãn của các ký tự có trong ảnh. Để làm được điều đó, bộ phân loại phải sinh ra các feature map ứng với từng mức kích thước khác nhau, các feature map đó được đưa vào lớp Multibox để sinh ra các vị trí dự đoán và nhãn tương ứng. Các feature map được lấy sau một (một số) lớp tích chập. Danh sách feature map có được ở giai đoạn sinh ô chuẩn chính là được lấy từ đây. \\
+	Bộ phận phân loại có nhiệm vụ đưa ra dự đoán về vị trí và nhãn của các ký tự có trong ảnh. Để làm được điều đó, bộ phân loại phải sinh ra các feature map ứng với từng mức kích thước khác nhau, các feature map đó được đưa vào lớp Multibox để sinh ra các vị trí dự đoán và nhãn tương ứng. Các feature map được lấy sau một (một số) lớp tích chập. Danh sách feature map có được ở giai đoạn sinh default box chính là được lấy từ đây. \\
 	
 	\begin{center}
 		
@@ -498,11 +498,11 @@
 		\captionof{figure}{Cấu tạo của một mạng SSD\cite{liu2016ssd}}
 	\end{center}
 	
-	Sau khi có được các feature map, lớp Multibox sẽ tiến hành đưa ra dự đoán về ô bọc và nhãn gắn với ô bọc đó. Mỗi feature map sử dụng một tập hợp các lớp tích chập sẽ cho ra một số lượng dự đoán nhất định. Với mỗi vị trí trên feature map được kernel trượt qua, thì một dự đoán về ký tự được sinh ra. Kernel có kích thước:
+	Sau khi có được các feature map, lớp Multibox sẽ tiến hành đưa ra dự đoán về bounding box và nhãn gắn với bounding box đó. Mỗi feature map sử dụng một tập hợp các lớp tích chập sẽ cho ra một số lượng dự đoán nhất định. Với mỗi vị trí trên feature map được kernel trượt qua, thì một dự đoán về ký tự được sinh ra. Kernel có kích thước:
 	\begin{align}
 	3 \times 3 \times (n \times (classes + 4))
 	\end{align}
-	Với $n$ là số lượng tỉ lệ diện mạo với fearture map tương ứng và $classes$ là số lượng nhãn cần nhận diện, số $4$ trong công thức đại diện cho 4 thông số về vị trí của ô bọc (tọa độ trọng tâm và kích thước). Do kích thước của các kernel không đồng nhất (vì số lượng tỉ lệ diện mạo ứng với từng feature map có thể khác nhau), nên để tạo ra dữ liệu đầu ra phù hợp với các ô chuẩn đã tạo từ trước thì các vector dự đoán sẽ được sắp xếp lại sao cho dữ liệu đầu ra chỉ có $classes + 4$ kênh và vị trí của các vector phải tương ứng với vị trí các ô chuẩn đã sinh từ trước.
+	Với $n$ là số lượng aspect ratio với fearture map tương ứng và $classes$ là số lượng nhãn cần nhận diện, số $4$ trong công thức đại diện cho 4 thông số về vị trí của bounding box (tọa độ trọng tâm và kích thước). Do kích thước của các kernel không đồng nhất (vì số lượng aspect ratio ứng với từng feature map có thể khác nhau), nên để tạo ra dữ liệu đầu ra phù hợp với các default box đã tạo từ trước thì các vector dự đoán sẽ được sắp xếp lại sao cho dữ liệu đầu ra chỉ có $classes + 4$ kênh và vị trí của các vector phải tương ứng với vị trí các default box đã sinh từ trước.
 	
 	\subsubsection{Tính giá trị lỗi}
 	
@@ -512,10 +512,10 @@
 	\end{align}
 	Trong đó:
 	\begin{itemize}
-		\item x biểu thị các phép kết hợp, cụ thể $x^p_{ij}$ biểu thị phép kết hợp giữa ô chuẩn thứ $i$ với ô bọc thứ $j$ đối với nhãn $p$. Vì vậy $x^p_{ij}$ có tập giá trị $\{0, 1\}$.
-		\item $c$ biểu thị nhãn kỳ vọng cho phép kết hợp đang xét.
-		\item $l$ biểu thị ô bọc dự đoán.
-		\item $g$ biểu thị ô bọc "đáp án".
+		\item x biểu thị các phép matching, cụ thể $x^p_{ij}$ biểu thị phép matching giữa default box thứ $i$ với bounding box thứ $j$ đối với nhãn $p$. Vì vậy $x^p_{ij}$ có tập giá trị $\{0, 1\}$.
+		\item $c$ biểu thị nhãn kỳ vọng cho phép matching đang xét.
+		\item $l$ biểu thị bounding box dự đoán.
+		\item $g$ biểu thị bounding box ground truth.
 	\end{itemize}
 	
 	Hàm lỗi về vị trí có thể được biểu diễn bằng công thức:
@@ -524,21 +524,21 @@
 	\end{align}
 	Trong đó:
 	\begin{itemize}
-		\item N là số lượng phép kết hợp giữa ô chuẩn và ô bọc có ý nghĩa (nhãn của phép kết hợp không phải là "nền". Nếu như $N = 0$ thì ta đặt giá trị lỗi bằng 0.
-		\item Pos là tập hợp các phép kết hợp có ý nghĩa.
+		\item N là số lượng phép matching giữa default box và bounding box có ý nghĩa (nhãn của phép matching không phải là "nền". Nếu như $N = 0$ thì ta đặt giá trị lỗi bằng 0.
+		\item Pos là tập hợp các phép matching có ý nghĩa.
 		\item $smooth_{L1}$ (theo \cite{girshick2015fast}) là một hàm tính lỗi được định nghĩa là:
 		\begin{align}
 		L(x) = \begin{cases} 0.5x^2 \quad if |x| < 1 \\ |x| - 0.5 \quad otherwise \end{cases}
 		\end{align}
-		\item \begin{align}\hat{g}_j^{cx} = (g_j^{cx} - d_i^{cx}) / d^w_i\end{align}Với $d$ biểu thị cho ô chuẩn.
+		\item \begin{align}\hat{g}_j^{cx} = (g_j^{cx} - d_i^{cx}) / d^w_i\end{align}Với $d$ biểu thị cho default box.
 		\item \begin{align}\hat{g}_j^{cy} = (g_j^{cy} - d_i^{cy}) / d^h_i\end{align}
 		\item \begin{align}\hat{g}^w_j = \log \left( \frac{g_j^w}{d_i^w} \right)\end{align}
 		\item \begin{align}\hat{g}^h_j = \log \left( \frac{g_j^h}{d_i^h} \right)\end{align}
 	\end{itemize}
 	
-	Bốn công thức $\hat{g}$ trên chính là độ lệch giữa ô đang xét và ô chuẩn, mà nhóm đã đề cập ở mục trước.
+	Bốn công thức $\hat{g}$ trên chính là độ lệch giữa ô đang xét và default box, mà nhóm đã đề cập ở mục trước.
 	
-	Vậy ta có thể thấy khi tính giá trại lỗi về vị trí, ta tính dựa trên sai lệch so với ô chuẩn mà ô bọc "đáp án" ban đầu kết hợp được thay vì tính lỗi trực tiếp.\\
+	Vậy ta có thể thấy khi tính giá trại lỗi về vị trí, ta tính dựa trên sai lệch so với default box mà bounding box ground truth ban đầu match được thay vì tính lỗi trực tiếp.\\
 	
 	Hàm lỗi về độ tin cậy có thể được tính theo công thức:
 	\begin{align}
@@ -549,12 +549,12 @@
 	
 	\subsubsection{Bộ giải mã (Decoder)}
 	
-	Bản chất của bộ giải mã khá đơn giản, nó có chức năng chuyển dữ liệu các ô bọc mà mạng dự đoán (tức là những ô bọc được tính kích thước và tọa độ theo ô chuẩn mà ô bọc đó được kết hợp vào) sang dữ liệu tọa độ của ảnh (có gốc tọa độ nằm ở góc trên bên phải và tọa độ nằm trong miền $[0, 1]$. Dữ liệu này cần thiết để trực quan hóa các ký tự mà hệ thống dự đoán và để đưa vào bộ phân tích cú pháp để sinh mã Latex.
+	Bản chất của bộ giải mã khá đơn giản, nó có chức năng chuyển dữ liệu các bounding box mà mạng dự đoán (tức là những bounding box được tính kích thước và tọa độ theo default box mà bounding box đó được match vào) sang dữ liệu tọa độ của ảnh (có gốc tọa độ nằm ở góc trên bên trái và tọa độ nằm trong miền $[0, 1]$. Dữ liệu này cần thiết để trực quan hóa các ký tự mà hệ thống dự đoán và để đưa vào bộ phân tích cú pháp để sinh mã Latex.
 	
 	\subsubsection{Một số vấn đề khác trong mạng SSD\cite{liu2016ssd}}
 	\subsubsection*{Tăng cường dữ liệu\footnote{Data Augumentation}}
 	
-	Ngay trước quá trình kết hợp, ảnh và các ô bọc được đi qua một bước gọi là cắt ngẫu nhiên\footnote{Thuật ngữ tiếng Anh: Random Crop}. Ở bước này, ảnh được cắt đi một số phần ngẫu nhiên (có tác dụng giống như phóng to (zoom) ảnh. Điều này giúp làm đa dạng dữ liệu huấn luyện và làm giảm bớt hiện tượng overfit.
+	Ngay trước quá trình matching, ảnh và các bounding box được đi qua một bước gọi là cắt ngẫu nhiên\footnote{Thuật ngữ tiếng Anh: Random Crop}. Ở bước này, ảnh được cắt đi một số phần ngẫu nhiên (có tác dụng giống như phóng to (zoom) ảnh. Điều này giúp làm đa dạng dữ liệu huấn luyện và làm giảm bớt hiện tượng overfit.
 	
 	
 	
@@ -766,7 +766,7 @@
 	\begin{center}
 		\begin{tabular}{||c | c | c | c ||} 
 			\hline
-			\makecell{ Feature map \\ Sinh bởi } & \makecell{ Kích thước} & \makecell{Tỉ lệ \\ diện mạo } &  \makecell{ Số dự đoán } \\ [0.5ex] 
+			\makecell{ Feature map \\ Sinh bởi } & \makecell{ Kích thước} & \makecell{Aspect Ratio } &  \makecell{ Số dự đoán } \\ [0.5ex] 
 			\hline\hline
 			Conv\_4 & $512 \times 38 \times 38$ & $ \{ 1, \frac{1}{2} , 2\} $ & 5776 \\ 
 			\hline
@@ -796,29 +796,29 @@
 	
 	Do bản chất mạng SSD300\cite{liu2016ssd} gặp rất nhiều khó khăn trong việc nhận dạng ký tự nhỏ do một số lý do:
 	\begin{itemize}
-		\item Trong quá trình kết hợp, các ô bọc "đáp án" kết hợp với ô chuẩn phải có chỉ số Jaccard\cite{Jaccard} lớn hơn 0.5, nhưng kích thước tối thiểu của ô chuẩn lại là $30 \times 30$ pixel, vì vậy nhiều ký tự nhỏ không thể kết hợp được (Trường hợp này xãy ra với hầu hết những ảnh có chữ nhỏ, ví dụ như ảnh dưới)
+		\item Trong quá trình matching, các bounding box ground truth match với default box phải có chỉ số Jaccard\cite{Jaccard} lớn hơn 0.5, nhưng kích thước tối thiểu của default box lại là $30 \times 30$ pixel, vì vậy nhiều ký tự nhỏ không thể match được (Trường hợp này xãy ra với hầu hết những ảnh có chữ nhỏ, ví dụ như ảnh dưới)
 		\begin{center}
 			\centering
 			\includegraphics[resolution=300]{HMER_2017_TEST1_MINH_01_2A.png}
 			\vspace{0.5cm}
 			\captionof{figure}{Ảnh ví dụ chữ nhỏ (với kích thước thật)}
 		\end{center}
-		Khi không thể kết hợp được thì vùng ký tự đó được hiểu là phần nền, điều này gây bất lợi lớn cho quá trình huấn luyện do vùng ảnh không trống nhưng lúc là nền lúc lại được gắn nhãn.
+		Khi không thể match được thì vùng ký tự đó được hiểu là phần nền, điều này gây bất lợi lớn cho quá trình huấn luyện do vùng ảnh không trống nhưng lúc là nền lúc lại được gắn nhãn.
 		
-		\item Nhiều ký tự có tỉ lệ diện mạo đặc biệt (Ví dụ như ký tự dấu $-$ trong phân số hoặc $\int$) cũng gặp nhiều khó khăn trong việc kết hợp do không đạt được ngưỡng Jaccard\cite{Jaccard}.
+		\item Nhiều ký tự có aspect ratio đặc biệt (Ví dụ như ký tự dấu $-$ trong phân số hoặc $\int$) cũng gặp nhiều khó khăn trong việc matching do không đạt được ngưỡng Jaccard\cite{Jaccard}.
 	\end{itemize}
 	
 	Vì vậy, nhóm đã sửa một số thông số để tìm cách giải quyết vấn đề trên, trong nhiều bộ thông số thì có 3 mô hình nổi bật.
 	
-	\subsubsection*{Giảm kích thước các ô chuẩn}
+	\subsubsection*{Giảm kích thước các default box}
 	
-	Mô hình này dựa trên mô hình SSD300 nguyên thủy\cite{liu2016ssd}, chỉ chỉnh sửa kích thước các ô bọc thông qua chỉnh hai thông số $s_{min} = 0.08$ và $s_{max} = 0.5$, từ đó danh sách kích thước các ô chuẩn được thay đổi thành (9, 24, 54, 84, 114, 144, 174). So với mô hình nguyên thủy, mô hình này không thể kết hợp tốt các ký tự lớn (lớn hơn khoảng $200 \times 200$ pixel). Tuy vậy, đối với bài toán về phát hiện các ký tự trong một ảnh, thì kích thước các ký tự không thể quá lớn, nên những ký tự đặc biệt lớn như vậy có thể được xem xét ở độ ưu tiên thấp hơn.\\
+	Mô hình này dựa trên mô hình SSD300 nguyên thủy\cite{liu2016ssd}, chỉ chỉnh sửa kích thước các bounding box thông qua chỉnh hai thông số $s_{min} = 0.08$ và $s_{max} = 0.5$, từ đó danh sách kích thước các default box được thay đổi thành (9, 24, 54, 84, 114, 144, 174). So với mô hình nguyên thủy, mô hình này không thể match tốt các ký tự lớn (lớn hơn khoảng $200 \times 200$ pixel). Tuy vậy, đối với bài toán về phát hiện các ký tự trong một ảnh, thì kích thước các ký tự không thể quá lớn, nên những ký tự đặc biệt lớn như vậy có thể được xem xét ở độ ưu tiên thấp hơn.\\
 	
 	Việc thay đổi tham số ở mô hình này không làm ảnh hưởng lớn đến cấu trúc mạng cũng như quá trình mã hóa, giải mã. Số lượng dự đoán không thay đổi.\\
 	
-	Mục đích chính của thay đổi này là để quá trình kết hợp diễn ra tốt hơn khi kích thước của ô chuẩn nhỏ nhất là $9 \times 9$, điều này giúp cho những ký tự rất nhỏ vẫn có thể được kết hợp, tránh hiện tượng bỏ sót ký tự như mạng SSD300 nguyên thủy\cite{liu2016ssd}.
+	Mục đích chính của thay đổi này là để quá trình matching diễn ra tốt hơn khi kích thước của default box nhỏ nhất là $9 \times 9$, điều này giúp cho những ký tự rất nhỏ vẫn có thể được match, tránh hiện tượng bỏ sót ký tự như mạng SSD300 nguyên thủy\cite{liu2016ssd}.
 	
-	\subsubsection*{Giảm kích thước các ô chuẩn và tăng kích thước ảnh đầu vào}
+	\subsubsection*{Giảm kích thước các default box và tăng kích thước ảnh đầu vào}
 	
 	Để có được mô hình này, nhóm cần phải có hai thay đổi so với mạng SSD300 nguyên thủy\cite{liu2016ssd}:
 	\begin{itemize}
@@ -831,7 +831,7 @@
 	\begin{center}
 		\begin{tabular}{||c | c | c | c ||} 
 			\hline
-			\makecell{ Feature map \\ Sinh bởi } & \makecell{ Kích thước} & \makecell{Tỉ lệ \\ diện mạo } &  \makecell{ Số dự đoán } \\ [0.5ex] 
+			\makecell{ Feature map \\ Sinh bởi } & \makecell{ Kích thước} & \makecell{Aspect Ratio } &  \makecell{ Số dự đoán } \\ [0.5ex] 
 			\hline\hline
 			Conv\_4 & $512 \times 63 \times 63$ & $ \{ 1, \frac{1}{2} , 2\} $ & 15876 \\ 
 			\hline
@@ -846,12 +846,12 @@
 			Conv\_11 & $256 \times 2 \times 2$ & $ \{ 1, \frac{1}{2} , 2\} $ & 64 \\ 
 			\hline
 		\end{tabular}
-		\captionof{table}{Thông tin của các feature map trích được từ mạng SSD đã giảm kích thước ô chuẩn và tăng kích thước ảnh đầu vào}
+		\captionof{table}{Thông tin của các feature map trích được từ mạng SSD đã giảm kích thước default box và tăng kích thước ảnh đầu vào}
 	\end{center}
 	
-	Như vậy với mỗi ảnh, hệ thống sinh ra 24148 dự đoán, gấp gần 3 lần so với ảnh SSD300 nguyên thủy\cite{liu2016ssd}. Với những thay đổi này ô bọc thậm chí còn có thể kết hợp với những ô chuẩn nhỏ hơn, bên cạnh đó, mật độ các ô chuẩn cũng dày đặc hơn nhiều so với mạng SSD nguyên thủy\cite{liu2016ssd}.
+	Như vậy với mỗi ảnh, hệ thống sinh ra 24148 dự đoán, gấp gần 3 lần so với ảnh SSD300 nguyên thủy\cite{liu2016ssd}. Với những thay đổi này bounding box thậm chí còn có thể match với những default box nhỏ hơn, bên cạnh đó, mật độ các default box cũng dày đặc hơn nhiều so với mạng SSD nguyên thủy\cite{liu2016ssd}.
 	
-	\subsubsection*{Giảm kích thước các ô chuẩn, tăng kích thước ảnh đầu vào và thêm lớp tích chập}
+	\subsubsection*{Giảm kích thước các default box, tăng kích thước ảnh đầu vào và thêm lớp tích chập}
 	
 	Mô hình này thừa kế các thay đổi ở hai mô hình trước, tuy nhiên ở phần thân mạng SSD\cite{liu2016ssd}, nhóm đã gắn thêm 2 lớp tích chập ở cuối với các tham số: \\
 	
@@ -874,7 +874,7 @@
 	\begin{center}
 		\begin{tabular}{||c | c | c | c ||} 
 			\hline
-			\makecell{ Feature map \\ Sinh bởi } & \makecell{ Kích thước} & \makecell{Tỉ lệ \\ diện mạo } &  \makecell{ Số dự đoán } \\ [0.5ex] 
+			\makecell{ Feature map \\ Sinh bởi } & \makecell{ Kích thước} & \makecell{Aspect Ratio } &  \makecell{ Số dự đoán } \\ [0.5ex] 
 			\hline\hline
 			Conv\_4 & $512 \times 63 \times 63$ & $ \{ 1, \frac{1}{2} , 2\} $ & 15876 \\ 
 			\hline
@@ -891,21 +891,29 @@
 			Conv\_12 & $256 \times 2 \times 1$ & $ \{ 1, \frac{1}{2} , 2\} $ & 10 \\ 
 			\hline
 		\end{tabular}
-		\captionof{table}{Thông tin của các feature map trích được từ mạng SSD\cite{liu2016ssd} đã giảm kích thước ô chuẩn, tăng kích thước ảnh đầu vào và tăng số lớp tích chập}
+		\captionof{table}{Thông tin của các feature map trích được từ mạng SSD\cite{liu2016ssd} đã giảm kích thước default box, tăng kích thước ảnh đầu vào và tăng số lớp tích chập}
 	\end{center}
 	
-	Lớp Conv\_12 được thêm vào cuối mạng với mục đích tăng độ dài danh sách feature map đưa vào lớp Multibox, điều này giúp trong quá trình kết hợp, các ký tự lớn hơn có thể được kết hợp.
+	Lớp Conv\_12 được thêm vào cuối mạng với mục đích tăng độ dài danh sách feature map đưa vào lớp Multibox, điều này giúp trong quá trình matching, các ký tự lớn hơn có thể được match.
+	
+	
+	\subsubsection{Một số thông số khác}
+	Ngoài những cấu hình nêu trên, còn có một số thông số:
+	\begin{itemize}
+		\item Learning rate: 0.003.
+		\item Momentum: 0.9
+	\end{itemize}
 	
 	\newpage
 	\subsection{Phân tích cú pháp (Draculae Parser \cite{zanibbi})}
 	
-	Bộ phân tích cú pháp Draculae\cite{zanibbi} này có nhiệm vụ chuyển dữ liệu dự đoán là các ô bọc sang dữ liệu biểu thức toán học dạng latex. Trong quá trình phân tích cú pháp, biểu thức được lưu trữ dưới dạng cây BST\cite{zanibbi}\footnote{Viết tắt: baseline Syntax Tree: Cây cú pháp dựa trên đường cơ sở} là một cấu trúc cây dựa trên các đường cơ sở, các nhánh của cây thể hiện một phân vùng bên trên, bên dưới, ... của nút và là một phân vùng ảnh có đường cơ sở riêng và Lexed - BST\cite{zanibbi} là một cấu trúc cây tương tự như BST nhưng thay vì chỉ biểu thị vị trí bên trên, bên dưới thì cây biểu thị quan hệ phân số, chỉ số trên, chỉ số dưới, ...\\
+	Bộ phân tích cú pháp Draculae\cite{zanibbi} này có nhiệm vụ chuyển dữ liệu dự đoán là các bounding box sang dữ liệu biểu thức toán học dạng latex. Trong quá trình phân tích cú pháp, biểu thức được lưu trữ dưới dạng cây BST\cite{zanibbi}\footnote{Viết tắt: baseline Syntax Tree: Cây cú pháp dựa trên đường cơ sở} là một cấu trúc cây dựa trên các đường cơ sở, các nhánh của cây thể hiện một phân vùng bên trên, bên dưới, ... của nút và là một phân vùng ảnh có đường cơ sở riêng và Lexed - BST\cite{zanibbi} là một cấu trúc cây tương tự như BST nhưng thay vì chỉ biểu thị vị trí bên trên, bên dưới thì cây biểu thị quan hệ phân số, chỉ số trên, chỉ số dưới, ...\\
 	
 	\begin{center}
 		\centering
 		\includegraphics[width=0.95\linewidth]{BST.png}
 		\vspace{0.5cm}
-		\captionof{figure}{Một cây BST\cite{zanibbi}}
+		\captionof{figure}{Một cây BST\cite{zanibbi} (Các đường màu đỏ biểu thị mối quan hệ nút cha con)}
 	\end{center}	
 	
 	\begin{center}
@@ -915,9 +923,11 @@
 		\captionof{figure}{Một cây Lexed - BST\cite{zanibbi}}
 	\end{center}
 	
+	
+	
 	\subsubsection{Sinh cây BST\cite{zanibbi}}
 	
-	Đây là giai đoạn phức tạp nhất và cũng là quan trọng nhất, ở giai đoạn này, dữ liệu đầu ra từ mạng SSD\cite{liu2016ssd} là danh sách các ô bọc sẽ được phân tích và xây dựng một cây BST\cite{zanibbi}. Công việc này có thể được phân ra thành bốn công đoạn: Tìm ký tự chủ đạo, xác định những ký tự trên đường cơ sở, tái phân vùng và xử lý nút con\\
+	Đây là giai đoạn phức tạp nhất và cũng là quan trọng nhất, ở giai đoạn này, dữ liệu đầu ra từ mạng SSD\cite{liu2016ssd} là danh sách các bounding box sẽ được phân tích và xây dựng một cây BST\cite{zanibbi}. Công việc này có thể được phân ra thành bốn công đoạn: Tìm ký tự chủ đạo, xác định những ký tự trên đường cơ sở, tái phân vùng và xử lý nút con.\\
 	
 	Trước khi tiến hành sinh cây, ta cần phải phân loại các ký tự vào những thể loại khác nhau, điều này có mục đích giúp xác định vị trí trọng tâm tốt hơn, xác định được vùng ảnh gắn với chỉ số trên, chỉ số dưới và giúp phân biệt một số loại ký tự có thể có cấu trức đặc biệt trong biểu thức (ví dụ như ký tự $\sum$ thì có thể có ký tự nằm trên và bên dưới, nhưng ký tự $sin$ thì gần như không bao giờ có). Như Zanibbi đã đề xuất cho Draculae\cite{zanibbi}, các ký tự được phân vào các lớp như bảng dưới:
 	
@@ -968,7 +978,7 @@
 		
 	\end{itemize}
 	
-	Trước khi tiến hành sinh cây BST, danh sách ô bọc cần phải được sắp xếp theo chiều tăng dần hoành độ của mép phải ô bọc $x$ (hay cụ thể hơn là $min(x)$). \\
+	Trước khi tiến hành sinh cây BST, danh sách bounding box cần phải được sắp xếp theo chiều tăng dần hoành độ của mép phải bounding box $x$ (hay cụ thể hơn là $min(x)$). \\
 	
 	\subsubsection*{Tìm ký tự chủ đạo}
 	
@@ -1031,7 +1041,7 @@
 	
 	\subsubsection{Sinh cây Lexed - BST\cite{zanibbi}}
 	
-	Sau khi đã thu được cây BST từ danh sách các ô bọc, nhiệm vụ còn lại là không quá phức tạp. Trước khi tạo được chuỗi Latex, ta cần phải sinh ra được một cây Lexed - BST\cite{zanibbi}, cây này chứa các thông tin như "nhóm ký tự" và cấu trúc biểu thức:
+	Sau khi đã thu được cây BST từ danh sách các bounding box, nhiệm vụ còn lại là không quá phức tạp. Trước khi tạo được chuỗi Latex, ta cần phải sinh ra được một cây Lexed - BST\cite{zanibbi}, cây này chứa các thông tin như "nhóm ký tự" và cấu trúc biểu thức:
 	
 	\begin{itemize}
 		\item Nhóm ký tự: Ban đầu, các ký tự được gom thành từng nhóm có nghĩa (Ví dụ các ký tự "s", "i", "n" thì sẽ được gộp lại thành một ký tự "sin" duy nhất.
@@ -1051,7 +1061,7 @@
 		
 	\end{itemize}
 	
-	Sau khi sinh được cây Lexed - BST\cite{zanibbi}, hệ thống sẽ duyệt qua cây theo chiều tiền thứ tự để sinh mã Latex
+	Sau khi sinh được cây Lexed - BST\cite{zanibbi}, hệ thống sẽ duyệt qua cây theo chiều tiền thứ tự để sinh mã Latex.
 	
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1158,7 +1168,7 @@
 	
 	\subsection{Xây dựng bản thử nghiệm}
 	
-	Khi đã thu được mô hình hoàn thiện của SSD, nhóm xây dựng một bản thử nghiệm bằng python. Giao diện khá đơn giản, người dùng chỉ việc chọn thư mục chứa ảnh, sau đó chọn ảnh cần nhận diện. Chương trình sẽ xử lý và đưa ra 3 ảnh gồm ảnh gốc ban đầu, ảnh thể hiện các ô bọc mà mạng dự đoán và ảnh biểu thức toán học được tạo ra từ đoạn mã Latex.
+	Khi đã thu được mô hình hoàn thiện của SSD, nhóm xây dựng một bản thử nghiệm bằng python. Giao diện khá đơn giản, người dùng chỉ việc chọn thư mục chứa ảnh, sau đó chọn ảnh cần nhận diện. Chương trình sẽ xử lý và đưa ra 3 ảnh gồm ảnh gốc ban đầu, ảnh thể hiện các bounding box mà mạng dự đoán và ảnh biểu thức toán học được tạo ra từ đoạn mã Latex.
 	
 	\begin{center}
 		
@@ -1173,37 +1183,38 @@
 	Trong mục phương pháp đề xuất, nhóm đã đưa ra bốn mô hình, bốn mô hình này sẽ được đánh số như sau:
 	\begin{itemize}
 		\item Mô hình I: Mạng SSD300 nguyên thủy\cite{liu2016ssd}.
-		\item Mô hình II: Mạng SSD300\cite{liu2016ssd} với thay đổi giảm kích thước các ô chuẩn.
-		\item Mô hình III: Mạng SSD300\cite{liu2016ssd} với thay đổi giảm kích thước các ô chuẩn và tăng ảnh đầu vào lên $500 \times 500$.
-		\item Mô hình IV: Mạng SSD300\cite{liu2016ssd} với thay đổi giảm kích thước các ô chuẩn, tăng kích thước ảnh đầu vào và tăng thêm một số lớp tích chập.
+		\item Mô hình II: Mạng SSD300\cite{liu2016ssd} với thay đổi giảm kích thước các default box.
+		\item Mô hình III: Mạng SSD300\cite{liu2016ssd} với thay đổi giảm kích thước các default box và tăng ảnh đầu vào lên $500 \times 500$.
+		\item Mô hình IV: Mạng SSD300\cite{liu2016ssd} với thay đổi giảm kích thước các default box, tăng kích thước ảnh đầu vào và tăng thêm một số lớp tích chập.
 	\end{itemize}
 	
 	\subsubsection{Định tính giữa bốn mô hình}
-	\subsubsubsection{Quá trình kết hợp}
-	Nhóm đã giảm kích thước các ô chuẩn, đồng thời phóng to ảnh đầu vào, một phần mục đích là để quá trình kết hợp có thể thực hiện tốt hơn đối với các ký tự nhỏ. Công việc này thật sự đã cải thiện được quá trình kết hợp khi kích thước tối thiểu của ô bọc "đáp án" được cải thiện một cách đáng kể:
+	\subsubsubsection{Quá trình matching}
+	Nhóm đã giảm kích thước các default box, đồng thời phóng to ảnh đầu vào, một phần mục đích là để quá trình matching có thể thực hiện tốt hơn đối với các ký tự nhỏ. Công việc này thật sự đã cải thiện được quá trình matching khi kích thước tối thiểu của bounding box ground truth được cải thiện một cách đáng kể:
 	
 	\begin{center}
 		\begin{tabular}{||c | c | c | c | c||} 
 			\hline
 			Mô hình & \makecell{  I } & \makecell{ II} & III &  \makecell{ IV}  \\ [0.5ex] 
 			\hline
-			Ô bọc vuông & $22 \times 22$ & $12 \times 12$ & $7 \times 7$ & $7 \times 7$ \\
+			bounding box vuông & $22 \times 22$ & $12 \times 12$ & $7 \times 7$ & $7 \times 7$ \\
 			\hline
-			Ô bọc có tỉ lệ 1 : 2 & $16 \times 32$ & $16 \times 32$ & $5 \times 10$ & $5 \times 10$ \\
+			bounding box có tỉ lệ 1 : 2 & $16 \times 32$ & $16 \times 32$ & $5 \times 10$ & $5 \times 10$ \\
 			\hline
 		\end{tabular}
-		\captionof{table}{Kích thước ô bọc "đáp án" nhỏ nhất mà mạng có thể kết hợp với ô chuẩn được của bốn mô hình đề xuất. (Đơn vị tính: Điểm ảnh - Pixel) }
+		\captionof{table}{Kích thước bounding box ground truth nhỏ nhất mà mạng có thể match với default box được của bốn mô hình đề xuất. (Đơn vị tính: Điểm ảnh - Pixel) }
 	\end{center}
 	
 	\subsubsubsection{Quá trình nhận diện}
 	
-	Kết quả của mô hình II không tốt, về mặt lý thuyết thì khi giảm kích thước các ô bọc, khả năng nhận diện các ký tự nhỏ sẽ tốt hơn, tuy nhiên khi áp dụng cho mô hình II, mạng đã gặp một số vấn đề: 
+	Kết quả của mô hình II không tốt, về mặt lý thuyết thì khi giảm kích thước các bounding box, khả năng nhận diện các ký tự nhỏ sẽ tốt hơn, tuy nhiên khi áp dụng cho mô hình II, mạng đã gặp một số vấn đề: 
 	
 	\begin{itemize}
-		\item Giảm kích thước ô bọc sẽ khiến cho các ký tự lớn "bị hổng", do các ô bọc quá lớn khi tính chỉ số Jaccard\cite{Jaccard} với các ô chuẩn quá nhỏ sẽ không đủ ngưỡng, vì vậy mạng không thể kết hợp được các ký tự lớn, từ đó mạng cũng không thể nhận diện các ký tự lớn.
+		\item Giảm kích thước bounding box sẽ khiến cho các ký tự lớn "bị hổng", do các bounding box quá lớn khi tính chỉ số Jaccard\cite{Jaccard} với các default box quá nhỏ sẽ không đủ ngưỡng, vì vậy mạng không thể match được các ký tự lớn, từ đó mạng cũng không thể nhận diện các ký tự lớn.
 		\item Mạng có thể nhận diện được các ký tự nhỏ hơn, tuy nhiên các ký tự này cũng không đủ nhỏ để bao phủ phần lớn các ký tự nhỏ có trong tập dữ liệu.
 	\end{itemize}
 
+	Vì vậy, qua thực nghiệm, mô hình II đưa ra dự đoán về ký tự nhỏ tốt hơn mô hình I một ít, nhưng kết quả vẫn còn rất tệ. Tuy vậy đối với những ký tự lớn, mô hình II tỏ ra yếu hơn so với mô hình I.
 	
 	\begin{center}
 		\centering
@@ -1221,7 +1232,7 @@
 		\captionof{figure}{Kết quả giữa mô hình I và mô hình II (2).}
 	\end{center}
 	
-	Như kết quả ở trên, mô hình II đưa ra dự đoán về ký tự nhỏ tốt hơn mô hình I một ít, nhưng kết quả vẫn còn rất tệ. Tuy vậy đối với những ký tự lớn, mô hình II tỏ ra yếu hơn so với mô hình I.
+	
 	
 	\begin{center}
 		\centering
@@ -1239,7 +1250,8 @@
 		\captionof{figure}{Kết quả giữa mô hình I và mô hình II (4).}
 	\end{center}
 	
-	Ngược lại với mô hình II, kết quả của mô hình III và IV khá tốt, hệ thống đã có thể nhận diện nhiều ký tự rất nhỏ và tương đối chuẩn xác.
+	Ngược lại với mô hình II, kết quả của mô hình III và IV khá tốt, hệ thống đã có thể nhận diện nhiều ký tự rất nhỏ và tương đối chuẩn xác, mô hình IV hầu như không thua kém mô hình I trong việc nhận diện ký tự lớn, một số ký tự mô hình I nhận diện được nhưng mô hình IV không thể và ngược lại. Để hoàn thiện mô hình III, IV trong việc nhận diện ký tự lớn, nhóm có đề xuất một hướng đi trong tương lai để cải thiện khả năng nhận diện ký tự lớn này.
+	
 	
 	\begin{center}
 		\centering
@@ -1266,7 +1278,6 @@
 		\captionof{figure}{Ảnh kết quả của mô hình IV(với kích thước thật)}
 	\end{center}
 	
-	Tuy vậy, mô hình IV hầu như không thua kém mô hình I trong việc nhận diện ký tự lớn, một số ký tự mô hình I nhận diện được nhưng mô hình IV không thể và ngược lại. Để giải quyết phần này, nhóm có đề xuất một hướng đi trong tương lai để cải thiện khả năng nhận diện ký tự lớn này.
 	
 	\begin{center}
 		\centering
@@ -1399,7 +1410,7 @@
 	Ngoài ra, hệ thống vẫn còn nhiều điểm có thể cải thiện thêm, trong tương lai, có thể:
 	\begin{itemize}
 		\item Thêm phần hậu xử lý ở các giai đoạn nhận diện ký tự và sinh cây Lexed - BST.
-		\item Cải thiện khả năng nhận diện các ký tự có tỉ lệ diện mạo đặc biệt.
+		\item Cải thiện khả năng nhận diện các ký tự có aspect ratio đặc biệt.
 		\item Đưa biểu thức đã nhận dạng được vào ứng dụng (Như có thể vẽ đồ thị, giải phương trình).
 	\end{itemize}
 	
