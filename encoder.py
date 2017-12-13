@@ -145,7 +145,7 @@ class DataEncoder:
 
 		return loc, conf
 
-	def nms(self, bboxes, scores, threshold=0.15, mode='union'):
+	def nms(self, bboxes, scores, threshold=0.5, mode='union'):
 		'''Non maximum suppression.
 
 		Args:
@@ -210,7 +210,7 @@ class DataEncoder:
 		  labels: (tensor) class labels, sized [#obj,1].
 		'''
 
-		if abs(args.bacground_conf_multiplier - 1.0) < 0.001:
+		if abs(args.bacground_conf_multiplier - 1.0) > 0.001:
 			for i in conf:
 				i[0] = i[0] / args.bacground_conf_multiplier
 
