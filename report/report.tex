@@ -515,7 +515,7 @@
 		\item $\hat{g}^h_j = \log \left( \frac{g_j^h}{d_i^h} \right)$
 	\end{itemize}
 	
-	Bốn công thức $\hat{g}$ trên chính là độ lệch giữa ô đang xét và ô chuẩn, mà chúng tôi đã đề cập ở mục trước.
+	Bốn công thức $\hat{g}$ trên chính là độ lệch giữa ô đang xét và ô chuẩn, mà nhóm đã đề cập ở mục trước.
 	
 	Vậy ta có thể thấy khi tính giá trại lỗi về vị trí, ta tính dựa trên sai lệch so với ô chuẩn mà ô bọc "đáp án" ban đầu kết hợp được thay vì tính lỗi trực tiếp.\\
 	
@@ -1139,14 +1139,94 @@
 	
 	\subsubsubsection{Quá trình nhận diện}
 	
-	Kết quả của mô hình II khá tệ, về mặt lý thuyết thì khi giảm kích thước các ô bọc, khả năng nhận diện các ký tự nhỏ sẽ tốt hơn, tuy nhiên khi áp dụng cho mô hình II, mạng đã gặp một số vấn đề: 
+	Kết quả của mô hình II không tốt, về mặt lý thuyết thì khi giảm kích thước các ô bọc, khả năng nhận diện các ký tự nhỏ sẽ tốt hơn, tuy nhiên khi áp dụng cho mô hình II, mạng đã gặp một số vấn đề: 
 	
 	\begin{itemize}
 		\item Giảm kích thước ô bọc sẽ khiến cho các ký tự lớn "bị hổng", do các ô bọc quá lớn khi tính chỉ số Jaccard\cite{Jaccard} với các ô chuẩn quá nhỏ sẽ không đủ ngưỡng, vì vậy mạng không thể kết hợp được các ký tự lớn, từ đó mạng cũng không thể nhận diện các ký tự lớn.
 		\item Mạng có thể nhận diện được các ký tự nhỏ hơn, tuy nhiên các ký tự này cũng không đủ nhỏ để bao phủ phần lớn các ký tự nhỏ có trong tập dữ liệu.
 	\end{itemize}
+
 	
-	Kết quả của mô hình III và IV khá tốt, hệ thống đã có thể nhận diện nhiều ký tự rất nhỏ
+	\begin{center}
+		\centering
+		\includegraphics[width=0.775\linewidth]{compare_1.png}
+		\vspace{0.5cm}
+		
+		\captionof{figure}{Kết quả giữa mô hình I và mô hình II (1).}
+	\end{center}
+	
+	\begin{center}
+		\centering
+		\includegraphics[width=0.775\linewidth]{compare_2.png}
+		\vspace{0.5cm}
+		
+		\captionof{figure}{Kết quả giữa mô hình I và mô hình II (2).}
+	\end{center}
+	
+	Như kết quả ở trên, mô hình II đưa ra dự đoán về ký tự nhỏ tốt hơn mô hình I một ít, nhưng kết quả vẫn còn rất tệ. Tuy vậy đối với những ký tự lớn, mô hình II tỏ ra yếu hơn so với mô hình I.
+	
+	\begin{center}
+		\centering
+		\includegraphics[width=0.775\linewidth]{compare_3.png}
+		\vspace{0.5cm}
+		
+		\captionof{figure}{Kết quả giữa mô hình I và mô hình II (3).}
+	\end{center}
+	
+	\begin{center}
+		\centering
+		\includegraphics[width=0.775\linewidth]{compare_4.png}
+		\vspace{0.5cm}
+		
+		\captionof{figure}{Kết quả giữa mô hình I và mô hình II (4).}
+	\end{center}
+	
+	Ngược lại với mô hình II, kết quả của mô hình III và IV khá tốt, hệ thống đã có thể nhận diện nhiều ký tự rất nhỏ và tương đối chuẩn xác.
+	
+	\begin{center}
+		\centering
+		\includegraphics[width=0.775\linewidth]{compare_5.png}
+		\vspace{0.5cm}
+		
+		\captionof{figure}{Kết quả giữa mô hình I và mô hình IV (1).}
+	\end{center}
+	
+	\begin{center}
+		\centering
+		\includegraphics[width=0.775\linewidth]{compare_6.png}
+		\vspace{0.5cm}
+		
+		\captionof{figure}{Kết quả giữa mô hình I và mô hình IV (2).}
+	\end{center}
+	
+	Đặc biệt, có nhiều biểu thức có ký tự rất nhỏ nhưng mô hình IV đã làm việc rất tốt:
+	
+	\begin{center}
+		\centering
+		\includegraphics{compare_7.png}
+		\vspace{0.5cm}
+		\captionof{figure}{Ảnh kết quả của mô hình IV(với kích thước thật)}
+	\end{center}
+	
+	Tuy vậy, mô hình IV hầu như không thua kém mô hình I trong việc nhận diện ký tự lớn, một số ký tự mô hình I nhận diện được nhưng mô hình IV không thể và ngược lại. Để giải quyết phần này, nhóm có đề xuất một hướng đi trong tương lai để cải thiện khả năng nhận diện ký tự lớn này.
+	
+	\begin{center}
+		\centering
+		\includegraphics[width=0.775\linewidth]{compare_8.png}
+		\vspace{0.5cm}
+		
+		\captionof{figure}{Kết quả giữa mô hình I và mô hình IV (3).}
+	\end{center}
+	
+	\begin{center}
+		\centering
+		\includegraphics[width=0.775\linewidth]{compare_9.png}
+		\vspace{0.5cm}
+		
+		\captionof{figure}{Kết quả giữa mô hình I và mô hình IV (4).}
+	\end{center}
+	
+	Riêng đối với mô hình III và mô hình IV, hai mô hình này có chênh lệch rất nhỏ trong khả năng dự đoán, cần phải định lượng để phân định.
 	
 	\subsubsection{Định lượng}
 	Trong quá trình thực hiện, nhóm đã xây dựng 4 mô hình huấn luyện dựa trên những thay đổi của 3 yếu tố sau:
@@ -1200,10 +1280,39 @@
 	\end{itemize}
 	\subsection{Hướng phát triển trong tương lai}
 	
-	Hệ thống vẫn còn nhiều điểm có thể cải thiện thêm, trong tương lai, có thể:
+	Hệ thống còn nhiều điểm có thể cải thiện thêm, trong đó có hai vấn đề nổi bật là mở rộng tập dữ liệu về cả số lượng ảnh và số lượng nhãn và thêm công đoạn tiền xử lý.
+	
+	\subsubsection{Mở rộng tập dữ liệu}
+	
+	\subsubsection{Công đoạn tiền xử lý}
+	
+	Như nhóm đã đề cập ở phần trước, mô hình IV hoạt động chưa tốt với những ký tự quá lớn, nắm được điều này, nhóm đã thử thu nhỏ ảnh và tiến hành chèn thêm (padding) vào ảnh đã thu nhỏ đó để vẫn được ảnh có kích thước $500 \times 500$ 
+	
+	\begin{center}
+		\centering
+		\includegraphics[width=0.775\linewidth]{ensmall.png}
+		\vspace{0.5cm}
+		
+		\captionof{figure}{Ví dụ thu nhỏ ảnh.}
+	\end{center}
+	
+	Sau khi thí nghiệm với một số ảnh, nhóm đã nhận thấy kết quả nhận được là khá tốt.
+	
+	\begin{center}
+		\centering
+		\includegraphics[width=0.875\linewidth]{compare_future.png}
+		\vspace{0.5cm}
+		
+		\captionof{figure}{Kết quả thu được sau khi thu nhỏ nội dung ảnh.}
+	\end{center}
+	
+	Vì vậy, nhóm tin rằng có thể thêm vào hệ thống một bộ phận tiền xử lý có nhiệm vụ tự động thu nhỏ nội dung ảnh nếu cần và nếu phù hợp
+	
+	\subsubsection{Các hướng phát triển khác}
+	
+	Ngoài ra, hệ thống vẫn còn nhiều điểm có thể cải thiện thêm, trong tương lai, có thể:
 	\begin{itemize}
 		\item Thêm phần hậu xử lý ở các giai đoạn nhận diện ký tự và sinh cây Lexed - BST.
-		\item Mở rộng tập dữ liệu về cả số lượng ảnh và số lượng nhãn.
 		\item Cải thiện khả năng nhận diện các ký tự có tỉ lệ diện mạo đặc biệt.
 		\item Đưa biểu thức đã nhận dạng được vào ứng dụng (Như có thể vẽ đồ thị, giải phương trình).
 	\end{itemize}
