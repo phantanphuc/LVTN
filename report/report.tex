@@ -276,7 +276,7 @@
 		\item Nhóm có thể tạo ra được một sản phẩm hoàn thiện như PhotoMath không?
 		
 	\end{itemize}
-
+	
 	Để tự mình trả lời những câu hỏi đó, nhóm quyết tâm thực hiện đề tài này. Ngoài ra, việc áp dụng kiến thức đã học để tạo ra một sản phẩm vừa cần thiết cho xã hội vừa tự bản thân mình có thể sử dụng được tạo cho nhóm một động lực đế tiến hành. 
 	
 	\subsection{Phạm vi đề tài}
@@ -288,7 +288,7 @@
 		\item Nhận diện được các cấu trúc đơn giản (tích phân, tổng, chỉ số trên, chỉ số dưới, phân số, giới hạn, ...)
 		
 	\end{itemize}
-
+	
 	\subsection{Quá trình thực hiện}
 	Bước 1: Tìm hiểu những công trình trong nước và nước ngoài liên quan đến vấn đề nhận dạng biểu thức toán học.
 	\begin{itemize}
@@ -447,19 +447,19 @@
 	
 	Sau khi hoàn tất sinh ô chuẩn, bộ phận encoder có nhiệm vụ kết hợp dữ liệu thô là các ô bọc \footnote{Thuật ngữ tiếng Anh: Bounding box} từ "đáp án"\footnote{Thuật ngữ tiếng Anh: Ground truth} qua các ô chuẩn vừa được tạo. Kết quả là ta sẽ thu được một tập nhiều vector, mỗi vector đại diện cho mỗi ô chuẩn chứa thông tin gồm tọa độ trọng tâm, kích thước của ô chuẩn và nhãn của ô chuẩn đó là gì (có thể là phần nền - không có gì cả, hoặc một ký tự nào đó cần được nhận diện). \\
 	
-	Việc kết hợp được thực hiện bằng cách so sánh từng ô chuẩn với từng ô bọc trong "đáp án" bằng cách tính chỉ số Jaccard, nếu chỉ số này thỏa điều kiện thì ô chuẩn đó được gán nội dung là kí tự chứa trong ô bọc phù hợp nhất, nếu không thì ô chuẩn được gán nội dung là "nền".\\
+	Việc kết hợp được thực hiện bằng cách so sánh từng ô chuẩn với từng ô bọc trong "đáp án" bằng cách tính chỉ số Jaccard\cite{Jaccard}, nếu chỉ số này thỏa điều kiện thì ô chuẩn đó được gán nội dung là kí tự chứa trong ô bọc phù hợp nhất, nếu không thì ô chuẩn được gán nội dung là "nền".\\
 	
-	Chỉ số Jaccard giữa hai ô bọc được tính bằng công thức:
+	Chỉ số Jaccard\cite{Jaccard} giữa hai ô bọc được tính bằng công thức:
 	
 	$$  J(A, B) = \frac{A \cap B }{ A \cup B } $$
 	
-	Trong đó, A, B lần lượt là phần ảnh mà ô bọc A và ô bọc B chiếm. Công thức này mang ý nghĩa hai ô bọc có kích thước càng tương đồng và phần trùng nhau càng nhiều thì có chỉ số Jaccard càng gần giá trị 1.\\
+	Trong đó, A, B lần lượt là phần ảnh mà ô bọc A và ô bọc B chiếm. Công thức này mang ý nghĩa hai ô bọc có kích thước càng tương đồng và phần trùng nhau càng nhiều thì có chỉ số Jaccard\cite{Jaccard} càng gần giá trị 1.\\
 	
 	\begin{center}
 		\centering
 		\includegraphics[width=0.5\linewidth]{Intersection_over_Union_-_visual_equation.png}
 		\vspace{0.5cm}
-		\captionof{figure}{Mô phỏng chỉ số Jaccard}
+		\captionof{figure}{Mô phỏng chỉ số Jaccard\cite{Jaccard}}
 	\end{center}
 	
 	Các ô bọc này có bản chất như một "hệ quy chiếu" cho các ô bọc, sau quá trình kết hợp, các ô bọc "đáp án" được tính độ lệch so với các ô chuẩn tương ứng và khi huấn luyện, mạng SSD\cite{liu2016ssd} có nhiệm vụ dự đoán các ô bọc theo các độ lệch đó. Giá trị hàm lỗi được tính dựa trên độ lêch của ô bọc "đáp án" và độ lệch của ô bọc dự đoán được. Cách tính độ lệch sẽ được đề cập rõ hơn ở phần tính giá trị lỗi.
@@ -519,7 +519,7 @@
 	
 	Vậy ta có thể thấy khi tính giá trại lỗi về vị trí, ta tính dựa trên sai lệch so với ô chuẩn mà ô bọc "đáp án" ban đầu kết hợp được thay vì tính lỗi trực tiếp.\\
 	
-	hàm lỗi về độ tin cậy có thể được tính theo công thức:
+	Hàm lỗi về độ tin cậy có thể được tính theo công thức:
 	
 	$$L_{conf}(x, c) = - \sum^N_{i \in Pos} x^p_{ij} \log (\hat{c}^p_i) - \sum_{i \in Neg} \log (\hat{c}^0_i) $$
 	
@@ -534,9 +534,7 @@
 	
 	Ngay trước quá trình kết hợp, ảnh và các ô bọc được đi qua một bước gọi là cắt ngẫu nhiên\footnote{Thuật ngữ tiếng Anh: Random Crop}. Ở bước này, ảnh được cắt đi một số phần ngẫu nhiên (có tác dụng giống như phóng to (zoom) ảnh. Điều này giúp làm đa dạng dữ liệu huấn luyện và làm giảm bớt hiện tượng overfit.
 	
-	\subsubsection*{Cân bằng nhãn\footnote{Hard Negative Mining}}	
 	
-	Ngay sau bước kết hợp, hầu hết các ô 
 	
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -558,7 +556,7 @@
 	\end{itemize}
 	
 	
-	\subsection{WHOOOOOO \cite{zhang2017watch}  : Watch, Attend and Parse: An End-to-end Neural Network Based Approach to Handwritten Mathematical Expression Recognition} 
+	\subsection{Watch, Attend and Parse: An End-to-end Neural Network Based Approach to Handwritten Mathematical Expression Recognition\cite{zhang2017watch}} 
 	
 	Khác với những bài báo đi trước sử dụng phương pháp phân vùng hay dựa trên ngữ pháp, bài báo này sử dụng phương pháp mang tên Watch, Attend, Parse dựa trên bài toán chú thích cho ảnh \footnote{Thuật ngữ tiếng anh: Image Captioning}. Hệ thống này là sự kết hợp giữa CNN, RNN và một hệ thống ANN (Cụ thể là GRU\cite{cho2014properties}\footnote{Viết tắt: Gated recurrent unit}), CNN đặc trưng cho Watcher sẽ trích đặc trưng ảnh, ANN đặc trưng cho Attend mang nhiệm vụ điều hướng cho mạng biết được vị trí nào sẽ tập trung vào và RNN đặc trưng cho Parser mang nhiệm vụ sinh ra chuỗi Latex chính là đầu ra của hệ thống\\
 	
@@ -572,7 +570,7 @@
 	\subsubsection{Parser}
 	Bản chất của bộ phận này là một mạng GRU\cite{cho2014properties} nhận dữ liệu đầu vào từ hai bộ phận còn lại, từ đó sinh ra chuỗi Latex
 	
-	\subsection{Wenhao He\cite{context}: Context-aware Recognition}
+	\subsection{Context-aware Recognition\cite{context}}
 	\label{subsec: context}
 	Một quá trình nhận dạng biểu thức toán học chuẩn bao gồm 2 giai đoạn: giai đoạn đầu tiên là phân tách và nhận dạng ký hiệu\footnote{symbol segmentation and recognition} , giai đoạn thứ hai là phân tích cấu trúc\footnote{structure analysis}. Nhiều công trình nghiên cứu trước đây về nhận dạng biểu thức toán học cũng thực hiện theo phương pháp như vậy. Nhược điểm của những phương pháp dạng này là thực hiện hai quá trình trên một cách độc lập, do đó thông tin cấu trúc\footnote{structure information hay context information} của biểu thức không được đưa vào quá trình nhận dạng. Như vậy sẽ dẫn đến lỗi\cite{context}.
 	
@@ -734,14 +732,14 @@
 	\begin{itemize}
 		\item Danh sách kích thước feature map: (38, 19, 10, 5, 3, 1)
 		\item Danh sách kích thước các ổ chuẩn (với $s_{min} = 0.2$ và $s_{max} = 0.9$): (30, 60, 111, 162, 213, 264, 315)
-		\item Ngưỡng Jaccard: 0.5.
+		\item Ngưỡng Jaccard\cite{Jaccard}: 0.5.
 	\end{itemize}
 	
 	\subsubsection{Các thay đổi}
 	
 	Do bản chất mạng SSD300\cite{liu2016ssd} gặp rất nhiều khó khăn trong việc nhận dạng ký tự nhỏ do một số lý do:
 	\begin{itemize}
-		\item Trong quá trình kết hợp, các ô bọc "đáp án" kết hợp với ô chuẩn phải có chỉ số Jaccard lớn hơn 0.5, nhưng kích thước tối thiểu của ô chuẩn lại là $30 \times 30$ pixel, vì vậy nhiều ký tự nhỏ không thể kết hợp được (Trường hợp này xãy ra với hầu hết những ảnh có chữ nhỏ, ví dụ như ảnh dưới)
+		\item Trong quá trình kết hợp, các ô bọc "đáp án" kết hợp với ô chuẩn phải có chỉ số Jaccard\cite{Jaccard} lớn hơn 0.5, nhưng kích thước tối thiểu của ô chuẩn lại là $30 \times 30$ pixel, vì vậy nhiều ký tự nhỏ không thể kết hợp được (Trường hợp này xãy ra với hầu hết những ảnh có chữ nhỏ, ví dụ như ảnh dưới)
 		\begin{center}
 			\centering
 			\includegraphics[resolution=300]{HMER_2017_TEST1_MINH_01_2A.png}
@@ -750,7 +748,7 @@
 		\end{center}
 		Khi không thể kết hợp được thì vùng ký tự đó được hiểu là phần nền, điều này gây bất lợi lớn cho quá trình huấn luyện do vùng ảnh không trống nhưng lúc là nền lúc lại được gắn nhãn.
 		
-		\item Nhiều ký tự có tỉ lệ diện mạo đặc biệt (Ví dụ như ký tự dấu $-$ trong phân số hoặc $\int$) cũng gặp nhiều khó khăn trong việc kết hợp do không đạt được ngưỡng Jaccard.
+		\item Nhiều ký tự có tỉ lệ diện mạo đặc biệt (Ví dụ như ký tự dấu $-$ trong phân số hoặc $\int$) cũng gặp nhiều khó khăn trong việc kết hợp do không đạt được ngưỡng Jaccard\cite{Jaccard}.
 	\end{itemize}
 	
 	Vì vậy, nhóm đã sửa một số thông số để tìm cách giải quyết vấn đề trên, trong nhiều bộ thông số thì có 3 mô hình nổi bật.
@@ -855,7 +853,7 @@
 	
 	\begin{center}
 		\centering
-		\includegraphics[width=0.85\linewidth]{LexBST.png}
+		\includegraphics[width=0.85\linewidth]{lexBST.png}
 		\vspace{0.5cm}
 		\captionof{figure}{Một cây Lexed - BST\cite{zanibbi}}
 	\end{center}
@@ -889,7 +887,7 @@
 			
 		\end{tabular}
 		\captionof{table}{Bảng phân lớp các ký tự cần nhận diện và các ngưỡng xác định phân vùng con}
-	
+		
 	\end{center}
 	
 	Trong đó:
@@ -922,7 +920,7 @@
 	$$ \sum^{n = 100000} a $$
 	Thì ký tự chủ đạo là $\sum$ nhưng ký tự bên trái nhất lại là $n$, Draculae\cite{zanibbi} được thiết kế để có thể chống lại những trường hợp như vậy.\\
 	
-
+	
 	Để tìm ký tự chủ đạo, ta cần thực hiện những công đoạn sau:
 	\begin{itemize}
 		\item Trước hết, ta tìm ký tự nằm bên trái nhất.
@@ -1061,12 +1059,12 @@
 		\end{center}
 		\item Thực hiện gán nhãn và xác định bounding box cho từng ký hiệu trong ảnh thu được từ bước trên bằng công cụ do nhóm tự thực hiện với giao diện như hình bên dưới. Công cụ này cho phép tải ảnh, xác định bounding boxes cho các đối tượng trong ảnh bằng cách kéo thả chuột từ góc trên bên trái đến góc dưới bên phải của từng đối tượng và nhập nhãn cho mỗi đối tượng đó. Quá trình này kết thúc sẽ thu được file với định dạng .txt lưu thông tin cần thiết về dữ liệu cho quá trình huấn luyện và kiểm tra. 
 		\begin{center}
-		\centering
-		\includegraphics[width=0.65\linewidth]{tool}
-		\vspace{0.5cm}
-		\captionof{figure}{Giao diện công cụ hỗ trợ quá trình gán nhãn và xác định bounding boxes. }
+			\centering
+			\includegraphics[width=0.65\linewidth]{tool}
+			\vspace{0.5cm}
+			\captionof{figure}{Giao diện công cụ hỗ trợ quá trình gán nhãn và xác định bounding boxes. }
 		\end{center}
-		\end{itemize}
+	\end{itemize}
 	\subsubsubsection{Thông tin mô tả tập dữ liệu biểu thức:}
 	\begin{itemize}
 		\item Số người tham gia: khoảng 88 
@@ -1112,6 +1110,45 @@
 		\captionof{figure}{Giao diện bản thử nghiệm}
 	\end{center}
 	\subsection{Kết quả}
+	\subsubsection{Quy ước}
+	
+	Trong mục phương pháp đề xuất, nhóm đã đưa ra bốn mô hình, bốn mô hình này sẽ được đánh số như sau:
+	\begin{itemize}
+		\item Mô hình I: Mạng SSD300 nguyên thủy\cite{liu2016ssd}.
+		\item Mô hình II: Mạng SSD300\cite{liu2016ssd} với thay đổi giảm kích thước các ô chuẩn.
+		\item Mô hình III: Mạng SSD300\cite{liu2016ssd} với thay đổi giảm kích thước các ô chuẩn và tăng ảnh đầu vào lên $500 \times 500$.
+		\item Mô hình IV: Mạng SSD300\cite{liu2016ssd} với thay đổi giảm kích thước các ô chuẩn, tăng kích thước ảnh đầu vào và tăng thêm một số lớp tích chập.
+	\end{itemize}
+	
+	\subsubsection{Định tính giữa bốn mô hình}
+	\subsubsubsection{Quá trình kết hợp}
+	Nhóm đã giảm kích thước các ô chuẩn, đồng thời phóng to ảnh đầu vào, một phần mục đích là để quá trình kết hợp có thể thực hiện tốt hơn đối với các ký tự nhỏ. Công việc này thật sự đã cải thiện được quá trình kết hợp khi kích thước tối thiểu của ô bọc "đáp án" được cải thiện một cách đáng kể:
+	
+	\begin{center}
+		\begin{tabular}{||c | c | c | c | c||} 
+			\hline
+			Mô hình & \makecell{  I } & \makecell{ II} & III &  \makecell{ IV}  \\ [0.5ex] 
+			\hline
+			Ô bọc vuông & $22 \times 22$ & $12 \times 12$ & $7 \times 7$ & $7 \times 7$ \\
+			\hline
+			Ô bọc có tỉ lệ 1 : 2 & $16 \times 32$ & $16 \times 32$ & $5 \times 10$ & $5 \times 10$ \\
+			\hline
+		\end{tabular}
+		\captionof{table}{Kích thước ô bọc "đáp án" nhỏ nhất mà mạng có thể kết hợp với ô chuẩn được của bốn mô hình đề xuất. (Đơn vị tính: Điểm ảnh - Pixel) }
+	\end{center}
+	
+	\subsubsubsection{Quá trình nhận diện}
+	
+	Kết quả của mô hình II khá tệ, về mặt lý thuyết thì khi giảm kích thước các ô bọc, khả năng nhận diện các ký tự nhỏ sẽ tốt hơn, tuy nhiên khi áp dụng cho mô hình II, mạng đã gặp một số vấn đề: 
+	
+	\begin{itemize}
+		\item Giảm kích thước ô bọc sẽ khiến cho các ký tự lớn "bị hổng", do các ô bọc quá lớn khi tính chỉ số Jaccard\cite{Jaccard} với các ô chuẩn quá nhỏ sẽ không đủ ngưỡng, vì vậy mạng không thể kết hợp được các ký tự lớn, từ đó mạng cũng không thể nhận diện các ký tự lớn.
+		\item Mạng có thể nhận diện được các ký tự nhỏ hơn, tuy nhiên các ký tự này cũng không đủ nhỏ để bao phủ phần lớn các ký tự nhỏ có trong tập dữ liệu.
+	\end{itemize}
+	
+	Kết quả của mô hình III và IV khá tốt, hệ thống đã có thể nhận diện nhiều ký tự rất nhỏ
+	
+	\subsubsection{Định lượng}
 	Trong quá trình thực hiện, nhóm đã xây dựng 4 mô hình huấn luyện dựa trên những thay đổi của 3 yếu tố sau:
 	\begin{itemize}
 		\item Kích thước ảnh đầu vào của mạng SSD.
@@ -1135,8 +1172,8 @@
 	\end{center}
 	Kết quả đánh giá của 4 mô hình thử nghiệm trên cùng một tập kiểm tra 
 	
-
-
+	
+	
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	\newpage	
