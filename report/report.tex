@@ -750,9 +750,7 @@
 	\end{center}
 	
 	
-	Các lớp tích chập đều sử dụng hàm truyền là hàm ReLu\cite{relu}. Ở sau các lớp Conv\_10\_1, Conv\_10\_2, Conv\_11\_1, Conv\_11\_2 thì có thêm một lớp dropout\cite{srivastava2014dropout} với hệ số dropout là 0.2.
-	
-	Các feature map được trích ra để thực hiện công đoạn phát hiện, phân loại ký tự tại vị trí các mủi tên màu đỏ trên hình, cụ thể:
+	Các lớp tích chập đều sử dụng hàm truyền là hàm ReLu\cite{relu}. Ở sau các lớp Conv\_10\_1, Conv\_10\_2, Conv\_11\_1, Conv\_11\_2 thì có thêm một lớp dropout\cite{srivastava2014dropout} với hệ số dropout là 0.2. Giữa một số lớp tích chập và pooling là nơi các feature map được trích ra để thực hiện công đoạn phát hiện, phân loại ký tự (được thể hiện bởi các mủi tên màu đỏ trên hình), cụ thể:
 	
 	\begin{itemize}
 		\item Ngay sau khối tích chập - pooling 512 thứ nhất trong mạng VGG\cite{simonyan2014very} (hay sau lớp pooling của lớp tích chập thứ 10 của mạng VGG\cite{simonyan2014very} - hay Conv\_4).
