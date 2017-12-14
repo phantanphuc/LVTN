@@ -542,7 +542,7 @@
 	Hàm lỗi về độ tin cậy có thể được tính theo công thức:
 	\begin{align}
 	L_{conf}(x, c) = - \sum^N_{i \in Pos} x^p_{ij} \log (\hat{c}^p_i) - \sum_{i \in Neg} \log (\hat{c}^0_i)
-	\end{align}
+N_u	\end{align}
 	
 	Với \begin{align}\hat{c}_i^p = \frac{\exp{c_i^p}}{\sum_p \exp{c)i^p}}\end{align}
 	
@@ -685,11 +685,20 @@
 	
 	\newpage
 	\section{Mô hình đề xuất}
-	
+	\label{sec: mohinhdexuat}
 	\subsection{Tổng quan}
-	
-	Nhóm quyết định sử dụng mạng SSD\cite{liu2016ssd} để phát hiện các ký tự trong ảnh và sau đó sử dụng bộ phân tích cú pháp DRACULAE\cite{zanibbi} để sinh ra chuỗi Latex.
-	
+	Để giải quyết đề tài, nhóm chọn hướng tiếp cận là thực hiện tuần tự 2 quá trình nhận dạng ký tự và phân tích cấu trúc. Quy trình thực hiện như hình bên dưới.
+	\begin{center}
+		
+		\centering
+		\includegraphics[width=0.8\linewidth]{overview}
+		\vspace{0.5cm}
+		\captionof{figure}{Mô hình phương pháp.}
+	\end{center}
+	\begin{itemize}
+		\item Ở bước nhận dạng ký tự, ảnh đầu vào là ảnh xám sẽ qua mạng SSD\cite{liu2016ssd} để tạo ra một danh sách các nhãn và bounding box được kỳ vọng là tương ứng với các ký tự có trong ảnh.
+		\item Với giai đoạn phân tích cấu trúc, từ danh sách nhãn và bounding box trả ra từ giai đoạn trước, sử dụng bộ phân tích cấu trúc DRACULAE \cite{zanibbi} để sinh ra chuỗi Latex.
+	\end{itemize}
 	\subsection{Nhận diện ký tự}
 	
 	\subsubsection{Mạng cơ sở}
@@ -973,7 +982,7 @@
 	\end{itemize}
 	\subsubsection{Xây dựng tập biểu thức}
 	Để phục vụ quá trình huấn luyện của mạng SSD được nêu trong Chương 4, ngoài tập ký tự nhóm cần phải xây dựng thêm tập ảnh các biểu thức Toán học viết tay.\\
-	\subsubsubsection{Quá trình thu thập dữ liệu bao gồm các công việc:}
+	\subsubsubsection{Quá trình thu thập dữ liệu}
 	\begin{itemize}
 		\item Tạo biểu mẫu để thu dữ liệu. Biễu mẫu này có 6 hàng và 2 cột như hình bên dưới. 
 		\begin{center}
@@ -997,7 +1006,7 @@
 			\vspace{0.5cm}
 			\captionof{figure}{Ví dụ một mẫu thu thập được từ người tham gia viết.}
 		\end{center}
-		\item Tập hợp lại các biểu mẫu sau khi cho người tham gia viết rồi mang đi scan. Sau đó xử lý qua một đoạn mã Matlab\cite{qak}\footnote{Đoạn mã này đã được chỉnh sửa để phù hợp với hình dạng mẫu lấy biểu thức của nhóm.} để từ một ảnh gồm nhiều biểu thức thu được ảnh chỉ chứa đúng một biểu thức như hình bên dưới.
+		\item Tập hợp lại các biểu mẫu sau khi cho người tham gia viết rồi mang đi scan. Sau đó xử lý qua một đoạn mã Matlab\cite{qak}\footnote{Đoạn mã này đã được chỉnh sửa để phù hợp với hình dạng mẫu lấy biểu thức của nhóm.} để từ một ảnh gồm nhiều biểu thức thu được ảnh chỉ chứa đúng một biểu thức như hình bên dưới. Ảnh này là ảnh xám, với kích thước $300\times300$.
 		\begin{center}
 			\centering
 			\includegraphics[width=0.5\linewidth]{EXP_2017_072_2A.png}
@@ -1012,10 +1021,15 @@
 			\captionof{figure}{Giao diện công cụ hỗ trợ quá trình gán nhãn và xác định bounding boxes. }
 		\end{center}
 	\end{itemize}
-	\subsubsubsection{Thông tin mô tả tập dữ liệu biểu thức:}
+	\subsubsubsection{Thông tin mô tả tập dữ liệu biểu thức}
 	\begin{itemize}
 		\item Số người tham gia: khoảng 88 
 		\item Số lượng ảnh\footnote{Mỗi ảnh chỉ chứa một biểu thức.}:  2256. Trong đó có 1746 ảnh dùng cho training, 138 ảnh dùng cho quá trình validation và 372 ảnh để test.
+		Trong đó, 372 ảnh test được thu thập từ 2 nguồn:
+		\begin{itemize}
+		 	\item 192 ảnh được viết bởi người chưa từng tham gia viết cho quá trình thu thập ảnh cho huấn luyện.
+		 	\item 102 ảnh còn lại được viết bởi 15 người đã tham gia quá trình thu thập ảnh cho huấn luyện.
+		\end{itemize}
 		\item Số loại biểu thức: khoảng 552
 		\item Tổng số ký tự trong tập huấn luyện: 13697
 		\item Tổng số ký tự trong tập kiểm tra: 2237
@@ -1023,16 +1037,18 @@
 	\end{itemize}
 	Hình minh hoạ cho sự phận phối số lượng ký tự trong từng nhãn đối với tập huấn luyện và tập kiểm tra.
 	\begin{figure}
+	
 		\includegraphics[width=0.475\linewidth]{train_statis.png}
 		\hfill
 		\includegraphics[width=0.475\linewidth]{test_statis.png}
 		\vspace{0.5cm}
 		\captionof{figure}{Sự phân phối ký tự theo từng nhãn đối với tập huấn luyện và tập kiểm tra.}
+		\label{fig: distribution}
 	\end{figure}
 	
 	\newpage
 	\subsection{Xây dựng mô hình}
-	
+	\label{subsec: xaydungmohinh}
 	Do bản chất mạng SSD300\cite{liu2016ssd} gặp rất nhiều khó khăn trong việc nhận dạng ký tự nhỏ do một số lý do:
 	\begin{itemize}
 		\item Trong quá trình matching, các bounding box ground truth khi match với các default box phải có chỉ số Jaccard\cite{Jaccard} lớn hơn 0.5, nhưng kích thước tối thiểu của default box lại là $30 \times 30$ pixel, vì vậy nhiều ký tự nhỏ không thể match được (Trường hợp này xãy ra với hầu hết những ảnh có chữ nhỏ, ví dụ như ảnh dưới)
@@ -1046,15 +1062,12 @@
 		
 		\item Nhiều ký tự có aspect ratio đặc biệt (Ví dụ như ký tự dấu $-$ trong phân số hoặc $\int$) cũng gặp nhiều khó khăn trong việc matching do không đạt được ngưỡng Jaccard\cite{Jaccard}.
 	\end{itemize}
-	
-	Vì vậy, nhóm đã sửa một số thông số để tìm cách giải quyết vấn đề trên, trong nhiều bộ thông số thì có 3 phiên bản nổi bật sẽ được đặc tả bên dưới. Để thuận tiện, nhóm xin phép được đặt tên phiên bản SSD300 nguyên thủy\cite{liu2016ssd} là phiên bản I, và 3 phiên bản được dể xuất sau được đặt tên lần lượt là phiên bản II, III, IV.
+	Vì vậy, nhóm đã sửa một số thông số để tìm cách giải quyết vấn đề trên, trong nhiều bộ thông số thì có 3 phiên bản nổi bật sẽ được đặc tả bên dưới. Để thuận tiện, nhóm xin phép được đặt tên phiên bản SSD300 nguyên thủy\cite{liu2016ssd} với sự thiết lập đã được giới thiệu trong \ref{sec: mohinhdexuat} là phiên bản I, và 3 phiên bản được dể xuất sau được đặt tên lần lượt là phiên bản II, III, IV.
 	
 	\subsubsection{Giảm kích thước các default box - Phiên bản II}
 	
 	Phiên bản này dựa trên phiên bản SSD300 nguyên thủy\cite{liu2016ssd}, chỉ chỉnh sửa kích thước các bounding box thông qua chỉnh hai thông số $s_{min} = 0.08$ và $s_{max} = 0.5$, từ đó danh sách kích thước các default box được thay đổi thành (9, 24, 54, 84, 114, 144, 174). So với phiên bản nguyên thủy, phiên bản này không thể match tốt các ký tự lớn (lớn hơn khoảng $200 \times 200$ pixel). Tuy vậy, đối với bài toán về phát hiện các ký tự trong một ảnh, thì kích thước các ký tự không thể quá lớn, nên những ký tự đặc biệt lớn như vậy có thể được xem xét ở độ ưu tiên thấp hơn.\\
-	
 	Việc thay đổi tham số ở phiên bản này không làm ảnh hưởng lớn đến cấu trúc mạng cũng như quá trình mã hóa, giải mã. Số lượng dự đoán không thay đổi.\\
-	
 	Mục đích chính của thay đổi này là để quá trình matching diễn ra tốt hơn khi kích thước của default box nhỏ nhất là $9 \times 9$, điều này giúp cho những ký tự rất nhỏ vẫn có thể được match, tránh hiện tượng bỏ sót ký tự như mạng SSD300 nguyên thủy\cite{liu2016ssd}.
 	
 	\subsubsection{Giảm kích thước các default box và tăng kích thước ảnh đầu vào - Phiên bản III}
@@ -1064,7 +1077,6 @@
 		\item Thay vì sử dụng ảnh $300 \times 300$ như nguyên thủy, ảnh sẽ được phóng to lên kích thước $500 \times 500$.
 		\item Như ở phiên bản đề xuất trước, nhóm thay đổi $s_{min} = 0.08$ và $s_{max} = 0.5$ từ đó thu được danh sách kích thước (15.0, 40, 80, 120, 160., 200, 240, 280).
 	\end{itemize}
-	
 	Những thay đổi trên có làm thay đổi đến cấu trúc mạng SSD\cite{liu2016ssd}, khi tăng kích thước ảnh đầu vào nghĩa là kích thước của các feature map thu thập được cũng tăng lên, từ đó kéo số lượng dự đoán trong một ảnh tăng lên như bảng dưới.\\
 	
 	\begin{center}
@@ -1087,7 +1099,6 @@
 		\end{tabular}
 		\captionof{table}{Thông tin của các feature map trích được từ mạng SSD đã giảm kích thước default box và tăng kích thước ảnh đầu vào}
 	\end{center}
-	
 	Như vậy với mỗi ảnh, hệ thống sinh ra 24148 dự đoán, gấp gần 3 lần so với ảnh SSD300 nguyên thủy\cite{liu2016ssd}. Với những thay đổi này bounding box thậm chí còn có thể match với những default box nhỏ hơn, bên cạnh đó, mật độ các default box cũng dày đặc hơn nhiều so với mạng SSD nguyên thủy\cite{liu2016ssd}.
 	
 	\subsubsection{Giảm kích thước các default box, tăng kích thước ảnh đầu vào và thêm lớp tích chập - Phiên bản IV}
@@ -1132,7 +1143,6 @@
 		\end{tabular}
 		\captionof{table}{Thông tin của các feature map trích được từ mạng SSD\cite{liu2016ssd} đã giảm kích thước default box, tăng kích thước ảnh đầu vào và tăng số lớp tích chập}
 	\end{center}
-	
 	Lớp Conv\_12 được thêm vào cuối mạng với mục đích tăng độ dài danh sách feature map đưa vào lớp Multibox, điều này giúp trong quá trình matching, các ký tự lớn hơn có thể được match.
 	
 	\subsection{Xây dựng bản thử nghiệm}
@@ -1174,10 +1184,8 @@
 		\item Giảm kích thước bounding box sẽ khiến cho các ký tự lớn "bị hổng", do các bounding box quá lớn khi tính chỉ số Jaccard\cite{Jaccard} với các default box quá nhỏ sẽ không đủ ngưỡng, vì vậy mạng không thể match được các ký tự lớn, từ đó mạng cũng không thể nhận diện các ký tự lớn.
 		\item Mạng có thể nhận diện được các ký tự nhỏ hơn, tuy nhiên các ký tự này cũng không đủ nhỏ để bao phủ phần lớn các ký tự nhỏ có trong tập dữ liệu.
 	\end{itemize}
-	
-	Vì vậy, qua thực nghiệm, phiên bản II đưa ra dự đoán về ký tự nhỏ tốt hơn phiên bản I một ít, nhưng kết quả vẫn còn rất tệ. Tuy vậy đối với những ký tự lớn, phiên bản II tỏ ra yếu hơn so với phiên bản I.
-	
-	Ngược lại với phiên bản II, kết quả của phiên bản III và IV khá tốt, hệ thống đã có thể nhận diện nhiều ký tự rất nhỏ và tương đối chuẩn xác, phiên bản IV hầu như không thua kém phiên bản I trong việc nhận diện ký tự lớn, một số ký tự phiên bản I nhận diện được nhưng phiên bản IV không thể và ngược lại. Để hoàn thiện phiên bản III, IV trong việc nhận diện ký tự lớn, nhóm có đề xuất một hướng đi trong tương lai để cải thiện khả năng nhận diện ký tự lớn này.
+	Vì vậy, qua thực nghiệm, phiên bản II đưa ra dự đoán về ký tự nhỏ tốt hơn phiên bản I một ít, nhưng kết quả vẫn còn rất tệ. Tuy vậy đối với những ký tự lớn, phiên bản II tỏ ra yếu hơn so với phiên bản I.\\
+	Ngược lại với phiên bản II, kết quả của phiên bản III và IV khá tốt, hệ thống đã có thể nhận diện nhiều ký tự rất nhỏ và tương đối chuẩn xác, phiên bản IV hầu như không thua kém phiên bản I trong việc nhận diện ký tự lớn, một số ký tự phiên bản I nhận diện được nhưng phiên bản IV không thể và ngược lại. Để hoàn thiện phiên bản III, IV trong việc nhận diện ký tự lớn, nhóm có đề xuất một hướng đi trong tương lai để cải thiện khả năng nhận diện ký tự lớn này.\\
 	
 	\begin{center}
 		\centering
@@ -1211,10 +1219,6 @@
 		\captionof{figure}{Kết quả dự đoán của 4 phiên bản. Khả năng nhận diện ký tự lớn giảm mạnh ở phiên bản II.}
 	\end{center}
 	
-	
-	
-	
-	
 	\begin{center}
 		\centering
 		\includegraphics[width=0.775\linewidth]{compare_5.png}
@@ -1222,8 +1226,6 @@
 		
 		\captionof{figure}{Kết quả dự đoán của 4 phiên bản. Khả năng nhận diện ký tự lớn ở phiên bản IV không thua kém phiên bản I.}
 	\end{center}
-	
-	
 	Đặc biệt, có nhiều biểu thức có ký tự rất nhỏ nhưng phiên bản IV đã làm việc rất tốt:
 	
 	\begin{center}
@@ -1242,7 +1244,7 @@
 		\item Kích thước default boxes.
 		\item Số lượng default boxes.
 	\end{itemize}
-	Thông tin cụ thể như bảng bên dưới.
+	Thông tin cụ thể đã được trình bày ở phần \ref{subsec: xaydungmohinh} của chương này, bên dưới là bảng tóm tắt.
 	\begin{center}
 		\begin{tabular}{||c | c | c | c | c||} 
 			\hline
@@ -1259,8 +1261,19 @@
 	\end{center}
 	Điều kiện đánh giá:
 	\begin{itemize}
-		\item Cùng một tập ảnh kiểm tra với 372 ảnh. Phân phối số lượng ký tự trên từng nhãn của tập ảnh kiểm tra được thể hiện trong Hình 16.
-		\item Độ đo sử dụng: mAP
+		\item Cùng một tập ảnh kiểm tra với 372 ảnh. Phân phối số lượng ký tự trên từng nhãn của tập ảnh kiểm tra được thể hiện trong Hình \ref{fig: distribution}.
+		\item Độ đo sử dụng: mAP\\
+		Cách tính:\\ Tính precision cho từng nhãn theo công thức\cite{mAP}:
+		\begin{align}
+		precision = \frac{TP}{TP+FP},
+		\end{align}
+		\hspace{2cm}với $TP$ được viết tắt từ $True Positive$\cite{mAP} và $FP$ từ $False Positive$\cite{mAP}.\\
+		Tính trọng số của từng nhãn trong tập dữ liệu kiểm tra theo công thức:
+		\begin{align}
+		class\_weight_i = \frac{N_i}{\sum_{u=0}^{106}N_u},
+		\end{align}
+		\hspace{2cm}với $N_i$ là số lượng ký tự thuộc nhãn $i$.\\
+		mAP là trung bình có trọng số giữa $precision$ và $class\_weight$.
 		\item Điều kiện máy chạy đánh giá:
 		\begin{itemize}
 			\item Hệ điều hành:
@@ -1269,32 +1282,38 @@
 		\end{itemize}
 	\end{itemize}
 	Kết quả đánh giá của 4 phiên bản:
+	\vspace{0.5cm}
 	\begin{center}
 		\begin{tabular}{||c | c | c | c | c||} 
 			\hline
 			phiên bản & I&II&III&IV\\[0.5ex] 
 			\hline\hline
-			mAP&0.58045049&0.525435115&0.66937778&0.671899566\\
+			mAP&0.58036471&0.505290245&0.63949538&0.65268642\\
 			\hline
-			\makecell{Số lượng ký tự\\ nhận dạng được\footnote{Không xét đến sự đúng sai.}}&1581&1054&1837&1920\\
+			\makecell{Số lượng ký tự\\ nhận dạng được}&1581&1054&1837&1920\\
+			\hline
+			\makecell{Số file ảnh\\ không xử lý được}&4/372&8/372&0/372&0/372\\
 			\hline
 		\end{tabular}
 		\captionof{table}{Kết quả mAP của 4 phiên bản thử nghiệm.}
 	\end{center}
+	\vspace{1.5cm}
 	\begin{center}
 		\centering
 		\includegraphics[width=0.775\linewidth]{mAP.png}
 		\vspace{0.5cm}
-		
 		\captionof{figure}{Trực quan kết quả mAP cho 4 phiên bản thử nghiệm.}
 	\end{center}
-	
+	Như vậy, từ mô hình ban đầu- mô hình I- với những thiết lập được giữ y nguyên như \cite{liu2016ssd}, nhóm đã thay đổi để tạo ra được mô hình IV- mô hình tốt nhất của nhóm. Từ đó nâng chỉ số mAP từ khoảng $58\%$ lên khoảng $65\%$. Nhìn vào đánh giá giữa 4 mô hình, rõ ràng thấy được việc thay đổi kích thước ảnh đầu vào và kích thước default box có tác động mạnh đến việc cải thiện độ chính xác của phương pháp. 
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	\newpage	
 	\section{Tổng kết}
 	
 	\subsection{Kết luận}
+	Hệ thống nhận dạng biệu thức toán học viết tay mà nhóm đang xây dựng là bước đầu cho một ứng dụng tiện ích sau này đối với các bạn học sinh, sinh viên cũng như với những giáo viên- những người thường xuyên tiếp xúc với các con số, công thức và mong muốn rằng có một sản phẩm nào đó hỗ trợ giải các bài toán không chỉ bằng cách đưa ra đáp số mà còn là hướng dẫn giải từng bước, vẽ đồ thị hàm số hay thậm chí cho phép tương tác lên hình ảnh đồ thị đó, gợi ý họ những đoạn lệnh Latex hay có thể là một ngôn ngữ tương tự từ ảnh của những biểu thức để tiết kiệm thời gian soạn thảo những công thức dài và phức tạp. Ngoài ra, với việc có thể trực quan những đồ thị hàm số hay hướng dẫn giải một số loại bài toán sẽ giúp cho việc dạy và học trở nên sinh động và thuận lợi hơn. Như vậy, rất rất nhiều những ứng dụng có thể phát triển từ hệ thống nhận dạng mà nhóm đang thực hiện. \\
+	Với hệ thống này, nhóm đã sử dụng phương pháp phát hiện và nhận dạng của mạng SSD thay vì những phương pháp phân tách phổ biến như phân tích hình chiếu, phân tích thành phần liên thông để khắc phục những lỗi sai có thể xảy ra khi gặp những ký tự dính nhau, bọc lấy nhau kết hợp với bộ phân tích cấu trúc DRACULAE, hệ thống sẽ giải quyết được nhiều loại công thức phức tạp hơn như những công thức có chứa chỉ số trên, chỉ số dưới,... 
+	Ngoài ra, trong quá trình thực hiện đề tài, nhóm đã phát triển 2 tập dữ liệu viết tay bao gồm 1 tập các ký tự và 1 tập những biểu thức từ đơn giản đến phức tạp. Với tập ký tự, dữ liệu đã lên tới con số 52353 file ảnh còn đối với tập biểu thức, hiện tại nhóm đã có 2256 ảnh. Đây là điều kiện quan trọng để nhóm có thể thực hiện những bước huấn luyện, đánh giá mô hình và cũng là cơ sở cho những đề tài liên quan đến chữ viết tay. 
 	\subsection{Đánh giá ưu, nhược điểm}
 	
 	\subsubsection{Ưu điểm}
@@ -1314,14 +1333,37 @@
 		\item Các ký tự hoàn toàn trùng lên nhau dễ bị bỏ sót (dấu căn).
 	\end{itemize}
 	\subsection{Hướng phát triển trong tương lai}
+	Đến thời điểm kết thúc luận văn, hệ thống mà nhóm xây dựng vẫn còn tồn tại những khuyết điểm và cả những trường hợp mà nhóm chưa có thời gian để kiểm tra. Trong đó nổi lên 2 vấn đề mà nhóm đã tiến hành giải quyết thử và thu được kết quả tốt là việc thu nhỏ nội dung ảnh để có thể khắc phục lỗi sai mà hệ thống mắc phải khi gặp những ký tự quá lớn và tăng cường thêm dữ liệu để giải quyết trực tiếp vô trường hợp chỉ số dưới của 2 ảnh trong tập test không nhận diện được. Ngoài ra vẫn còn nhiều trường hợp khác nữa mà theo nhóm đó là hướng phát triển trong tương lai của đề tài. 
 	
-	Hệ thống còn nhiều điểm có thể cải thiện thêm, trong đó có hai vấn đề nổi bật là mở rộng tập dữ liệu về cả số lượng ảnh và số lượng nhãn và thêm công đoạn tiền xử lý.
+	\subsubsection{Mở rộng tập dữ liệu biểu thức}
+	Trong quá trình đánh giá hệ thống trên tập kiểm tra với mô hình IV, nhóm nhận thấy đối với 2 ảnh bên dưới hệ thống không nhận dạng được chỉ số dưới- cụ thể là số 1. 
+		\begin{center}
+		\centering
+		\includegraphics[width=0.6\linewidth]{M1E1}
+		\vspace{0.5cm}
+		\captionof{figure}{Trường hợp không nhận được chỉ số dưới.}
+		\label{fig: m1}
+	\end{center}
+	Trên nhận định lý do của vấn đề này là do trong tập huấn luyện số lượng mẫu với chỉ số dưới còn ít và thiếu những mẫu mà chỉ số dưới dính vào hệ số của nó, nhóm đã bổ sung thêm 96 ảnh với nội dung cố định là $E_1$ và $M_1$ vào tập huấn luyện và 24 ảnh để kiểm tra với hy vọng sau khi huấn luyện lại với lượng ảnh bổ sung thì tình trạng trong Hình \ref{fig: m1} sẽ được giải quyết.\\
+	Sử dụng kiến trúc mạng theo mô hình IV, sau quá trình huấn luyện với tập dữ liệu đã được thêm mới, nhóm thu được kết quả là cả 24 ảnh kiểm tra đều được nhận dạng đúng.
+	\vspace{1cm}
+	\begin{center}
+		\centering
+		\includegraphics[width=0.7\linewidth]{subfolder}
+		\vspace{0.5cm}
+		\captionof{figure}{ Kết quả nhận dạng chỉ số dưới trên bộ ảnh test mới.}
+	\end{center}
+	Và kết quả trên 2 ảnh gặp lỗi ở Hình \ref{fig: m1}:
+	\begin{center}
+		\centering
+		\includegraphics[width=0.7\linewidth]{M1E1_res}
+		\vspace{0.5cm}
+		\captionof{figure}{ Kết quả nhận dạng sau khi được huấn luyện với dữ liệu bổ sung.}
+	\end{center}
+	Có thể nhận thấy được rằng, ký tự tại vị trí dấu gạch đỏ ở hình bên trái đã được nhận diện, tuy nhiên với hình bên phải thì lại không. 
+	\subsubsection{Khắc phục lỗi nhận dạng sai ở ký tự lớn}
 	
-	\subsubsection{Mở rộng tập dữ liệu}
-	
-	\subsubsection{Công đoạn tiền xử lý}
-	
-	Như nhóm đã đề cập ở phần trước, phiên bản IV hoạt động chưa tốt với những ký tự quá lớn, nắm được điều này, nhóm đã thử thu nhỏ ảnh và tiến hành chèn thêm (padding) vào ảnh đã thu nhỏ đó để vẫn được ảnh có kích thước $500 \times 500$ 
+	Như nhóm đã đề cập ở phần trước, phiên bản IV hoạt động chưa tốt với những ký tự quá lớn, nắm được điều này, nhóm đã thử thu nhỏ ảnh và tiến hành chèn thêm (padding) vào ảnh đã thu nhỏ đó để nội dung ảnh thì nhỏ lại nhưng kích thước ảnh không đổi, vẫn $500 \times 500$.
 	
 	\begin{center}
 		\centering
@@ -1340,18 +1382,24 @@
 		
 		\captionof{figure}{Kết quả thu được sau khi thu nhỏ nội dung ảnh.}
 	\end{center}
-	
-	Vì vậy, nhóm tin rằng có thể thêm vào hệ thống một bộ phận tiền xử lý có nhiệm vụ tự động thu nhỏ nội dung ảnh nếu cần và nếu phù hợp
+	Vì vậy, một trong những điều cần được thực hiện ngay trong tương lai là tối ưu hoá bộ tiền xử lý để xử lý linh hoạt cho những ảnh có nội dung lớn và nhỏ khác nhau. Từ đó tạo ra bộ ảnh đầu vào phù hợp cho hệ thống.
+	%Vì vậy, nhóm tin rằng có thể thêm vào hệ thống một bộ phận tiền xử lý có nhiệm vụ tự động thu nhỏ nội dung ảnh nếu cần và nếu phù hợp.
 	
 	\subsubsection{Các hướng phát triển khác}
-	
-	Ngoài ra, hệ thống vẫn còn nhiều điểm có thể cải thiện thêm, trong tương lai, có thể:
+	Như đã đề cập ở đầu mục này, vẫn còn nhiều trường hợp mà nhóm không có đủ thời gian để kiểm tra trong giai đoạn luận văn. Đây cũng là những hướng đi mà trong tương lai nhóm cần phải thực hiện. Cụ thể, nhóm chưa kiểm tra được liệu hệ thống của mình có thể hoạt động tốt trong các tình huống sau:
+	\begin{itemize}
+		\item Ảnh chứa đựng các ký tự nghiêng.
+		\item Ảnh có nhiễu.
+		\item Ảnh với nền khác màu trắng.
+		\item Ảnh chụp thay vì scan.
+		
+	\end{itemize}
+	\vspace{1cm}
+	Ngoài ra, cũng còn những điều cần hoàn thiện:
 	\begin{itemize}
 		\item Thêm phần hậu xử lý ở các giai đoạn nhận diện ký tự và sinh cây Lexed - BST.
 		\item Cải thiện khả năng nhận diện các ký tự có aspect ratio đặc biệt.
-		\item Đưa biểu thức đã nhận dạng được vào ứng dụng (Như có thể vẽ đồ thị, giải phương trình).
 	\end{itemize}
-	
 	
 	
 	\newpage
