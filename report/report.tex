@@ -440,7 +440,7 @@
 		
 		\begin{itemize}
 			\item Tạo một default box có kích thước $s_k$ là kích thước ứng với mức kích thươc $k$ hiện tại.
-			\item Tạo một default box có kích thước bằng $\sqrt{s_k \times s_{k + 1}}$.
+			\item Tạo một default box có kích thước bằng $\sqrt{s_k \times s_{k + 1}}$\footnote{Do dùng công thức này nên với $n$ feature map thì cần sinh ra $n + 1$ giá trị $s_k$ trong khi công thức bên trên chỉ giải quyết được $n$ giá trị $s_k$ ứng với $n$ mức kích thước. Để giải quyết vấn đề này, ta có thể thêm một giá trị $s_0$ phù hợp}.
 			\item Với mỗi phần tử trong danh sách aspect ratio tương ứng, ta tạo một default box có kích thước chiều rộng: 
 			\begin{align}
 			w = s_k \times \sqrt{aspect\_ratio}
@@ -542,7 +542,7 @@
 	Hàm lỗi về độ tin cậy có thể được tính theo công thức:
 	\begin{align}
 	L_{conf}(x, c) = - \sum^N_{i \in Pos} x^p_{ij} \log (\hat{c}^p_i) - \sum_{i \in Neg} \log (\hat{c}^0_i)
-N_u	\end{align}
+	N_u	\end{align}
 	
 	Với \begin{align}\hat{c}_i^p = \frac{\exp{c_i^p}}{\sum_p \exp{c)i^p}}\end{align}
 	
@@ -793,7 +793,7 @@ N_u	\end{align}
 	
 	\begin{itemize}
 		\item Danh sách kích thước feature map: (38, 19, 10, 5, 3, 1)
-		\item Danh sách kích thước các ổ chuẩn (với $s_{min} = 0.2$ và $s_{max} = 0.9$): (30, 60, 111, 162, 213, 264, 315)
+		\item Danh sách kích thước các ổ chuẩn (với $s_0 = 0.1$, $s_{min} = 0.2$ và $s_{max} = 0.9$): (30, 60, 111, 162, 213, 264, 315)
 		\item Ngưỡng Jaccard\cite{Jaccard}: 0.5.
 	\end{itemize}
 	
@@ -881,11 +881,11 @@ N_u	\end{align}
 	%\begin{itemize}
 	%	\item Trước hết, ta tìm ký tự nằm bên trái nhất.
 	%	\item Kiếm tra ký tự đó có phải là Variable Range. Nếu đúng thì ta kiểm tra xem ký tự đó có bị thống trị bởi một phân số hay không, nếu có thì ký tự chủ đạo\cite{zanibbi} là ký tự phân số, nếu không thì ký tự chủ đạo\cite{zanibbi} là ký tự Variable Range vừa tìm được. Nếu ký tự vừa tìm được không phải là Variable Range, thì ta tìm kiếm ký tự Variable Range nằm bên trái nhất và sang bước tiếp theo.
-		
+	
 	%	\item Nếu không còn ký tự Variable Range nào khác, thì ký tự bên trái nhất vừa tìm được ở bước trên được kiểm tra bị thống trị bởi phân số hay không và trả về ký tự chủ đạo\cite{zanibbi} (ký tự đó hoặc ký tự phân số). Nếu còn một ký tự Variable Range khác trong biểu thức, ta tiếp tục với bước kế tiếp.
-		
+	
 	%	\item Ta kiểm tra xem ký tự Variable Range khác đó có ký tự nào nằm liền kề bên trái không. Nếu không thì tự Variable Range được kiểm tra xem có bị thống trị bởi ký tự phân số hay không và chọn ký tự chủ đạo\cite{zanibbi} ký tự phù hợp. Nếu tồn tại ký tự liền kề bên trái, thì ký tự bên trái nhất được kiểm tra có bị thống trị bởi phân số không và chọn ký tự chủ đạo\cite{zanibbi} phù hợp.
-		
+	
 	%\end{itemize}
 	
 	\subsubsection*{Xác định ký tự trên đường cơ sở}
@@ -1027,8 +1027,8 @@ N_u	\end{align}
 		\item Số lượng ảnh\footnote{Mỗi ảnh chỉ chứa một biểu thức.}:  2256. Trong đó có 1746 ảnh dùng cho training, 138 ảnh dùng cho quá trình validation và 372 ảnh để test.
 		Trong đó, 372 ảnh test được thu thập từ 2 nguồn:
 		\begin{itemize}
-		 	\item 192 ảnh được viết bởi người chưa từng tham gia viết cho quá trình thu thập ảnh cho huấn luyện.
-		 	\item 102 ảnh còn lại được viết bởi 15 người đã tham gia quá trình thu thập ảnh cho huấn luyện.
+			\item 192 ảnh được viết bởi người chưa từng tham gia viết cho quá trình thu thập ảnh cho huấn luyện.
+			\item 102 ảnh còn lại được viết bởi 15 người đã tham gia quá trình thu thập ảnh cho huấn luyện.
 		\end{itemize}
 		\item Số loại biểu thức: khoảng 552
 		\item Tổng số ký tự trong tập huấn luyện: 13697
@@ -1037,7 +1037,7 @@ N_u	\end{align}
 	\end{itemize}
 	Hình minh hoạ cho sự phận phối số lượng ký tự trong từng nhãn đối với tập huấn luyện và tập kiểm tra.
 	\begin{figure}
-	
+		
 		\includegraphics[width=0.475\linewidth]{train_statis.png}
 		\hfill
 		\includegraphics[width=0.475\linewidth]{test_statis.png}
@@ -1062,7 +1062,7 @@ N_u	\end{align}
 		
 		\item Nhiều ký tự có aspect ratio đặc biệt (Ví dụ như ký tự dấu $-$ trong phân số hoặc $\int$) cũng gặp nhiều khó khăn trong việc matching do không đạt được ngưỡng Jaccard\cite{Jaccard}.
 	\end{itemize}
-	Vì vậy, nhóm đã sửa một số thông số để tìm cách giải quyết vấn đề trên, trong nhiều bộ thông số thì có 3 phiên bản nổi bật sẽ được đặc tả bên dưới. Để thuận tiện, nhóm xin phép được đặt tên phiên bản SSD300 nguyên thủy\cite{liu2016ssd} với sự thiết lập đã được giới thiệu trong \ref{sec: mohinhdexuat} là phiên bản I, và 3 phiên bản được dể xuất sau được đặt tên lần lượt là phiên bản II, III, IV.
+	Vì vậy, nhóm đã sửa một số thông số để tìm cách giải quyết vấn đề trên, trong nhiều bộ thông số thì có 3 phiên bản nổi bật sẽ được đặc tả bên dưới. Để thuận tiện, nhóm xin phép được đặt tên phiên bản SSD300 nguyên thủy\cite{liu2016ssd} với sự thiết lập đã được giới thiệu trong \ref{sec: mohinhdexuat} là phiên bản I. Phiên bản này được xây dựng dựa trên mã nguồn của tác giả tại https://github.com/kuangliu/pytorch-ssd. 3 phiên bản được dể xuất sau được đặt tên lần lượt là phiên bản II, III, IV.
 	
 	\subsubsection{Giảm kích thước các default box - Phiên bản II}
 	
@@ -1075,7 +1075,7 @@ N_u	\end{align}
 	Để có được phiên bản này, nhóm cần phải có hai thay đổi so với mạng SSD300 nguyên thủy\cite{liu2016ssd}:
 	\begin{itemize}
 		\item Thay vì sử dụng ảnh $300 \times 300$ như nguyên thủy, ảnh sẽ được phóng to lên kích thước $500 \times 500$.
-		\item Như ở phiên bản đề xuất trước, nhóm thay đổi $s_{min} = 0.08$ và $s_{max} = 0.5$ từ đó thu được danh sách kích thước (15.0, 40, 80, 120, 160., 200, 240, 280).
+		\item Như ở phiên bản đề xuất trước, nhóm thay đổi $s_0 = 0.03$, $s_{min} = 0.08$ và $s_{max} = 0.5$ từ đó thu được danh sách kích thước (15.0, 40, 80, 120, 160., 200, 240, 280).
 	\end{itemize}
 	Những thay đổi trên có làm thay đổi đến cấu trúc mạng SSD\cite{liu2016ssd}, khi tăng kích thước ảnh đầu vào nghĩa là kích thước của các feature map thu thập được cũng tăng lên, từ đó kéo số lượng dự đoán trong một ảnh tăng lên như bảng dưới.\\
 	
@@ -1337,7 +1337,7 @@ N_u	\end{align}
 	
 	\subsubsection{Mở rộng tập dữ liệu biểu thức}
 	Trong quá trình đánh giá hệ thống trên tập kiểm tra với mô hình IV, nhóm nhận thấy đối với 2 ảnh bên dưới hệ thống không nhận dạng được chỉ số dưới- cụ thể là số 1. 
-		\begin{center}
+	\begin{center}
 		\centering
 		\includegraphics[width=0.6\linewidth]{M1E1}
 		\vspace{0.5cm}
@@ -1360,7 +1360,7 @@ N_u	\end{align}
 		\vspace{0.5cm}
 		\captionof{figure}{ Kết quả nhận dạng sau khi được huấn luyện với dữ liệu bổ sung.}
 	\end{center}
-	Có thể nhận thấy được rằng, ký tự tại vị trí dấu gạch đỏ ở hình bên trái đã được nhận diện, tuy nhiên với hình bên phải thì lại không. 
+	Có thể nhận thấy được rằng, ký tự tại vị trí dấu gạch đỏ ở cả 2 hình đều được phát hiện và nhận đúng. Do đó hướng giải quyết phát triển tập dữ liệu là điều cần thiết và khả năng sẽ khắc phục những một số những lỗi sai khác. 
 	\subsubsection{Khắc phục lỗi nhận dạng sai ở ký tự lớn}
 	
 	Như nhóm đã đề cập ở phần trước, phiên bản IV hoạt động chưa tốt với những ký tự quá lớn, nắm được điều này, nhóm đã thử thu nhỏ ảnh và tiến hành chèn thêm (padding) vào ảnh đã thu nhỏ đó để nội dung ảnh thì nhỏ lại nhưng kích thước ảnh không đổi, vẫn $500 \times 500$.
