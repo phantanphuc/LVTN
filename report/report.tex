@@ -62,7 +62,7 @@
 		\tiny \bf 
 \end{tabular}  }
 \fancyfoot{} % clear all footer fields
-\fancyfoot[L]{\scriptsize \ttfamily Nhận dạng biểu thức toán học}
+\fancyfoot[L]{\scriptsize \ttfamily Nhận dạng biểu thức toán học viết tay}
 \fancyfoot[R]{\scriptsize \ttfamily Trang {\thepage}/\pageref{LastPage}}
 \renewcommand{\headrulewidth}{0.3pt}
 \renewcommand{\footrulewidth}{0.3pt}
@@ -247,8 +247,10 @@
 			\multicolumn{1}{|c|}{\textbf{Thuật ngữ}} & 
 			\multicolumn{1}{|c|}{\textbf{Giải thích}}\\\hline
 			CNN & Mạng nơron tích chập (Convolutional Neural Network)\\\hline
-			NN & Mạng nơron truyền thống \\\hline
-			MSE & Mean Square Error\\\hline
+			FCN & Mạng nơron tích chập đầy đủ (Fully convolutional netwrok) \\\hline
+			SSD & Single Shot Mutilbox Detector\\\hline
+			BST & Cây ngữ pháp dựa trên đường cơ sở (Baseline Syntax Tree)\\\hline
+			DRACULAE & Diagram Recognition Application for Computer Understanding of Large Algebraic Expressions\\\hline
 			%& t\\\hline
 		\end{tabular}
 	\end{table}
@@ -263,7 +265,7 @@
 		\item Số hoá các công thức in trong sách hay được viết tay.
 		\item Giải tham khảo một số dạng phương trình.
 		\item Trực quan hoá các hàm số
-		\item Biểu diễn công thức, ký hiệu dưới những lệnh mà các trình soạn thảo toán có thể hiểu được, ví dụ Latex.
+		\item Biểu diễn công thức, ký hiệu viết tay dưới những lệnh mà các trình soạn thảo toán có thể hiểu được, ví dụ Latex.
 		\item ...
 		
 	\end{itemize}
@@ -288,8 +290,8 @@
 	\begin{itemize}
 		\item Nhận dạng biểu thức toán học viết tay dạng offline\footnote{Nhận dạng từ ảnh chứa biểu thức toán học.}.
 		\item Chuyển biểu thức từ dạng hình ảnh sang dạng máy có thể hiểu được (Latex).
-		\item Ảnh nhận diện ít nhiễu và không bị xoay quá nhiều.
-		\item Nhận diện được các cấu trúc đơn giản (tích phân, tổng, chỉ số trên, chỉ số dưới, phân số, giới hạn, ...)
+		%\item Ảnh nhận diện ít nhiễu và không bị xoay quá nhiều.
+		%\item Nhận diện được các cấu trúc đơn giản (tích phân, tổng, chỉ số trên, chỉ số dưới, phân số, giới hạn, ...)
 		
 	\end{itemize}
 	
@@ -402,9 +404,7 @@
 	\section{Kiến thức đã tìm hiểu}
 	
 	\subsection{Mạng Single Shot Multibox Detector\cite{liu2016ssd}}
-	
 	SSD\cite{liu2016ssd} như là một mạng cải tiến của phương pháp phát hiện bằng cửa sổ trượt\footnote{Thuật ngữ tiếng Anh: Sliding Window}. Thay vì sử dụng một (một số) cửa sổ có kích thước cố định, thì SSD sinh ra một số lượng hữu hạn các \textbf{default box} \footnote{Tiếng việt: Ô chuẩn} để rồi từ các default box đó để hệ thống có thể xác định vị trí các ký tự cần nhận diện cho quá trình huấn luyện, qua đó mạng cần phải học cách dự đoán cả kích thước của các \textbf{bounding box}\footnote{Tiếng việt: Ô Bọc} quanh ký tự thay vì chỉ chấp nhận kích thước cho trước. SSD\cite{liu2016ssd} cũng sử dụng các lớp tích chập\footnote{Thuật ngữ tiếng Anh: Convolution layer} (hay cụ thể hơn là các mạng nơ-ron tích chập\footnote{Convolutional neural network}) để trích đặc trưng, tạo tiền đề cho việc phát hiện và phân loại ký tự. \\
-	
 	Nhóm xin phép được tách quá trình huấn luyện thành ba giai đoạn: mã hóa, phát hiện - phân loại và tính giá trị lỗi. Và song song với huấn luyện, quá trình kiểm tra, kiểm định, chạy thực tiễn cũng được chia thành ba giai đoạn: trích đặc trưng - phân loại và giải mã.
 	
 	\subsubsection{Bộ mã hóa (Encoder)}
@@ -496,7 +496,6 @@
 		\vspace{0.5cm}
 		\captionof{figure}{Cấu tạo của một mạng SSD\cite{liu2016ssd}}
 	\end{center}
-	
 	Sau khi có được các feature map, lớp Multibox sẽ tiến hành đưa ra dự đoán về bounding box và nhãn gắn với bounding box đó. Mỗi feature map sử dụng một tập hợp các lớp tích chập sẽ cho ra một số lượng dự đoán nhất định. Với mỗi vị trí trên feature map được kernel trượt qua, thì một dự đoán về ký tự được sinh ra. Kernel có kích thước:
 	\begin{align}
 	3 \times 3 \times (n \times (classes + 4))
@@ -574,7 +573,7 @@
 			\hline\hline
 			P.A.Chou&\makecell{Template matching} &\makecell{ Stochastic context-\\free grammar}\\ 
 			\hline
-			M.Okamoto& \makecell{recursive projection\\ và Template matching}&\makecell{ Không parsing}\\ 
+			M.Okamoto& \makecell{Recursive projection\\ và Template matching}&\makecell{ Không parsing}\\ 
 			\hline
 			J.Ha&\makecell{X-Y cut và mạng nơ-ron}&\makecell{ Expression tree}\\
 			\hline
@@ -598,7 +597,7 @@
 	\subsection{Công trình tham khảo}
 	Dưới đây là những công trình mà nhóm tham khảo trực tiếp để hoàn thành luận văn của mình.
 	\subsubsection{Watch, Attend and Parse: An End-to-end Neural Network Based Approach to Handwritten Mathematical Expression Recognition\cite{zhang2017watch}} 
-	Để tránh nhưng vấn đề nảy sinh liên quan đến quá trình phân tách và nhận dạng ký tự và việc phải định nghĩa trước những luật ngữ pháp trong quá trình phân tích câu trúc theo hướng tiếp cận tuần tự, nhóm tác giả của công trình này đã đề xuất một phương pháp theo hướng kết hợp mà ở đó họ đồng thời xử lý cả hai quá trình cơ bản của vấn đề nhận dạng biểu thức toán học. Với phương pháp này, họ xây dựng một mạng tích chập dùng để mã hoá ảnh đầu vào tạo ra các đặc trưng- quá trình này được gọi là encode, tiếp theo đó là quá trình decode- những đặc trưng này qua mạng RNN, kết hợp với cơ chế attention\cite{zhang2017watch} mà nhóm tác giả giới thiệu sẽ tao ra được các chuỗi Latex của ảnh biểu thức đầu vào.
+	Để tránh nhưng vấn đề nảy sinh liên quan đến quá trình phân tách và nhận dạng ký tự và việc phải định nghĩa trước những luật ngữ pháp trong quá trình phân tích câu trúc theo hướng tiếp cận tuần tự, nhóm tác giả của công trình này đã đề xuất một phương pháp theo hướng kết hợp mà ở đó họ đồng thời xử lý cả hai quá trình cơ bản của vấn đề nhận dạng biểu thức toán học. Với phương pháp này, họ xây dựng một mạng tích chập dùng để mã hoá ảnh đầu vào tạo ra các đặc trưng- quá trình này được gọi là encode, tiếp theo đó là quá trình decode- những đặc trưng này qua mạng RNN, kết hợp với cơ chế attention\cite{zhang2017watch} mà nhóm tác giả giới thiệu sẽ tạo ra được các chuỗi Latex của ảnh biểu thức đầu vào.
 	Cụ thể, kiến trúc mạng của họ gồm 2 phần được đặt tên là Watcher- ứng với quá trình encode và Parser- ứng với quá trình decode.
 	\begin{itemize}
 		\item \textbf{Watcher} thực chất là một mạng nơ-ron tích chập đầy đủ-FCN- với chỉ gồm các lớp tích chập và pooling. Watcher nhận input là một bộ gồm 9 ảnh bao gồm 1 ảnh nhị phân của biểu thức và ảnh 8 hướng của ảnh này. Đầu ra của Watcher là những vector đặc trưng tương ứng với từng pixel trong ảnh. 
@@ -627,12 +626,11 @@
 	
 	\subsubsection{Context-aware Recognition\cite{context}}
 	\label{subsec: context}
-	Một quá trình nhận dạng biểu thức toán học chuẩn bao gồm 2 giai đoạn: giai đoạn đầu tiên là phân tách và nhận dạng ký hiệu\footnote{symbol segmentation and recognition} , giai đoạn thứ hai là phân tích cấu trúc\footnote{structure analysis}. Nhiều công trình nghiên cứu trước đây về nhận dạng biểu thức toán học cũng thực hiện theo phương pháp như vậy. Nhược điểm của những phương pháp dạng này là thực hiện hai quá trình trên một cách độc lập, do đó thông tin cấu trúc\footnote{structure information hay context information} của biểu thức không được đưa vào quá trình nhận dạng. Như vậy sẽ dẫn đến lỗi\cite{context}.
+	Nhận thấy nhược điểm của phương pháp nhận dạng theo hướng tuần tự là thực hiện hai quá trình nhận dạng ký tự và phân tích cấu trúc một cách độc lập, do đó thông tin cấu trúc của biểu thức không được đưa vào quá trình nhận dạng. Như vậy sẽ dẫn đến việc lỗi tích luỹ qua từng giai đoạn\cite{context}.
+	WenHao He cùng các cộng sự của ông đã đề xuất một phương pháp dựa trên CNN, kết hợp với cách học đa nhiệm vụ\footnote{Thuật ngữ tiếng Anh: Multi-task learning}, cố gắng kết hợp hai giai đoạn chuẩn của quá trình nhận dạng biểu thức toán lại với nhau.
 	
-	WenHao He cùng các cộng sự của ông đã đề xuất một phương pháp dựa trên CNN, kết hợp với cách học đa nhiệm vụ\footnote{multi-task learning}, cố gắng kết hợp hai giai đoạn chuẩn của quá trình nhận dạng biểu thức toán lại với nhau.
-	
-	Phương pháp mà các ông đưa ra đảm bảo thông tin cấu trúc của biểu thức được đưa vào quá trình nhận dạng và thể hiện trong các ma trận đặc trưng\footnote{feature map}\cite{yanlecun}. \\
-	Đối với các phương pháp trước, biểu thức phải được phân tách thành những ký hiệu rồi từng ký hiệu này mới được đưa qua bộ nhận dạng. Một số phương pháp phân tách ký hiệu thường được sử dụng như: phân tích thành phần liên thông\footnote{connected components}, cắt dựa trên các phép chiếu\footnote{projection cutting}\cite{segment}. Tuy nhiên với phương pháp mới này, cả ảnh của biểu thức toán học được đưa qua bộ nhận dạng, chính vì vậy mà thông tin cấu trúc của biểu thức được bảo toàn. \\
+	Phương pháp mà các ông đưa ra đảm bảo thông tin cấu trúc của biểu thức được đưa vào quá trình nhận dạng và thể hiện trong các ma trận đặc trưng\footnote{Thuật ngữ tiếng Anh: Feature map}\cite{yanlecun}. \\
+	Đối với các phương pháp trước, biểu thức phải được phân tách thành những ký hiệu rồi từng ký hiệu này mới được đưa qua bộ nhận dạng. Một số phương pháp phân tách ký hiệu thường được sử dụng như: phân tích thành phần liên thông\footnote{Thuật ngữ tiếng Anh: Connected components}, cắt dựa trên các phép chiếu\footnote{Thuật ngữ tiếng Anh: Projection cutting}\cite{segment}. Tuy nhiên với phương pháp mới này, cả ảnh của biểu thức toán học được đưa qua bộ nhận dạng, chính vì vậy mà thông tin cấu trúc của biểu thức được bảo toàn. \\
 	%\vspace{5cm}
 	
 	Dưới đây là mô hình học của phương pháp này:\\
@@ -687,7 +685,7 @@
 	\section{Mô hình đề xuất}
 	\label{sec: mohinhdexuat}
 	\subsection{Tổng quan}
-	Để giải quyết đề tài, nhóm chọn hướng tiếp cận là thực hiện tuần tự 2 quá trình nhận dạng ký tự và phân tích cấu trúc. Quy trình thực hiện như hình bên dưới.
+	Nhóm chọn hướng tiếp cận là thực hiện tuần tự hai quá trình nhận dạng ký tự và phân tích cấu trúc để giải quyết đề tài. Quy trình thực hiện như hình bên dưới.
 	\begin{center}
 		
 		\centering
@@ -699,7 +697,8 @@
 		\item Ở bước nhận dạng ký tự, ảnh đầu vào là ảnh xám sẽ qua mạng SSD\cite{liu2016ssd} để tạo ra một danh sách các nhãn và bounding box được kỳ vọng là tương ứng với các ký tự có trong ảnh.
 		\item Với giai đoạn phân tích cấu trúc, từ danh sách nhãn và bounding box trả ra từ giai đoạn trước, sử dụng bộ phân tích cấu trúc DRACULAE \cite{zanibbi} để sinh ra chuỗi Latex.
 	\end{itemize}
-	\subsection{Nhận diện ký tự}
+	Việc lựa chọn SSD cho giai đoạn nhận dạng ký tự là để khắc phục hạn chế của cách tiếp cận tuần tự khi thông tin cấu trúc ảnh vẫn được lưu giữ qua thông tin các bounding box của ký tự. 
+	\subsection{Giai đoạn nhận diện ký tự}
 	
 	\subsubsection{Mạng cơ sở}
 	
@@ -799,9 +798,9 @@
 	
 	
 	\newpage
-	\subsection{Phân tích cú pháp (Draculae Parser \cite{zanibbi})}
+	\subsection{Giai đoạn phân tích cú pháp}
 	
-	Bộ phân tích cú pháp Draculae\cite{zanibbi} này có nhiệm vụ chuyển dữ liệu dự đoán là các bounding box sang dữ liệu biểu thức toán học dạng latex. Trong quá trình phân tích cú pháp, biểu thức được lưu trữ dưới dạng cây BST\cite{zanibbi}\footnote{Viết tắt: baseline Syntax Tree: Cây cú pháp dựa trên đường cơ sở} là một cấu trúc cây dựa trên các đường cơ sở, các nhánh của cây thể hiện một phân vùng bên trên, bên dưới, ... của nút và là một phân vùng ảnh có đường cơ sở riêng và Lexed - BST\cite{zanibbi} là một cấu trúc cây tương tự như BST nhưng thay vì chỉ biểu thị vị trí bên trên, bên dưới thì cây biểu thị quan hệ phân số, chỉ số trên, chỉ số dưới, ...\\
+	Nhóm sử dụng phương pháp phân tích cú pháp DRACULAE được giới thiệu trong \cite{zanibbi}. Bộ phân tích cú pháp DRACULAE\cite{zanibbi} này có nhiệm vụ chuyển dữ liệu dự đoán là các bounding box và nhãn của ký tự sang dữ liệu biểu thức toán học dạng Latex. Trong quá trình phân tích cú pháp, biểu thức được lưu trữ dưới dạng cây  BST\cite{zanibbi} là một cấu trúc cây dựa trên các đường cơ sở, các nhánh của cây thể hiện một phân vùng bên trên, bên dưới, ... của nút và là một phân vùng ảnh có đường cơ sở riêng và Lexed - BST\cite{zanibbi} là một cấu trúc cây tương tự như BST nhưng thay vì chỉ biểu thị vị trí bên trên, bên dưới thì cây biểu thị quan hệ phân số, chỉ số trên, chỉ số dưới, ...\\
 	
 	\begin{center}
 		\centering
@@ -823,7 +822,7 @@
 	
 	Đây là giai đoạn phức tạp nhất và cũng là quan trọng nhất, ở giai đoạn này, dữ liệu đầu ra từ mạng SSD\cite{liu2016ssd} là danh sách các bounding box sẽ được phân tích và xây dựng một cây BST\cite{zanibbi}. Công việc này có thể được phân ra thành bốn công đoạn: Tìm ký tự chủ đạo\cite{zanibbi}\footnote{Thuật ngữ tiếng Anh: Dominate symbol.}, xác định những ký tự trên đường cơ sở, tái phân vùng và xử lý nút con.\\
 	
-	Trước khi tiến hành sinh cây, ta cần phải phân loại các ký tự vào những thể loại khác nhau. Theo Zanibbi đã đề xuất cho Draculae\cite{zanibbi}, các ký tự được phân vào các lớp như bảng dưới:
+	Trước khi tiến hành sinh cây, ta cần phải phân loại các ký tự vào những thể loại khác nhau. Theo Zanibbi đã đề xuất cho DRACUALE\cite{zanibbi}, các ký tự được phân vào các lớp như bảng dưới:
 	
 	\begin{center}
 		\begin{tabular}{||c | c | c c c c ||} 
@@ -867,7 +866,7 @@
 	Trong hầu hết trường hợp, ký tự chủ đạo\cite{zanibbi} là ký tự nằm bên trái nhất, tuy vậy, ta vẫn cần phải kháng được những trường hợp người dùng viết chữ không chuẩn gây thụt ra ngoài, hoặc những ký tự có dạng như:
 	
 	$$ \sum^{n = 100000} a $$
-	Thì ký tự chủ đạo\cite{zanibbi} là $\sum$ nhưng ký tự bên trái nhất lại là $n$, Draculae\cite{zanibbi} được thiết kế để có thể chống lại những trường hợp như vậy.\\
+	Thì ký tự chủ đạo\cite{zanibbi} là $\sum$ nhưng ký tự bên trái nhất lại là $n$, DRACULAE\cite{zanibbi} được thiết kế để có thể chống lại những trường hợp như vậy.\\
 	
 	Để tìm ký tự chủ đạo\cite{zanibbi}, ta tìm ký tự bên trái nhất dựa trên 3 điều kiện:
 	
@@ -960,15 +959,15 @@
 	Để xây dựng hệ thống nhận diện biểu thức toán học viết tay, nhóm cần hoàn thành ba công việc chính bao gồm thu thập dữ liệu, huấn luyện mạng SSD và xây dựng chương trình sinh mã latex.
 	
 	\subsection{Chuẩn bị dữ liệu}
-	Việc chuẩn bị dữ liệu bao gồm xây dựng tập ký tự viết tay thường dùng trong Toán học và xây dựng bộ những biểu thức Toán học viết tay sử dụng những ký hiệu đó.
+	Việc chuẩn bị dữ liệu bao gồm xây dựng tập ký tự viết tay thường dùng trong Toán học và xây dựng bộ những ảnh biểu thức Toán học viết tay sử dụng những ký hiệu đó.
 	\subsubsection{Xây dựng tập ký tự}
-	Như đã đề cập trong chương 1, nhóm sử dụng lại tập ký hiệu Toán viết tay bao gồm chữ cái, chữ số, các ký hiệu Hy Lạp của nhóm sinh viên khoá 2011\cite{qak}.\\
+	Như đã đề cập trong chương 1, nhóm kế thừa tập ký hiệu Toán viết tay bao gồm chữ cái, chữ số, các ký hiệu Hy Lạp của nhóm sinh viên khoá 2011\cite{qak}.\\
 	Một số thông tin về tập dữ liệu\footnote{Sử dụng thông tin được nêu trong luận văn \cite{qak}.}:
 	\begin{itemize}
 		\item Số người tham gia: khoảng 20
 		\item Số lượng ký hiệu: 46197
 		\item Số lượng nhãn: 88
-		\item Các ký hiệu trong tập dữ liệu: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, a, b, c, d, e, f, g, h, i,
+		\item Các nhãn ký hiệu trong tập dữ liệu: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, a, b, c, d, e, f, g, h, i,
 		j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y, z, A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, (, ), +, -, *, /, =, $\int$, $\alpha$, $\beta$, $\gamma$, $\delta$, $\epsilon$, $\theta$, $\lambda$, $\mu$, $\pi$, $\rho$, $\sigma$, $\phi$, $\omega$, $\Delta$, $\Pi$, $\Sigma$, $\Phi$, $\Omega$.
 	\end{itemize}
 	Tuy nhiên, nhóm đã bổ sung thêm 18 nhãn ký hiệu vào tập dữ liệu này dựa trên cách thu thập được giới thiệu trong luận văn của nhóm sinh viên khoá 2011\cite{qak}.\\
@@ -977,7 +976,7 @@
 		\item Số người tham gia: 36
 		\item Số lượng ký hiệu: 52353
 		\item Số lượng nhãn: 106
-		\item Các ký hiệu trong tập dữ liệu: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y, z, A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, (, ), +, -, *, /, =, $\int$, $\alpha$, $\beta$, $\gamma$, $\delta$, $\epsilon$, $\theta$, $\lambda$, $\mu$, $\pi$, $\rho$, $\sigma$, $\phi$, $\omega$, $\Delta$, $\Pi$, $\Sigma$, $\Phi$, $\Omega$, $\sin$, $\cos$, $\tan$, $\log$, $\lim$, $\surd$, $\rightarrow$, $\geq$, $\leq$, $\forall$, $\exists$, $\in$, !, ., $\ldots$, $\div$, $\neq$, $\infty$.
+		\item Các nhãn ký hiệu trong tập dữ liệu: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y, z, A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, (, ), +, -, *, /, =, $\int$, $\alpha$, $\beta$, $\gamma$, $\delta$, $\epsilon$, $\theta$, $\lambda$, $\mu$, $\pi$, $\rho$, $\sigma$, $\phi$, $\omega$, $\Delta$, $\Pi$, $\Sigma$, $\Phi$, $\Omega$, $\sin$, $\cos$, $\tan$, $\log$, $\lim$, $\surd$, $\rightarrow$, $\geq$, $\leq$, $\forall$, $\exists$, $\in$, !, ., $\ldots$, $\div$, $\neq$, $\infty$.
 		
 	\end{itemize}
 	\subsubsection{Xây dựng tập biểu thức}
@@ -999,7 +998,7 @@
 			\vspace{0.5cm}
 			\captionof{figure}{Ví dụ mẫu biểu thức gợi ý cho người viết.}
 		\end{center}
-		\item Người tham gia viết sẽ nhận được biểu mẫu và công thức gợi ý. Sau đó họ sẽ viết lại những công thức này lên tờ biểu mẫu bằng chính nết chữ thường ngày của họ. 
+		\item Người tham gia viết sẽ nhận được biểu mẫu và công thức gợi ý. Sau đó họ sẽ viết lại những công thức này lên tờ biểu mẫu bằng chính nét chữ thường ngày của họ. 
 		\begin{center}
 			\centering
 			\includegraphics[width=0.8\linewidth]{Exp_sample_vd}
@@ -1027,15 +1026,15 @@
 		\item Số lượng ảnh\footnote{Mỗi ảnh chỉ chứa một biểu thức.}:  2256. Trong đó có 1746 ảnh dùng cho training, 138 ảnh dùng cho quá trình validation và 372 ảnh để test.
 		Trong đó, 372 ảnh test được thu thập từ 2 nguồn:
 		\begin{itemize}
-			\item 192 ảnh được viết bởi người chưa từng tham gia viết cho quá trình thu thập ảnh cho huấn luyện.
-			\item 102 ảnh còn lại được viết bởi 15 người đã tham gia quá trình thu thập ảnh cho huấn luyện.
+		 	\item 192 ảnh được viết bởi người chưa từng tham gia viết cho quá trình thu thập ảnh huấn luyện.
+		 	\item 102 ảnh còn lại được viết bởi 15 người đã tham gia quá trình thu thập ảnh huấn luyện.
 		\end{itemize}
 		\item Số loại biểu thức: khoảng 552
 		\item Tổng số ký tự trong tập huấn luyện: 13697
 		\item Tổng số ký tự trong tập kiểm tra: 2237
 		\item Số  người gán nhãn: 3
 	\end{itemize}
-	Hình minh hoạ cho sự phận phối số lượng ký tự trong từng nhãn đối với tập huấn luyện và tập kiểm tra.
+	Hình minh hoạ cho sự phân phối số lượng ký tự trong từng nhãn đối với tập huấn luyện và tập kiểm tra.
 	\begin{figure}
 		
 		\includegraphics[width=0.475\linewidth]{train_statis.png}
@@ -1049,7 +1048,7 @@
 	\newpage
 	\subsection{Xây dựng mô hình}
 	\label{subsec: xaydungmohinh}
-	Do bản chất mạng SSD300\cite{liu2016ssd} gặp rất nhiều khó khăn trong việc nhận dạng ký tự nhỏ do một số lý do:
+	Do bản chất mạng SSD300\cite{liu2016ssd} gặp rất nhiều khó khăn trong việc nhận dạng ký tự nhỏ với một số lý do:
 	\begin{itemize}
 		\item Trong quá trình matching, các bounding box ground truth khi match với các default box phải có chỉ số Jaccard\cite{Jaccard} lớn hơn 0.5, nhưng kích thước tối thiểu của default box lại là $30 \times 30$ pixel, vì vậy nhiều ký tự nhỏ không thể match được (Trường hợp này xãy ra với hầu hết những ảnh có chữ nhỏ, ví dụ như ảnh dưới)
 		\begin{center}
@@ -1313,7 +1312,7 @@
 	\subsection{Kết luận}
 	Hệ thống nhận dạng biệu thức toán học viết tay mà nhóm đang xây dựng là bước đầu cho một ứng dụng tiện ích sau này đối với các bạn học sinh, sinh viên cũng như với những giáo viên- những người thường xuyên tiếp xúc với các con số, công thức và mong muốn rằng có một sản phẩm nào đó hỗ trợ giải các bài toán không chỉ bằng cách đưa ra đáp số mà còn là hướng dẫn giải từng bước, vẽ đồ thị hàm số hay thậm chí cho phép tương tác lên hình ảnh đồ thị đó, gợi ý họ những đoạn lệnh Latex hay có thể là một ngôn ngữ tương tự từ ảnh của những biểu thức để tiết kiệm thời gian soạn thảo những công thức dài và phức tạp. Ngoài ra, với việc có thể trực quan những đồ thị hàm số hay hướng dẫn giải một số loại bài toán sẽ giúp cho việc dạy và học trở nên sinh động và thuận lợi hơn. Như vậy, rất rất nhiều những ứng dụng có thể phát triển từ hệ thống nhận dạng mà nhóm đang thực hiện. \\
 	Với hệ thống này, nhóm đã sử dụng phương pháp phát hiện và nhận dạng của mạng SSD thay vì những phương pháp phân tách phổ biến như phân tích hình chiếu, phân tích thành phần liên thông để khắc phục những lỗi sai có thể xảy ra khi gặp những ký tự dính nhau, bọc lấy nhau kết hợp với bộ phân tích cấu trúc DRACULAE, hệ thống sẽ giải quyết được nhiều loại công thức phức tạp hơn như những công thức có chứa chỉ số trên, chỉ số dưới,... 
-	Ngoài ra, trong quá trình thực hiện đề tài, nhóm đã phát triển 2 tập dữ liệu viết tay bao gồm 1 tập các ký tự và 1 tập những biểu thức từ đơn giản đến phức tạp. Với tập ký tự, dữ liệu đã lên tới con số 52353 file ảnh còn đối với tập biểu thức, hiện tại nhóm đã có 2256 ảnh. Đây là điều kiện quan trọng để nhóm có thể thực hiện những bước huấn luyện, đánh giá mô hình và cũng là cơ sở cho những đề tài liên quan đến chữ viết tay. 
+	Ngoài ra, trong quá trình thực hiện đề tài, nhóm đã phát triển 2 tập dữ liệu viết tay bao gồm 1 tập các ký tự và 1 tập những biểu thức từ đơn giản đến phức tạp. Với tập ký tự, dữ liệu đã lên tới con số 52353 file ảnh còn đối với tập biểu thức, hiện tại nhóm đã có khoảng 2400 ảnh. Đây là điều kiện quan trọng để nhóm có thể thực hiện những bước huấn luyện, đánh giá mô hình và cũng là cơ sở cho những đề tài liên quan đến chữ viết tay. 
 	\subsection{Đánh giá ưu, nhược điểm}
 	
 	\subsubsection{Ưu điểm}
@@ -1329,14 +1328,14 @@
 	\begin{itemize}
 		\item Khi có nhiều ký tự trong ảnh với mật độ lớn thì hệ thống nhận diện gặp nhiều khó khăn.
 		\item Tốc độ xử lý một ảnh còn chậm.
-		\item Hậu xử lý vẫn còn chưa thật sự hiệu quả.
+		\item Bộ phân tích cú pháp còn đơn giản.
 		\item Các ký tự hoàn toàn trùng lên nhau dễ bị bỏ sót (dấu căn).
 	\end{itemize}
 	\subsection{Hướng phát triển trong tương lai}
-	Đến thời điểm kết thúc luận văn, hệ thống mà nhóm xây dựng vẫn còn tồn tại những khuyết điểm và cả những trường hợp mà nhóm chưa có thời gian để kiểm tra. Trong đó nổi lên 2 vấn đề mà nhóm đã tiến hành giải quyết thử và thu được kết quả tốt là việc thu nhỏ nội dung ảnh để có thể khắc phục lỗi sai mà hệ thống mắc phải khi gặp những ký tự quá lớn và tăng cường thêm dữ liệu để giải quyết trực tiếp vô trường hợp chỉ số dưới của 2 ảnh trong tập test không nhận diện được. Ngoài ra vẫn còn nhiều trường hợp khác nữa mà theo nhóm đó là hướng phát triển trong tương lai của đề tài. 
+	Đến thời điểm kết thúc luận văn, hệ thống mà nhóm xây dựng vẫn còn tồn tại những khuyết điểm và cả những trường hợp mà nhóm chưa có thời gian để kiểm tra. Trong đó nổi lên 2 vấn đề mà nhóm đã tiến hành giải quyết thử và thu được những kết quả khả quan ở bước đầu là việc thu nhỏ nội dung ảnh để có thể khắc phục lỗi sai mà hệ thống mắc phải khi gặp những ký tự quá lớn và tăng cường thêm dữ liệu để giải quyết trực tiếp vô trường hợp chỉ số dưới của 2 ảnh cụ thể trong tập test không nhận diện được. Ngoài ra vẫn còn nhiều trường hợp khác nữa mà theo nhóm đó là hướng phát triển trong tương lai của đề tài. 
 	
 	\subsubsection{Mở rộng tập dữ liệu biểu thức}
-	Trong quá trình đánh giá hệ thống trên tập kiểm tra với mô hình IV, nhóm nhận thấy đối với 2 ảnh bên dưới hệ thống không nhận dạng được chỉ số dưới- cụ thể là số 1. 
+	Trong quá trình đánh giá hệ thống trên tập kiểm tra với mô hình IV, nhóm nhận thấy đối với 2 ảnh bên dưới hệ thống không nhận dạng được chỉ số dưới- cụ thể là số 1 ở vị trí dấu gạch đỏ. 
 	\begin{center}
 		\centering
 		\includegraphics[width=0.6\linewidth]{M1E1}
@@ -1360,7 +1359,7 @@
 		\vspace{0.5cm}
 		\captionof{figure}{ Kết quả nhận dạng sau khi được huấn luyện với dữ liệu bổ sung.}
 	\end{center}
-	Có thể nhận thấy được rằng, ký tự tại vị trí dấu gạch đỏ ở cả 2 hình đều được phát hiện và nhận đúng. Do đó hướng giải quyết phát triển tập dữ liệu là điều cần thiết và khả năng sẽ khắc phục những một số những lỗi sai khác. 
+	Có thể nhận thấy được rằng, ký tự tại vị trí dấu gạch đỏ ở cả 2 hình đều được phát hiện và nhận đúng. Do đó hướng giải quyết phát triển tập dữ liệu là điều cần thiết và khả năng sẽ khắc phục những một số lỗi sai khác. 
 	\subsubsection{Khắc phục lỗi nhận dạng sai ở ký tự lớn}
 	
 	Như nhóm đã đề cập ở phần trước, phiên bản IV hoạt động chưa tốt với những ký tự quá lớn, nắm được điều này, nhóm đã thử thu nhỏ ảnh và tiến hành chèn thêm (padding) vào ảnh đã thu nhỏ đó để nội dung ảnh thì nhỏ lại nhưng kích thước ảnh không đổi, vẫn $500 \times 500$.
@@ -1399,8 +1398,13 @@
 	\begin{itemize}
 		\item Thêm phần hậu xử lý ở các giai đoạn nhận diện ký tự và sinh cây Lexed - BST.
 		\item Cải thiện khả năng nhận diện các ký tự có aspect ratio đặc biệt.
+		\item Tối ưu hoá bộ phân tích cú pháp. 
 	\end{itemize}
 	
+	\newpage
+	\subsection*{Kết lời}
+	Trải qua giai đoạn luận văn và cả thực tập tốt nghiệp, những thành viên nhóm đã học được nhiều điều. Về kiến thức, luận văn này là cơ hội cho các thành viên nhóm tìm hiểu và hiện thực những mô hình mạng Deep learning. Bước đầu biết được những vấn đề khó khăn khi huấn luyện một mạng và cách khắc phục chúng. Hiểu và xây dựng được một ứng dụng trên lĩnh vực nhận dạng đó chính là đề tài của nhóm, mặc dù về mặt ứng dụng nó còn ở mức đơn sơ. Về cách làm việc nhóm, trên thực tế các thành viên nhóm liên tục gặp phải những bất đồng, tranh chấp trên quan điểm làm việc cũng như xử lý vần đề. Có những lúc gay gắt mà các thành viên cảm thấy không thể tiếp tục được với nhau. Tuy nhiên tất cả những điều khó khăn này xảy ra đều dựa trên nền tảng vì một luận văn thành công, vì một đề tài mà cả hai thành viên nhóm đều tự hào nên đã vượt qua được. Tất cả những điều đó là trải nghiệm, là kinh nghiệm để các thành viên nhóm hoàn thiện mình hơn cho giai đoạn công việc sắp tới. Cho đến thời điểm này, mặc dù vẫn còn đó những thiếu sót nhưng cả 2 thành viên nhóm tự hào vì những điều mình đã làm được. \\
+	Chân thành cảm ơn. 
 	
 	\newpage
 	\bibliographystyle{ieeetr}

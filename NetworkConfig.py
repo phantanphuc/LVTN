@@ -21,13 +21,13 @@ parser.add_argument('--decay', default=1e-4, type=float, help='decay')
 parser.add_argument('--use_cuda', default=False, type=bool, help='Use CUDA for training')
 parser.add_argument('--epoch_count', default=20, type=int, help='Number of training epoch')
 parser.add_argument('--batch_size', default=1, type=int, help='Batch size')
-parser.add_argument('--resume_mode', default='pretrain', type=str, help='Continue training mode: \'none\': From nothing,\'pretrain\': From pretrain model, \'continue\': Continue from SSD Model ')
+parser.add_argument('--resume_mode', default='none', type=str, help='Continue training mode: \'none\': From nothing,\'pretrain\': From pretrain model, \'continue\': Continue from SSD Model ')
 
 ######### Core Component
 parser.add_argument('--using_python_2', default=False, type=bool, help='Current python version')
 parser.add_argument('--class_count', default=107, type=int, help='Number of classes')
-parser.add_argument('--network', default='SSD300', type=str, help='network type: \'SSD300\': use original SSD300, \'SSD500\': Improved version ')
-parser.add_argument('--resuming_model', default='./trainingmodel/ssd.pth', type=str, help='Model to load (Only valid for resume_mode: pretrain and continue)')
+parser.add_argument('--network', default='SSD500', type=str, help='network type: \'SSD300\': use original SSD300, \'SSD500\': Improved version ')
+parser.add_argument('--resuming_model', default='./model/ckpt_resize_scale_p2_500_4.pth', type=str, help='Model to load (Only valid for resume_mode: pretrain and continue)')
 
 ######### PATH 
 parser.add_argument('--train_dir', default='./dataset/train', type=str, help='training set directory')
@@ -42,16 +42,16 @@ parser.add_argument('--output_format', default='ckpt_%d.pth', type=str, help='Fo
 ######### MISC.
 parser.add_argument('--epoch_cycle', default=50, type=int, help='For output model name format')
 parser.add_argument('--upload_model', default=True, type=bool, help='Upload trained model after training process')
-parser.add_argument('--bacground_conf_multiplier', default=1.0, type=float, help='Background Confident Multiplier')
+parser.add_argument('--bacground_conf_multiplier', default=70.0, type=float, help='Background Confident Multiplier')
 
 
 #############################
 ###### ARG for masstest #####
 #############################
 
-parser.add_argument('--test_dir', default='./dataset/test', type=str, help='path of test directory')
-parser.add_argument('--test_model', default='./model/SSD300_resize_scale.pth', type=str, help='path of test model')
-parser.add_argument('--output_dir', default='./result_300_scale', type=str, help='path of output image')
+parser.add_argument('--test_dir', default='./dataset/Exp_Sub/test', type=str, help='path of test directory')
+parser.add_argument('--test_model', default='./model/SSD500_testM1E1.pth', type=str, help='path of test model')
+parser.add_argument('--output_dir', default='./result_sub', type=str, help='path of output image')
 
 ##########################################################
 ################ PRE - INITIALIZATION ####################
@@ -64,7 +64,7 @@ args = parser.parse_args()
 # 1: Deprecated
 # 2: SSD 500 improved
 # 3: Deprecated
-InputImgSize = 500
+InputImgSize = 300
 Network_type = 0
 if args.network == 'SSD400':
 	Network_type = 1
@@ -82,15 +82,15 @@ if Network_type == 0: #SSD 300
 	feature_map_sizes = (38, 19, 10, 5, 3, 1)
 	steps_raw = (8, 16, 32, 64, 100, 300)
 	aspect_ratios = ((2,), (2,3), (2,3), (2,3), (2,), (2,))
-	#min_ratio = 20
-	#max_ratio = 90
-	#min_scale = 0.1
-	#aspect_ratios = ((2,), (2,3), (2,3), (2,3), (2,), (2,))
+	min_ratio = 20
+	max_ratio = 90
+	min_scale = 0.1
+	aspect_ratios = ((2,), (2,3), (2,3), (2,3), (2,), (2,))
 	#min_ratio = 5
 	#max_ratio = 50
 	#min_scale = 0.03 
-	feature_map_sizes = (63, 32, 16, 8, 6, 4)
-	steps_raw = (8, 16, 31, 62, 83, 125)
+	#feature_map_sizes = (63, 32, 16, 8, 6, 4)
+	#steps_raw = (8, 16, 31, 62, 83, 125)
 	min_ratio = 8
 	max_ratio = 50
 	min_scale = 0.03
