@@ -49,8 +49,8 @@ parser.add_argument('--bacground_conf_multiplier', default=2.0, type=float, help
 ###### ARG for masstest #####
 #############################
 
-parser.add_argument('--test_dir', default='./dataset/Exp_Sub/test', type=str, help='path of test directory')
-parser.add_argument('--test_model', default='./model/SSD500_testM1E1.pth', type=str, help='path of test model')
+parser.add_argument('--test_dir', default='./dataset/test', type=str, help='path of test directory')
+parser.add_argument('--test_model', default='./model/ckpt_resize_scale_p2_500_4.pth', type=str, help='path of test model')
 parser.add_argument('--output_dir', default='./result_sub', type=str, help='path of output image')
 
 ##########################################################
