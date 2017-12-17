@@ -618,15 +618,14 @@ class LatexGenerator:
 			
 				if node['symbol'] == 'ldots':
 					return '\\ldots'
-				if node['symbol'] == 'rightarrow':
-					return ' \\rightarrow '
-				if node['symbol'] == 'intft':
-					return ' \\inf '
 			
 				node['symbol'] = node['symbol'].replace('ldot', '.')
 				
 				if node['symbol'] in self.greek_alphabet:
-					node['symbol'] = '\\' + node['symbol']
+					if node['symbol'] == 'muy':
+						node['symbol'] = '\\mu'
+					else:
+						node['symbol'] = '\\' + node['symbol']
 				
 				return ' ' + node['symbol'] + ' '
 			elif node['type'] == 'Operation':
@@ -646,10 +645,8 @@ class LatexGenerator:
 					return ' \\in '
 				if node['symbol'] == 'div':
 					return ' \\div '
-				if node['symbol'] == 'rightarrow':
-					return ' \\rightarrow '
-
-
+				
+				
 				return node['symbol']
 			elif node['type'] == 'bracket':
 				return '(' + self.createLatexString(node['child'][0]) + ')'
@@ -694,13 +691,13 @@ class LatexGenerator:
 				upper_node = self.createLatexString(node['child'][0])
 				lower_node = self.createLatexString(node['child'][1])
 			
-				return '\\sum^{' + upper_node + '}_{' + lower_node + '}'
+				return '\\sum_{' + upper_node + '}^{' + lower_node + '}'
 			
 			elif node['type'] == '_Pi':
 				upper_node = self.createLatexString(node['child'][0])
 				lower_node = self.createLatexString(node['child'][1])
 			
-				return '\\prod^{' + upper_node + '}_{' + lower_node + '}'
+				return '\\prod_{' + upper_node + '}^{' + lower_node + '}'
 		
 			elif node['type'] == 'lim':
 				lower_node = self.createLatexString(node['child'][1])
@@ -717,6 +714,15 @@ class LatexGenerator:
 			
 			
 			else:
+				if len(node['child'][0]) > 0 and len(node['child'][1]) == 0:
+					return node['type'] + '^{' + self.createLatexString(node['child'][0]) + '}'
+					
+				elif len(node['child'][0]) == 0 and len(node['child'][1]) > 0:
+					return node['type'] + '_{' + self.createLatexString(node['child'][1]) + '}'
+					
+				elif len(node['child'][0]) > 0 and len(node['child'][1]) > 0:
+					return node['type'] + '^{' + self.createLatexString(node['child'][0]) + '}_{' + self.createLatexString(node['child'][1]) + '}'
+					
 				return str(node)
 		
 			

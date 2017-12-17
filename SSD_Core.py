@@ -5,6 +5,9 @@ import torchvision.transforms as transforms
 
 from torch.autograd import Variable
 
+import sys
+
+sys.path.insert(0, './../..')
 
 from ssd import SSD300
 from encoder import DataEncoder

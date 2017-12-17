@@ -20,7 +20,7 @@ class MainWindow:
 		
 		self.mainHandle = tkinter.Tk()
 		#self.mainHandle.configure(background='black')
-		self.mainHandle.title('Mathematical Expression Recognition - Demo')
+		self.mainHandle.title('Groundtruth Generator')
 		self.mainHandle.geometry("850x700")
 
 		self.camvas_border = 10

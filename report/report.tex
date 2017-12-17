@@ -715,7 +715,7 @@
 	Như hình vẽ bên trên, các lớp tích chập và lớp pooling được gom lại thành các cụm, sau hai đến ba lớp tích chập là một lớp pooling. Số kênh của tensor chạy trong mạng được nâng dần từ 64 lên 512 về phía cuối mạng. Khi đưa mạng cơ sở vào mạng SSD\cite{liu2016ssd}, các lớp liên kết đầy đủ sẽ được bỏ đi và bộ phận phân loại sẽ được chèn vào vị trí tương ứng. Khi đó, ta cần phải chuyển model của mạng VGG\cite{simonyan2014very} sang mạng SSD\cite{liu2016ssd}.
 	
 	\subsubsection{Thân mạng SSD\cite{liu2016ssd}}
-	
+	\label{sec: thanSSD}
 	Sau khi ảnh đi qua mạng cơ sở và sinh ra một feature map, dữ liệu này sẽ tiếp tục đi qua các lớp tích chập và pooling kết hợp với việc trích ra feature map ở một số vị trí nhất định để đưa vào lớp multibox,  Mô hình cụ thể của phần thân mạng SSD\cite{liu2016ssd} nhóm để xuất được thể hiện ở ảnh dưới.
 	
 	\begin{center}
@@ -1048,7 +1048,7 @@
 	\newpage
 	\subsection{Xây dựng mô hình}
 	\label{subsec: xaydungmohinh}
-	Do bản chất mạng SSD300\cite{liu2016ssd} gặp rất nhiều khó khăn trong việc nhận dạng ký tự nhỏ với một số lý do:
+	Do bản chất mạng SSD300\cite{liu2016ssd} mô tả trong phần mô hình đề xuất gặp rất nhiều khó khăn trong việc nhận dạng ký tự nhỏ với một số lý do:
 	\begin{itemize}
 		\item Trong quá trình matching, các bounding box ground truth khi match với các default box phải có chỉ số Jaccard\cite{Jaccard} lớn hơn 0.5, nhưng kích thước tối thiểu của default box lại là $30 \times 30$ pixel, vì vậy nhiều ký tự nhỏ không thể match được (Trường hợp này xãy ra với hầu hết những ảnh có chữ nhỏ, ví dụ như ảnh dưới)
 		\begin{center}
