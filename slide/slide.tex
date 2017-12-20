@@ -83,7 +83,12 @@
 \usepackage{caption}
 \usepackage{fancyvrb}
 \usepackage{bbm}
+\everymath{\color{blue}}%make in-line maths symbols blue to read/check easily
 
+%\sloppy
+\captionsetup[figure]{labelfont={small,bf},textfont={small,it},belowskip=-1pt,aboveskip=-9pt}
+
+\captionsetup[table]{labelfont={small,bf},textfont={small,it},belowskip=-1pt,aboveskip=7pt}
 %----------------------------------------------------------------------------------------
 %	TITLE PAGE
 %----------------------------------------------------------------------------------------
@@ -131,7 +136,7 @@
 
 \begin{frame}
 \frametitle{Overview} % Table of contents slide, comment this block out to remove it
-\tableofcontents % Throughout your presentation, if you choose to use \section{} and \subsection{} commands, these will automatically be printed on this slide as an overview of your presentation
+\tableofcontents[pausesections] % Throughout your presentation, if you choose to use \section{} and \subsection{} commands, these will automatically be printed on this slide as an overview of your presentation
 \end{frame}
 
 %----------------------------------------------------------------------------------------
@@ -154,6 +159,7 @@
 \begin{frame}
 \frametitle{Công trình liên quan}
 {\Huge Giới thiệu đề tài}
+
 \end{frame}
 
 %--------------------------------------------------
