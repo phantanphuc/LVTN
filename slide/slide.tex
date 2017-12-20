@@ -42,7 +42,7 @@
 	%\usetheme{Ilmenau}
 	%\usetheme{JuanLesPins}
 	%\usetheme{Luebeck}
-	\usetheme{Madrid}
+	\usetheme[secheader]{Madrid}
 	%\usetheme{Malmoe}
 	%\usetheme{Marburg}
 	%\usetheme{Montpellier}
@@ -76,6 +76,8 @@
 	%\setbeamertemplate{footline}[page number] % To replace the footer line in all slides with a simple slide count uncomment this line
 	
 	%\setbeamertemplate{navigation symbols}{} % To remove the navigation symbols from the bottom of all slides uncomment this line
+	\setbeamertemplate{section in toc}[circle]
+	\setbeamertemplate{subsection in toc}[square]
 }
 
 \usepackage{graphicx} % Allows including images
@@ -84,41 +86,222 @@
 \usepackage{fancyvrb}
 \usepackage{bbm}
 \graphicspath{ {Images/} }
+\usepackage[style=authortitle,backend=bibtex]{biblatex}
+\addbibresource{ref.bib}
+\everymath{\color{blue}}%make in-line maths symbols blue to read/check easily
+
+%\sloppy
+\captionsetup[figure]{labelfont={small,bf},textfont={small,it},belowskip=-1pt,aboveskip=-9pt}
+
+\captionsetup[table]{labelfont={small,bf},textfont={small,it},belowskip=-1pt,aboveskip=7pt}
+
+
 %----------------------------------------------------------------------------------------
 %	TITLE PAGE
 %----------------------------------------------------------------------------------------
 
-\title[Mathematical expressions recognition]{Mathematical expressions recognition }
+\title[Nhận dạng biểu thức toán học]{ Nhận dạng biểu thức toán học}
 
-\author{Phan Tấn Phúc - Bùi Khánh Ngọc} % Your name
+
+\author[Phan Tấn Phúc - Bùi Khánh Ngọc]{} % Your name
 \institute[BKU] % Your institution as it will appear on the bottom of every slide, may be shorthand to save space
 {
-	Ho Chi Minh City University of Technology \\ % Your institution for the title page
+	\bf{Đại học Bách Khoa Thành phố Hồ Chí Minh} \\ % Your institution for the title page
+	\medskip
+	\bf{Khoa Khoa Học và Kỹ Thuật Máy Tính}\\
 	\medskip
 	\textit{\{phantanphuc2512, buikhanhngoc142\}@gmail.com} % Your email address
 }
-\date{\today} % Date, can be changed to a custom date
+
+\date[\today]{} % Date, can be changed to a custom date
+\logo{\includegraphics[height=0.65cm]{hcmut.png}}
+
+\AtBeginSection[]{
+	%\frame{\sectionpage}
+	\begin{frame}{Mục lục}
+	\tableofcontents[currentsection, hideothersubsections]
+\end{frame}
+}
 
 \begin{document}
-	
-	\begin{frame}
-		\titlepage % Print the title page as the first slide
+\begin{frame}[plain]
+\maketitle
+\small
+{\centering\itshape \huge{\bf{Luận văn tốt nghiệp đại học}} \par}
+\footnotesize
+\begin{table}[c]
+	\centering 
+	\begin{tabular}{rrl}
+		%\vspace{0.5cm}
+		\hspace{1.5 cm} & Hội đồng & : \bf{Khoa học máy tính}\\
+		%	\vspace{0.5cm}
+		\hspace{1.5 cm} & Giảng viên hướng dẫn & : \bf{TS. LÊ Thành Sách}\\
+		%\vspace{0.5cm}
+		\hspace{1.5cm} & Giảng viên phản biện & : \bf{TS. Nguyễn Đức Dũng}\\
+		%\vspace{0.5cm}
+		\hspace{1.5 cm} & Nhóm sinh viên thực hiện & : \bf{Phan Tấn Phúc - 51303058}\\
+		%	\vspace{0.5cm}
+		\hspace{1.5 cm} & \hspace{5 cm} &  \hspace{0.15cm} \bf{Bùi Khánh Ngọc - 51302567}\\
+		
+	\end{tabular}
+\end{table}
+\begin{center}
+	{\footnotesize Tp. Hồ Chí Minh, Tháng 01/2018}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\frametitle{Overview} % Table of contents slide, comment this block out to remove it
+\tableofcontents[pausesections, hideallsubsections] % Throughout your presentation, if you choose to use \section{} and \subsection{} commands, these will automatically be printed on this slide as an overview of your presentation
+\end{frame}
+
+%----------------------------------------------------------------------------------------
+%	PRESENTATION SLIDES
+%----------------------------------------------------------------------------------------
+
+
+
+\section{Giới thiệu}
+%------------------------------------------------
+\subsection{Đặt vấn đề}
+	\begin{frame}{Đặt vấn đề}
+		\begin{center}
+			\centering
+			\includegraphics[width=0.9\linewidth]{bui.png}
+			\vspace{0.5cm}
+			\captionof{figure}{Ứng dụng của công nghệ trong giáo dục.}
+		\end{center}
 	\end{frame}
-	
-	\begin{frame}
-		\frametitle{Overview} % Table of contents slide, comment this block out to remove it
-		\tableofcontents % Throughout your presentation, if you choose to use \section{} and \subsection{} commands, these will automatically be printed on this slide as an overview of your presentation
+%---------------------------------------------------
+\subsection{Mục tiêu đề tài}
+	\begin{frame}{Mục tiêu đề tài}
+		\begin{itemize}
+			\uncover<1->{\item Nhận dạng biểu thức toán học dạng offline\footnote{Nhận dạng từ hình ảnh.}.}
+			\uncover<2->{\item Chuyển biểu thức từ dạng hình ảnh sang dạng Latex.}
+		\end{itemize}
 	\end{frame}
-	
-	%----------------------------------------------------------------------------------------
-	%	PRESENTATION SLIDES
-	%----------------------------------------------------------------------------------------
-	
-	
-	
-	\section{Giới thiệu}
-	%------------------------------------------------
-	
+%---------------------------------------------------
+\subsection{Lý do chọn đề tài}
+	\begin{frame}{Lý do chọn đề tài}
+		\begin{itemize}
+			\item Thách thức khi thực hiện đề tài:
+			\begin{itemize}
+				\item[$-$] Làm sao để nhận diện được từng ký hiệu?
+				\item[$-$] Làm cách nào nhận dạng cả một biểu thức?
+				\item[$-$] Có thể khắc phục được những khuyết điểm trong công trình nhận dạng biểu thức toán học của nhóm sinh viên đi trước.
+				\item [$-$]Có thể tạo ra được sản phẩm hoàn thiện như PhotoMath\footnote{Một ứng dụng nhận dạng biểu thức toán học} 
+				\item[$-$] ...
+			\end{itemize}
+			\item Động lực tiến hành khi áp dụng kiến thức đã học để tạo ra một sản phẩm hữu ích cho xã hội và tự mình có thể sử dụng.
+		\end{itemize}
+.	\end{frame}
+%---------------------------------------------------
+
+\section{Công trình liên quan}
+%---------------------------------------------------
+\subsection{Watch, Attend and Parse}
+
+\begin{frame}{Watch, Attend and Parser\footfullcite{zhang2017watch}}
+	\begin{block}{Phương pháp}
+		\begin{itemize}
+			\item \textbf{Watcher} là mạng nơron tích chập đầy đủ- FCN\footnote{Fully convolutional network} mã hoá ảnh đầu vào (bộ 9 ảnh bao gồm 1 ảnh gốc và ảnh 8 hướng) tạo ra đặc trưng ứng với từng pixel của ảnh gốc.
+			\item \textbf{Parser} là kiến trúc mạng GRU\footfullcite{cho2014properties} nhận các vectơ đặc trưng được sinh ra từ \textbf{Watcher}, kết hợp cơ chế \textbf{Attention} do nhóm tác giả đề xuất để sinh ra chuỗi Latex.
+		\end{itemize}
+	\end{block}
+\end{frame}
+
+\begin{frame}{Watch, Attend and Parse}
+\begin{center}
+	\centering
+	\includegraphics[width=0.5\linewidth]{WAP}
+	\vspace{0.5cm}
+	\captionof{figure}{Hình minh hoạ các bước thực hiện của phương pháp Watch, Attend and Parser.}
+\end{center}
+\end{frame}
+%---------------------------------------------------
+\subsection{Context- aware Recognition}
+\begin{frame}{Context- aware Recognition\footfullcite{context}}
+	\begin{block}{Phương pháp}
+		Ảnh đầu vào sẽ qua một số lớp tích chập và pooling để tạo ra một feature map. Feature map này là input cho 3 nhiệm vụ bên dưới. Cụ thể,
+		giả sử một điểm $i$ được cho đặt tại toạ độ ($w_i$, $h_i$) của feature map đầu vào. 
+		\begin{itemize}
+			\item \textbf{Nhiệm vụ phát hiện} (Dectection task) sẽ cho ra một con số $s$ thể hiện độ tin cậy rằng một ký hiệu được đặt tại $i$.
+			\item \textbf{Nhiệm vụ hồi quy} (Regression task) cho ra một vec-tor 4 chiều {$x_1$, $y_1$, $x_2$, $y_2$} thể hiện thông tin về bounding box của ký hiệu được đặt tại $i$.
+			\item\textbf{Nhiệm vụ nhận dạng} (Recognition task) gán nhãn cho ký hiệu đặt tại $i$ cùng với xác suất của nhãn đó. 
+		\end{itemize}
+		
+	\end{block}
+\end{frame}
+
+\begin{frame}{Context- aware Recognition}
+	\begin{figure}[!h]
+		\centering
+		\includegraphics[width=0.9\linewidth]{context_aware.png}
+		\vspace{0.2cm}
+		\caption{Mô hình học được đề xuất \footfullcite{context}.}
+	\end{figure}
+\end{frame}
+%--------------------------------------------------
+\subsection{QAK}
+\begin{frame}{QAK\footfullcite{qak}}
+	\begin{block}{Phương pháp}
+		\begin{itemize}
+			\item \textbf{Tiền xử lý:} chuyền ảnh đầu vào về ảnh xám, khử nhiễu bằng bộ lọc Guass, thực hiện chuyển về ảnh nhị phân và phân tích thành phần liên thông để tăng cường chất lượng , hỗ trợ bước phân đoạn.
+			\item \textbf{Phân đoạn ảnh:} dùng kỹ thuật phân tích hình chiếu và phân tích thành phần liên thông để tách ảnh đầu vào thành những mảnh ảnh chỉ chứa một ký tự.
+		\end{itemize}
+	\end{block}
+\end{frame}
+
+\begin{frame}{QAK}
+\begin{block}{Phương pháp}
+	\begin{itemize}
+		\item \textbf{Nhận dạng:} sử dụng kiến trúc mạng được chỉnh sửa thì Lenet- 5\footfullcite{yanlecun} để học nhận dạng ký tự.
+		\item \textbf{Phân tích cú pháp:} tạo ra các dãy ký hiệu có khả năng là kết quả của ảnh đầu vào, áp dụng tập luật văn phạm phi ngữ cảnh do các tác giả đề xuất để chọn ra kết quả có độ tin tưởng cao nhất.
+	\end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame}{QAK}
+	\begin{block}{Đánh giá}
+		Hệ thống của nhóm tác giả vẫn còn một số vấn đề sau:
+		\begin{itemize}
+			\item Phương pháp phân tích hình chiếu gặp vấn đề với những ký tự dính nhau, overlap nhau.
+			\item Chưa giải quyết được với những biểu thức mà ký tự có chỉ số trên hoặc chỉ số dưới. 
+		\end{itemize}
+	\end{block}
+\end{frame}
+%--------------------------------------------------
+%--------------------------------------------------
+%--------------------------------------------------
+
+
+\section{Mô hình đề xuất}
+\begin{frame}
+\frametitle{Mô hình đề xuất}
+{\Huge Mô hình đề xuất}
+\hspace{10 cm}
+
+
+
+
+Mạng SSD - Single Shot Multibox Detector
+\end{frame}
+
+%--------------------------------------------------
+%----------SUBSEC: SSD----------------------
+%--------------------------------------------------
+\subsection{Lý thuyết mạng SSD}
+
+\frame{\tableofcontents[currentsection]}
+
+\begin{frame}
+\frametitle{Lý thuyết mạng SSD}
+
+SSD\cite{liu2016ssd} sinh ra một số lượng hữu hạn các \textbf{default box}\footnote{Tiếng việt: Ô chuẩn} được xem là các "hệ quy chiếu" để hệ thống có thể xác định vị trí và kích thước các ký tự cần nhận diện. Thông qua quá trình huấn luyện, mạng cần phải học cách dự đoán các \textbf{bounding box}\footnote{Tiếng việt: Ô Bọc} bọc quanh ký tự cần nhận diện thông qua "hệ quy chiếu" tương ứng bên trên.
+
+SSD\cite{liu2016ssd} sử dụng các lớp tích chập\footnote{Thuật ngữ tiếng Anh: Convolution layer} (hay cụ thể hơn là mạng nơ-ron tích chập\footnote{Thuật ngữ tiếng anh: Convolutional neural network}) để trích đặc trưng, tạo tiền đề cho việc phát hiện và phân loại ký tự. \\
+%Nhóm xin phép được tách quá trình huấn luyện thành ba giai đoạn: mã hóa, phát hiện - phân loại và tính giá trị lỗi. Và song song với huấn luyện, quá trình kiểm tra, kiểm định, chạy thực tiễn cũng được chia thành ba giai đoạn: trích đặc trưng - phân loại và giải mã. << Talk
+
 	\begin{frame}
 		\frametitle{Giới thiệu đề tài}
 		{\Huge Giới thiệu đề tài}
