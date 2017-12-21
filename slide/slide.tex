@@ -274,52 +274,6 @@
 %--------------------------------------------------
 %--------------------------------------------------
 
-
-\section{Mô hình đề xuất}
-\begin{frame}
-\frametitle{Mô hình đề xuất}
-{\Huge Mô hình đề xuất}
-\hspace{10 cm}
-
-
-
-
-Mạng SSD - Single Shot Multibox Detector
-\end{frame}
-
-%--------------------------------------------------
-%----------SUBSEC: SSD----------------------
-%--------------------------------------------------
-\subsection{Lý thuyết mạng SSD}
-
-\frame{\tableofcontents[currentsection]}
-
-\begin{frame}
-\frametitle{Lý thuyết mạng SSD}
-
-SSD\cite{liu2016ssd} sinh ra một số lượng hữu hạn các \textbf{default box}\footnote{Tiếng việt: Ô chuẩn} được xem là các "hệ quy chiếu" để hệ thống có thể xác định vị trí và kích thước các ký tự cần nhận diện. Thông qua quá trình huấn luyện, mạng cần phải học cách dự đoán các \textbf{bounding box}\footnote{Tiếng việt: Ô Bọc} bọc quanh ký tự cần nhận diện thông qua "hệ quy chiếu" tương ứng bên trên.
-
-SSD\cite{liu2016ssd} sử dụng các lớp tích chập\footnote{Thuật ngữ tiếng Anh: Convolution layer} (hay cụ thể hơn là mạng nơ-ron tích chập\footnote{Thuật ngữ tiếng anh: Convolutional neural network}) để trích đặc trưng, tạo tiền đề cho việc phát hiện và phân loại ký tự. \\
-%Nhóm xin phép được tách quá trình huấn luyện thành ba giai đoạn: mã hóa, phát hiện - phân loại và tính giá trị lỗi. Và song song với huấn luyện, quá trình kiểm tra, kiểm định, chạy thực tiễn cũng được chia thành ba giai đoạn: trích đặc trưng - phân loại và giải mã. << Talk
-
-	\begin{frame}
-		\frametitle{Giới thiệu đề tài}
-		{\Huge Giới thiệu đề tài}
-	\end{frame}
-	
-	%---------------------------------------------------
-	
-	\section{Công trình liên quan}
-	\begin{frame}
-		\frametitle{Công trình liên quan}
-		{\Huge Giới thiệu đề tài}
-	\end{frame}
-	
-	%--------------------------------------------------
-	%--------------------------------------------------
-	%--------------------------------------------------
-	%--------------------------------------------------
-	
 	
 	\section{Mô hình đề xuất}
 	\begin{frame}
@@ -567,6 +521,16 @@ SSD\cite{liu2016ssd} sử dụng các lớp tích chập\footnote{Thuật ngữ 
 		\end{block}
 	\end{frame}
 	
+	
+	%--------------------------------------------------
+	%----------SUBSEC: PARSE----------------------
+	%--------------------------------------------------
+	\subsection{Phân tích cấu trúc}
+	\begin{frame}
+		\frametitle{Phân tích cấu trúc}
+		{\Huge Đánh giá kết quả}
+	\end{frame}
+	
 	%--------------------------------------------------
 	%--------------------------------------------------
 	%--------------------------------------------------
@@ -590,9 +554,7 @@ SSD\cite{liu2016ssd} sử dụng các lớp tích chập\footnote{Thuật ngữ 
 	
 	\begin{frame}
 		\frametitle{References}
-		\newpage
-		\bibliographystyle{ieeetr}
-		\bibliography{ref}
+		\printbibliography
 	\end{frame}
 	
 	
