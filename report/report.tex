@@ -36,6 +36,7 @@
 \usepackage{makecell}
 \usetikzlibrary{arrows,snakes,backgrounds}
 \usepackage[unicode]{hyperref}
+\usepackage{xcolor}
 \hypersetup{urlcolor=blue,linkcolor=black,citecolor=black,colorlinks=true} 
 
 \setlength{\headheight}{40pt}
@@ -62,7 +63,7 @@
 		\tiny \bf 
 \end{tabular}  }
 \fancyfoot{} % clear all footer fields
-\fancyfoot[L]{\scriptsize \ttfamily Nhận dạng biểu thức toán học viết tay}
+\fancyfoot[L]{\scriptsize \ttfamily Nhận dạng biểu thức toán học}
 \fancyfoot[R]{\scriptsize \ttfamily Trang {\thepage}/\pageref{LastPage}}
 \renewcommand{\headrulewidth}{0.3pt}
 \renewcommand{\footrulewidth}{0.3pt}
@@ -140,7 +141,7 @@
 				\hline
 				\\
 				\multicolumn{1}{c}{\textbf{{\Large
-							Nhận dạng biểu thức toán học viết tay
+							Nhận dạng biểu thức toán học
 				}}}\\
 				
 			\end{tabular}
@@ -150,11 +151,12 @@
 		
 		\begin{table}[h]
 			\begin{tabular}{rrl}
-				%\vspace{0.5cm}
-				%\hspace{1.5 cm} & Hội đồng & : \bf{Khoa học máy tính}\\
+				\vspace{0.5cm}
+				\hspace{1.5 cm} & Hội đồng & : \bf{Khoa học máy tính}\\
 				\vspace{0.5cm}
 				\hspace{1.5 cm} & Giảng viên hướng dẫn & : \bf{TS. Lê Thành Sách}\\
-				
+				\vspace{0.5cm}
+				\hspace{1.5cm} & Giảng viên phản biện & : \bf{TS. Nguyễn Đức Dũng}\\
 				\vspace{0.5cm}
 				\hspace{1.5 cm} & Nhóm sinh viên thực hiện & : \bf{Phan Tấn Phúc - 51303058}\\
 				%	\vspace{0.5cm}
@@ -217,7 +219,7 @@
 	
 	Luận văn  này chỉ ra quá trình thực hiện của nhóm từ tìm hiểu những kiến thức cần thiết đến hiện thực đề tài và đánh giá kết quả đạt được. Bố cục của luận văn gồm 6 chương, không kể các mục lục, phụ lục khác. 
 	
-	Chương 1 là chương giới thiệu tổng quan đề tài. Ở đó sẽ trình bày thế nào là nhận dạng biểu thức toán học, nhu cầu của nó trong xã hội cũng như đưa ra lý do vì sao nhóm chọn đề tài này và sau cùng là quá trình thực hiện của nhóm từ sau giai đoạn thực tập tốt nghiệp.
+	Chương 1 là chương giới thiệu tổng quan đề tài. Ở đó sẽ trình bày nhu cầu của đề tài trong xã hội cũng như đưa ra lý do vì sao nhóm chọn đề tài này và sau cùng là quá trình thực hiện của nhóm từ sau giai đoạn thực tập tốt nghiệp.
 	
 	Chương 2 sẽ đề cập những kiến thức liên quan trực tiếp đến đề tài mà nhóm đã tìm hiểu, cụ thể là kiến trúc mạng SSD.
 	
@@ -403,14 +405,14 @@
 	\newpage
 	\section{Kiến thức đã tìm hiểu}
 	
-	\subsection{Mạng Single Shot Multibox Detector\cite{liu2016ssd}}
+	\subsection*{Mạng Single Shot Multibox Detector\cite{liu2016ssd}}
 	SSD\cite{liu2016ssd} như là một mạng cải tiến của phương pháp phát hiện bằng cửa sổ trượt\footnote{Thuật ngữ tiếng Anh: Sliding Window}. Thay vì sử dụng một (một số) cửa sổ có kích thước cố định, thì SSD sinh ra một số lượng hữu hạn các \textbf{default box} \footnote{Tiếng việt: Ô chuẩn} để rồi từ các default box đó để hệ thống có thể xác định vị trí các ký tự cần nhận diện cho quá trình huấn luyện, qua đó mạng cần phải học cách dự đoán cả kích thước của các \textbf{bounding box}\footnote{Tiếng việt: Ô Bọc} quanh ký tự thay vì chỉ chấp nhận kích thước cho trước. SSD\cite{liu2016ssd} cũng sử dụng các lớp tích chập\footnote{Thuật ngữ tiếng Anh: Convolution layer} (hay cụ thể hơn là các mạng nơ-ron tích chập\footnote{Convolutional neural network}) để trích đặc trưng, tạo tiền đề cho việc phát hiện và phân loại ký tự. \\
 	Nhóm xin phép được tách quá trình huấn luyện thành ba giai đoạn: mã hóa, phát hiện - phân loại và tính giá trị lỗi. Và song song với huấn luyện, quá trình kiểm tra, kiểm định, chạy thực tiễn cũng được chia thành ba giai đoạn: trích đặc trưng - phân loại và giải mã.
 	
-	\subsubsection{Bộ mã hóa (Encoder)}
+	\subsection{Bộ mã hóa (Encoder)}
 	Bộ mã hóa chỉ được sử dụng trong quá trình huấn luyện nhằm mã hóa, chuyển đổi ground truth \footnote{Thuật ngữ tiếng Anh: Ground truth} thô (được lưu trong tệp tin định dạng txt hoặc xml) sang ground truth mà mạng SSD\cite{liu2016ssd} có thể hiểu được.
 	
-	\subsubsection*{Sinh default box}
+	\subsection*{Sinh default box}
 	
 	Để mã hóa ground truth, bộ mã hóa trước hết có nhiệm vụ sinh ra nhiều default box có nhiều kích thước khác nhau, để làm được điều này, mạng cần phải được cung cấp một số thông số:\\
 	\begin{itemize}
@@ -456,7 +458,7 @@
 	
 	Như vậy, với mỗi vị trí được chọn để đặt trong tâm các default box, bộ phận mã hóa sẽ sinh ra $2 + n$ default box với $n$ là số aspect ratio ứng với mức kích thước hiện tại. Kết quả của quá trình sinh default box là một tập hợp nhiều vector. Mỗi vector ứng với một default box mang thông tin tọa độ trọng tâm, chiều dài, chiều rộng của default box.
 	
-	\subsubsection*{Matching\footnote{Thuật ngữ tiếng Anh: Matching}}
+	\subsection*{Matching\footnote{Thuật ngữ tiếng Anh: Matching}}
 	
 	Sau khi hoàn tất sinh default box, bộ phận encoder có nhiệm vụ matching dữ liệu thô là các bounding box \footnote{Thuật ngữ tiếng Anh: Bounding box} từ ground truth\footnote{Thuật ngữ tiếng Anh: Ground truth} qua các default box vừa được tạo. Kết quả là ta sẽ thu được một tập nhiều vector, mỗi vector đại diện cho mỗi default box chứa thông tin gồm tọa độ trọng tâm, kích thước của default box và nhãn của default box đó là gì (có thể là phần nền - không có gì cả, hoặc một ký tự nào đó cần được nhận diện). \\
 	
@@ -478,14 +480,14 @@
 	Các bounding box này có bản chất như một "hệ quy chiếu" cho các bounding box, sau quá trình matching, các bounding box ground truth được tính độ lệch so với các default box tương ứng và khi huấn luyện, mạng SSD\cite{liu2016ssd} có nhiệm vụ dự đoán các bounding box theo các độ lệch đó. Giá trị hàm lỗi được tính dựa trên độ lêch của bounding box ground truth và độ lệch của bounding box dự đoán được. Cách tính độ lệch sẽ được đề cập rõ hơn ở phần tính giá trị lỗi.
 	
 	
-	\subsubsection{Bộ phát hiện - phân loại}
+	\subsection{Bộ phát hiện - phân loại}
 	Đây là bộ phận có nhiệm vụ trích đặc trưng từ ảnh thô đầu vào, tạo ra các feature map để đưa vào quá trình phân loại ký tự.
 	
-	\subsubsection*{Bộ phận trích đặc trưng (Hay mạng cơ sở \footnote{Thuật ngữ tiếng Anh: Base Network})}
+	\subsection*{Bộ phận trích đặc trưng (Hay mạng cơ sở \footnote{Thuật ngữ tiếng Anh: Base Network})}
 	
 	Mạng cơ sở của SSD\cite{liu2016ssd} là một mạng nơron tích chập bất kỳ, có thể là VGG\cite{Simonyan14c} hoặc lenet\cite{yanlecun},... Hầu hết những mạng này có mục đích phân loại\footnote{Thuật ngữ tiếng Anh: Classification}, vì vậy ở phía cuối mạng thường có các lớp liên kết đầy đủ nhằm giảm kích thước feature map và tạo ra dữ liệu đầu ra có kích thước phù hợp (bằng với số nhãn cần dự đoán). Khi kết hợp với mạng SSD\cite{liu2016ssd}, các lớp liên kết đầy đủ này sẽ được thay thế bằng các lớp tích chập và song hành là các bước trích ra feature map để đưa vào lớp Multibox \cite{erhan2014scalable}, chi tiết phần này sẽ được để cập ở mục tiếp theo.
 	
-	\subsubsection* {Phân loại}
+	\subsection* {Phân loại}
 	
 	Bộ phận phân loại có nhiệm vụ đưa ra dự đoán về vị trí và nhãn của các ký tự có trong ảnh. Để làm được điều đó, bộ phân loại phải sinh ra các feature map ứng với từng mức kích thước khác nhau, các feature map đó được đưa vào lớp Multibox để sinh ra các vị trí dự đoán và nhãn tương ứng. Các feature map được lấy sau một (một số) lớp tích chập. Danh sách feature map có được ở giai đoạn sinh default box chính là được lấy từ đây. \\
 	
@@ -502,7 +504,7 @@
 	\end{align}
 	Với $n$ là số lượng aspect ratio với fearture map tương ứng và $classes$ là số lượng nhãn cần nhận diện, số $4$ trong công thức đại diện cho 4 thông số về vị trí của bounding box (tọa độ trọng tâm và kích thước). Do kích thước của các kernel không đồng nhất (vì số lượng aspect ratio ứng với từng feature map có thể khác nhau), nên để tạo ra dữ liệu đầu ra phù hợp với các default box đã tạo từ trước thì các vector dự đoán sẽ được sắp xếp lại sao cho dữ liệu đầu ra chỉ có $classes + 4$ kênh và vị trí của các vector phải tương ứng với vị trí các default box đã sinh từ trước.
 	
-	\subsubsection{Tính giá trị lỗi}
+	\subsection{Tính giá trị lỗi}
 	
 	Giá trị lỗi được tính bằng tổng có trọng số giữa lỗi về vị trí\footnote{Thuật ngữ tiếng Anh: Localization Loss} và lỗi về độ tin cậy\footnote{Thuật ngữ tiếng Anh: Confidence Loss}
 	\begin{align}
@@ -545,12 +547,12 @@
 	
 	Với \begin{align}\hat{c}_i^p = \frac{\exp{c_i^p}}{\sum_p \exp{c)i^p}}\end{align}
 	
-	\subsubsection{Bộ giải mã (Decoder)}
+	\subsection{Bộ giải mã (Decoder)}
 	
 	Bản chất của bộ giải mã khá đơn giản, nó có chức năng chuyển dữ liệu các bounding box mà mạng dự đoán (tức là những bounding box được tính kích thước và tọa độ theo default box mà bounding box đó được match vào) sang dữ liệu tọa độ của ảnh (có gốc tọa độ nằm ở góc trên bên trái và tọa độ nằm trong miền $[0, 1]$. Dữ liệu này cần thiết để trực quan hóa các ký tự mà hệ thống dự đoán và để đưa vào bộ phân tích cú pháp để sinh mã Latex.
 	
-	\subsubsection{Một số vấn đề khác trong mạng SSD\cite{liu2016ssd}}
-	\subsubsection*{Tăng cường dữ liệu\footnote{Data Augumentation}}
+	\subsection{Một số vấn đề khác trong mạng SSD\cite{liu2016ssd}}
+	\subsection*{Tăng cường dữ liệu\footnote{Thuật ngữ tiếng Anh: Data Augumentation}}
 	
 	Ngay trước quá trình matching, ảnh và các bounding box được đi qua một bước gọi là cắt ngẫu nhiên\footnote{Thuật ngữ tiếng Anh: Random Crop}. Ở bước này, ảnh được cắt đi một số phần ngẫu nhiên (có tác dụng giống như phóng to (zoom) ảnh. Điều này giúp làm đa dạng dữ liệu huấn luyện và làm giảm bớt hiện tượng overfit.
 	
@@ -643,7 +645,7 @@
 		
 	\end{figure}
 	
-	Ảnh đầu vào sẽ qua một số lớp tích chập, down-sampling và up-sampling để tạo ra một feature map. Feature map này sẽ được gửi đến ba nhiệm vụ, mỗi nhiệm sẽ tạo ra 1 feature map có cùng kích thước với feature map đầu vào. \\
+	Ảnh đầu vào sẽ qua một số lớp tích chập, down-sampling và up-sampling để tạo ra một feature map. Feature map này sẽ được gửi đến ba nhiệm vụ, mỗi nhiệm sẽ tạo ra 1 feature map có cùng kích thước với feature map đầu vào. Kiến trúc mạng của 3 nhiệm vụ này là sự kết hợp của các module inception\cite{context}. \\
 	Giả sử một điểm $i$ được cho đặt tại toạ độ ($w_i$, $h_i$) của feature map được tạo ra bởi các nhiệm vụ. 
 	\begin{itemize}
 		\item \textbf{Nhiệm vụ phát hiện} (Dectection task) sẽ cho ra một con số $s$ thể hiện độ tin cậy rằng một ký hiệu được đặt tại $i$.
@@ -968,7 +970,7 @@
 		\item Số lượng ký hiệu: 46197
 		\item Số lượng nhãn: 88
 		\item Các nhãn ký hiệu trong tập dữ liệu: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, a, b, c, d, e, f, g, h, i,
-		j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y, z, A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, (, ), +, -, *, /, =, $\int$, $\alpha$, $\beta$, $\gamma$, $\delta$, $\epsilon$, $\theta$, $\lambda$, $\mu$, $\pi$, $\rho$, $\sigma$, $\phi$, $\omega$, $\Delta$, $\Pi$, $\Sigma$, $\Phi$, $\Omega$.
+		j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y, z, A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, (, ), +, -, *, /, =,  $\textcolor{black}{\int}$, $\textcolor{black}{\alpha}$, $\textcolor{black}{\beta}$, $\textcolor{black}{\gamma}$, $\textcolor{black}{\delta}$, $\textcolor{black}{\epsilon}$, $\textcolor{black}{\theta}$, $\textcolor{black}{\lambda}$, $\textcolor{black}{\mu}$, $\textcolor{black}{\pi}$, $\textcolor{black}{\rho}$, $\textcolor{black}{\sigma}$, $\textcolor{black}{\phi}$, $\textcolor{black}{\omega}$, $\textcolor{black}{\Delta}$, $\textcolor{black}{\Pi}$, $\textcolor{black}{\Sigma}$, $\textcolor{black}{\Phi}$, $\textcolor{black}{\Omega}$.
 	\end{itemize}
 	Tuy nhiên, nhóm đã bổ sung thêm 18 nhãn ký hiệu vào tập dữ liệu này dựa trên cách thu thập được giới thiệu trong luận văn của nhóm sinh viên khoá 2011\cite{qak}.\\
 	Thông tin mô tả tập ký hiệu được sử dụng cho đề tài:
@@ -976,7 +978,7 @@
 		\item Số người tham gia: 36
 		\item Số lượng ký hiệu: 52353
 		\item Số lượng nhãn: 106
-		\item Các nhãn ký hiệu trong tập dữ liệu: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y, z, A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, (, ), +, -, *, /, =, $\int$, $\alpha$, $\beta$, $\gamma$, $\delta$, $\epsilon$, $\theta$, $\lambda$, $\mu$, $\pi$, $\rho$, $\sigma$, $\phi$, $\omega$, $\Delta$, $\Pi$, $\Sigma$, $\Phi$, $\Omega$, $\sin$, $\cos$, $\tan$, $\log$, $\lim$, $\surd$, $\rightarrow$, $\geq$, $\leq$, $\forall$, $\exists$, $\in$, !, ., $\ldots$, $\div$, $\neq$, $\infty$.
+		\item Các nhãn ký hiệu trong tập dữ liệu: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y, z, A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, (, ), +, -, *, /, =, $\textcolor{black}{\int}$, $\textcolor{black}{\alpha}$, $\textcolor{black}{\beta}$, $\textcolor{black}{\gamma}$, $\textcolor{black}{\delta}$, $\textcolor{black}{\epsilon}$, $\textcolor{black}{\theta}$, $\textcolor{black}{\lambda}$, $\textcolor{black}{\mu}$, $\textcolor{black}{\pi}$, $\textcolor{black}{\rho}$, $\textcolor{black}{\sigma}$, $\textcolor{black}{\phi}$, $\textcolor{black}{\omega}$, $\textcolor{black}{\Delta}$, $\textcolor{black}{\Pi}$, $\textcolor{black}{\Sigma}$, $\textcolor{black}{\Phi}$, $\textcolor{black}{\Omega}$, $\textcolor{blue}{\sin}$, $\textcolor{blue}{\cos}$, $\textcolor{blue}{\tan}$, $\textcolor{blue}{\log}$, $\textcolor{blue}{\lim}$, $\textcolor{blue}{\surd}$, $\textcolor{blue}{\rightarrow}$, $\textcolor{blue}{\geq}$, $\textcolor{blue}{\leq}$, $\textcolor{blue}{\forall}$, $\textcolor{blue}{\exists}$, $\textcolor{blue}{\in}$, \textcolor{blue}{!}, \textcolor{blue}{.}, $\textcolor{blue}{\ldots}$, $\textcolor{blue}{\div}$, $\textcolor{blue}{\neq}$, $\textcolor{blue}{\infty}$.
 		
 	\end{itemize}
 	\subsubsection{Xây dựng tập biểu thức}
@@ -1061,7 +1063,7 @@
 		
 		\item Nhiều ký tự có aspect ratio đặc biệt (Ví dụ như ký tự dấu $-$ trong phân số hoặc $\int$) cũng gặp nhiều khó khăn trong việc matching do không đạt được ngưỡng Jaccard\cite{Jaccard}.
 	\end{itemize}
-	Vì vậy, nhóm đã sửa một số thông số để tìm cách giải quyết vấn đề trên, trong nhiều bộ thông số thì có 3 phiên bản nổi bật sẽ được đặc tả bên dưới. Để thuận tiện, nhóm xin phép được đặt tên phiên bản SSD300 nguyên thủy\cite{liu2016ssd} với sự thiết lập đã được giới thiệu trong \ref{sec: mohinhdexuat} là phiên bản I. Phiên bản này được xây dựng dựa trên mã nguồn của tác giả tại https://github.com/kuangliu/pytorch-ssd. 3 phiên bản được dể xuất sau được đặt tên lần lượt là phiên bản II, III, IV.
+	Vì vậy, nhóm đã sửa một số thông số để tìm cách giải quyết vấn đề trên, trong nhiều bộ thông số thì có 3 phiên bản nổi bật sẽ được đặc tả bên dưới. Để thuận tiện, nhóm xin phép được đặt tên phiên bản SSD300 nguyên thủy\cite{liu2016ssd} với sự thiết lập đã được giới thiệu trong \ref{sec: mohinhdexuat} là phiên bản I. Phiên bản này được xây dựng dựa trên mã nguồn của tác giả tại \cite{github}. Ba phiên bản được dể xuất sau được đặt tên lần lượt là phiên bản II, III, IV.
 	
 	\subsubsection{Giảm kích thước các default box - Phiên bản II}
 	
@@ -1247,7 +1249,7 @@
 	\begin{center}
 		\begin{tabular}{||c | c | c | c | c||} 
 			\hline
-			phiên bản & \makecell{  I } & \makecell{ II} & III &  \makecell{ IV}  \\ [0.5ex] 
+			Phiên bản & \makecell{  I } & \makecell{ II} & III &  \makecell{ IV}  \\ [0.5ex] 
 			\hline\hline
 			Kích thước ảnh đầu vào& 300x300 & 300x300 & 500x500 & 500x500 \\ 
 			\hline
@@ -1275,9 +1277,9 @@
 		mAP là trung bình có trọng số giữa $precision$ và $class\_weight$.
 		\item Điều kiện máy chạy đánh giá:
 		\begin{itemize}
-			\item Hệ điều hành:
-			\item CPU:
-			\item RAM:
+			\item Hệ điều hành: Ubuntu 14.04 LTS
+			\item CPU: Intel Core i5- 2500M 3.30GHz 
+			\item RAM: 8GB
 		\end{itemize}
 	\end{itemize}
 	Kết quả đánh giá của 4 phiên bản:
@@ -1402,7 +1404,7 @@
 	\end{itemize}
 	
 	\newpage
-	\subsection*{Kết lời}
+	\subsection*{Lời kết}
 	Trải qua giai đoạn luận văn và cả thực tập tốt nghiệp, những thành viên nhóm đã học được nhiều điều. Về kiến thức, luận văn này là cơ hội cho các thành viên nhóm tìm hiểu và hiện thực những mô hình mạng Deep learning. Bước đầu biết được những vấn đề khó khăn khi huấn luyện một mạng và cách khắc phục chúng. Hiểu và xây dựng được một ứng dụng trên lĩnh vực nhận dạng đó chính là đề tài của nhóm, mặc dù về mặt ứng dụng nó còn ở mức đơn sơ. Về cách làm việc nhóm, trên thực tế các thành viên nhóm liên tục gặp phải những bất đồng, tranh chấp trên quan điểm làm việc cũng như xử lý vần đề. Có những lúc gay gắt mà các thành viên cảm thấy không thể tiếp tục được với nhau. Tuy nhiên tất cả những điều khó khăn này xảy ra đều dựa trên nền tảng vì một luận văn thành công, vì một đề tài mà cả hai thành viên nhóm đều tự hào nên đã vượt qua được. Tất cả những điều đó là trải nghiệm, là kinh nghiệm để các thành viên nhóm hoàn thiện mình hơn cho giai đoạn công việc sắp tới. Cho đến thời điểm này, mặc dù vẫn còn đó những thiếu sót nhưng cả 2 thành viên nhóm tự hào vì những điều mình đã làm được. \\
 	Chân thành cảm ơn. 
 	
