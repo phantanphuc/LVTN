@@ -288,7 +288,7 @@
 %--------------------------------------------------
 
 	
-toán.	\section{Mô hình đề xuất}
+ \section{Mô hình đề xuất}
 	\begin{frame}
 		\frametitle{Mô hình đề xuất}
 		{\Huge Mô hình đề xuất}
@@ -838,11 +838,11 @@ toán.	\section{Mô hình đề xuất}
 			\begin{itemize}
 				\item Số người tham gia: khoảng 88 
 				\item Số lượng ảnh\footnote{Mỗi ảnh chỉ chứa một biểu thức.}:  2256. Trong đó có 1746 ảnh dùng cho training, 138 ảnh dùng cho quá trình validation và 372 ảnh để test.
-				Trong đó, 372 ảnh test được thu thập từ 2 nguồn:
-				\begin{itemize}
-					\item[$-$] 192 ảnh được viết bởi người chưa từng tham gia viết cho quá trình thu thập ảnh huấn luyện.
-					\item[$-$] 102 ảnh còn lại được viết bởi 15 người đã tham gia quá trình thu thập ảnh huấn luyện.
-				\end{itemize}
+%				Trong đó, 372 ảnh test được thu thập từ 2 nguồn:
+%				\begin{itemize}
+%					\item[$-$] 192 ảnh được viết bởi người chưa từng tham gia viết cho quá trình thu thập ảnh huấn luyện.
+%					\item[$-$] 102 ảnh còn lại được viết bởi 15 người đã tham gia quá trình thu thập ảnh huấn luyện.
+%				\end{itemize}
 				\item Số loại biểu thức: khoảng 552
 				\item Tổng số ký tự trong tập huấn luyện: 13697
 				\item Tổng số ký tự trong tập kiểm tra: 2237
@@ -867,6 +867,31 @@ toán.	\section{Mô hình đề xuất}
 			\end{tabular}
 			\captionof{table}{Sự khác nhau giữa 4 phiên bản thử nghiệm.}
 		\end{center}
+	\end{frame}
+	
+	\begin{frame}{Đánh giá định tính}
+		\begin{center}
+			\centering
+			\includegraphics[width=0.775\linewidth]{compare_4.png}
+			\vspace{0.5cm}
+			\captionof{figure}{Kết quả nhận diện của 4 phiên bản thử nghiệm.}
+		\end{center}
+	\end{frame}
+	\begin{frame}{Đánh giá định tính}
+	\begin{center}
+		\centering
+		\includegraphics[width=0.775\linewidth]{compare_1.png}
+		\vspace{0.5cm}
+		\captionof{figure}{Kết quả nhận diện của 4 phiên bản thử nghiệm.}
+	\end{center}
+	\end{frame}
+	\begin{frame}{Đánh giá định tính}
+	\begin{center}
+		\centering
+		\includegraphics[width=0.85\linewidth]{compare_7.png}
+		\vspace{0.5cm}
+		\captionof{figure}{Kết quả nhận diện phiên bản IV trên ký tự nhỏ.}
+	\end{center}
 	\end{frame}
 
 	\begin{frame}{Đánh giá định lượng}
@@ -905,23 +930,124 @@ toán.	\section{Mô hình đề xuất}
 	\end{frame}
 	%--------------------------------------------------
 	\section{Tổng kết}
-	\begin{frame}
-		\frametitle{Tổng kết}
-		{\Huge Tổng kết}
+	\subsection{Ưu điểm}
+	\begin{frame}{Ưu điểm}
+			\begin{itemize}
+			\item Hệ thống có thể nhận diện được ký tự ở nhiều kích thước khác nhau.
+			\item Nhận diện được nhiều biểu thức mà nếu chỉ dùng kỹ thuật phân vùng thì khó có thể làm được (ví dụ như biểu thức có ký tự dính nhau).
+			\item Nhận diện được nhiều loại ký tự.
+		\end{itemize}
+	\end{frame}
+	\subsection{Nhược điểm}
+	\begin{frame}{Nhược điểm}
+		\begin{itemize}
+			\item Khi có nhiều ký tự trong ảnh thì hệ thống nhận diện gặp nhiều khó khăn.
+			\item Tốc độ xử lý một ảnh còn chậm.
+			\item Bộ phân tích cú pháp đơn giản.
+			\item Các ký tự hoàn toàn trùng lên nhau dễ bị bỏ sót (dấu căn).
+		\end{itemize}
 	\end{frame}
 	
+	\subsection{Hướng phát triển}
+	\begin{frame}{Phát triển tập dữ liệu biểu thức}
+		\begin{itemize}
+			\item Sử dụng phiên bản IV để kiểm tra.
+			\item Hai ảnh cụ thể trong 372 ảnh test không nhận được chỉ số dưới, cụ thể số 1.
+		\end{itemize}
+		\begin{center}
+			\centering
+			\includegraphics[width=0.6\linewidth]{M1E1}
+			\vspace{0.5cm}
+			\captionof{figure}{Trường hợp không nhận được chỉ số dưới.}
+			\label{fig: m1}
+		\end{center}
+	\end{frame}
+	\begin{frame}{Phát triển tập dữ liệu biểu thức}
+	\begin{block}{Giải pháp}
+		Bổ sung mẫu biểu thức chứa cụ thể $E\_1$ và $M\_1$ vào tập huấn luyện. Cụ thể, tăng cường 96 ảnh vào tập huấn luyện và 24 ảnh để test.
+	\end{block}
+	\begin{center}
+		\centering
+		\includegraphics[width=0.7\linewidth]{M1E1_res}
+		\vspace{0.5cm}
+		\captionof{figure}{ Kết quả nhận dạng sau khi được huấn luyện với dữ liệu bổ sung.}
+	\end{center}
+	\end{frame}
+
+	\begin{frame}{Khắc phục lỗi nhận dạng sai ở ký tự lớn}
+		\begin{block}{Giải pháp}
+			Thu nhỏ nội dung ảnh.
+		\end{block}
+		\begin{center}
+			\centering
+			\includegraphics[width=0.775\linewidth]{ensmall.png}
+			\vspace{0.5cm}
+			\captionof{figure}{Ví dụ thu nhỏ ảnh.}
+		\end{center}
+	\end{frame}
+	
+	\begin{frame}{Khắc phục lỗi nhận dạng sai ở ký tự lớn}
+		\begin{center}
+			\centering
+			\includegraphics[width=0.875\linewidth]{compare_future.png}
+			\vspace{0.5cm}
+			\captionof{figure}{Kết quả thu được sau khi thu nhỏ nội dung ảnh.}
+		\end{center}
+	\end{frame}
+	
+	\begin{frame}{Hướng phát triển khác}
+		\begin{itemize}
+			\item Những điều cần kiểm tra:
+			\begin{itemize}
+				\item [$-$]Ảnh chứa đựng các ký tự nghiêng.
+				\item [$-$]Ảnh có nhiễu.
+				\item [$-$]Ảnh với nền khác màu trắng.
+				\item [$-$]Ảnh chụp thay vì scan.
+			\end{itemize}
+			\item Những điều cần hoàn thiện:
+			\begin{itemize}
+				\item [$-$]Thêm phần hậu xử lý ở các giai đoạn nhận diện ký tự và sinh cây Lexed - BST.
+				\item [$-$]Cải thiện khả năng nhận diện các ký tự có aspect ratio đặc biệt.
+				\item [$-$]Tối ưu hoá bộ phân tích cú pháp. 
+			\end{itemize}
+		\end{itemize}
+	\end{frame}
+	\begin{frame}{Demo}
+	\huge{Demo}
+	\end{frame}
+	\section*{Tham khảo}
 	\begin{frame}
-		\frametitle{References}
+		\frametitle{Tham khảo}
 		\printbibliography
 	\end{frame}
 	
 	
 	%------------------------------------------------
-	
+	\section*{Lời kết}
 	\begin{frame}
-		\Huge{\centering{The End}}
+		\Huge{\centering{Cảm ơn quý thầy cô và các bạn!}}
 	\end{frame}
 	
+	\section*{Phụ lục}
+	\begin{frame}{Phụ lục}
+	\centering
+	\colorbox{blue}{\textcolor{white}{\huge{Phụ lục}}}
+	\end{frame}
+
+	\begin{frame}{Công thức tính chỉ số mAP}
+		Tính precision cho từng nhãn theo công thức\footfullcite{mAP}:
+		\begin{align}
+		precision = \frac{TP}{TP+FP},
+		\end{align}
+		\hspace{2cm}với $TP$ được viết tắt từ $True Positive$\footfullcite{mAP} và $FP$ từ $False Positive$\footfullcite{mAP}.\\
+		Tính trọng số của từng nhãn trong tập dữ liệu kiểm tra theo công thức:
+		\begin{align}
+		class\_weight_i = \frac{N_i}{\sum_{u=0}^{106}N_u},
+		\end{align}
+		\hspace{2cm}với $N_i$ là số lượng ký tự thuộc nhãn $i$.\\
+		mAP là trung bình có trọng số giữa $precision$ và $class\_weight$.
+		
+	\end{frame}
 	%----------------------------------------------------------------------------------------
 	
 \end{document}
