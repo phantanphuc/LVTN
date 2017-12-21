@@ -535,14 +535,205 @@ toán.	\section{Mô hình đề xuất}
 	\end{frame}
 	
 	
-	%--------------------------------------------------
-	%----------SUBSEC: PARSE----------------------
-	%--------------------------------------------------
-	\subsection{Phân tích cấu trúc}
-	\begin{frame}
-		\frametitle{Phân tích cấu trúc}
-		{\Huge Đánh giá kết quả}
-	\end{frame}
+%--------------------------------------------------
+%----------SUBSEC: PARSE----------------------
+%--------------------------------------------------
+\subsection{Phân tích cấu trúc}
+\begin{frame}
+	\frametitle{Phân tích cấu trúc}
+	Bộ phận phân tích cấu trúc có nhiệm vụ nhận dữ liệu là các bounding box từ SSD\cite{liu2016ssd} và xây dựng một cây Lex - BST tạo tiền đề để xây dựng biểu thức Latex.
+\end{frame}
+
+%--------------------------------------------------
+%----------SUBSEC: BST----------------------
+%--------------------------------------------------
+\subsubsection{Sinh cây BST}
+\begin{frame}
+	\frametitle{Sinh cây BST}
+	\begin{center}
+		\centering
+		\includegraphics[width=0.6\linewidth]{BST.png}
+		\vspace{0.5cm}
+		\captionof{figure}{Một cây BST}
+	\end{center}
+	\begin{block}{Cây BST}
+		\begin{itemize}
+			\item Mỗi nút là một đường cơ sở.
+			\item Các liên kết giữa các nút thể hiện vị trí tương đối giữa các đường cơ sở.
+		\end{itemize}
+	\end{block}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Phân tích cấu trúc - Tìm ký tự chủ đạo}
+	\begin{center}
+		\centering
+		\includegraphics[width=0.8\linewidth]{base.png}
+		\vspace{0.5cm}
+		\captionof{figure}{Một số ký tự chủ đạo}
+	\end{center}
+	\begin{block}{Ký tự chủ đạo}
+		Ký tự chủ đạo là ký tự bắt đầu của một đường cơ sở, là ký tự nằm bên trái nhất mà không bị thống trị.
+	\end{block}
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Xác định ký tự trên đường cơ sở}
+	\begin{center}
+		\centering
+		\includegraphics[width=0.6\linewidth]{hor1.png}
+		\captionof{figure}{GT}
+	\end{center}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Xác định ký tự trên đường cơ sở}
+	\begin{center}
+		\centering
+		\includegraphics[width=0.6\linewidth]{hor1.png}
+		\captionof{figure}{GT}
+	\end{center}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Xác định ký tự trên đường cơ sở}
+	\begin{center}
+		\centering
+		\includegraphics[width=0.6\linewidth]{hor2.png}
+		\captionof{figure}{GT}
+	\end{center}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Xác định ký tự trên đường cơ sở}
+	\begin{center}
+		\centering
+		\includegraphics[width=0.6\linewidth]{hor3.png}
+		\captionof{figure}{GT}
+	\end{center}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Xác định ký tự trên đường cơ sở}
+	\begin{center}
+		\centering
+		\includegraphics[width=0.6\linewidth]{hor4.png}
+		\captionof{figure}{GT}
+	\end{center}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Xác định ký tự trên đường cơ sở}
+	\begin{center}
+		\centering
+		\includegraphics[width=0.6\linewidth]{hor5.png}
+		\captionof{figure}{GT}
+	\end{center}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Xác định ký tự trên đường cơ sở}
+	\begin{center}
+		\centering
+		\includegraphics[width=0.6\linewidth]{hor5_5.png}
+		\captionof{figure}{GT}
+	\end{center}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Xác định ký tự trên đường cơ sở}
+	\begin{center}
+		\centering
+		\includegraphics[width=0.6\linewidth]{hor6.png}
+		\captionof{figure}{GT}
+	\end{center}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Xác định ký tự trên đường cơ sở}
+	\begin{center}
+		\centering
+		\includegraphics[width=0.6\linewidth]{hor7.png}
+		\captionof{figure}{GT}
+	\end{center}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Tái phân vùng}
+	\begin{center}
+		\centering
+		\includegraphics[width=0.6\linewidth]{hor8.png}
+		\captionof{figure}{GT}
+	\end{center}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Xử lý nút con}
+	\begin{center}
+		\centering
+		\includegraphics[width=0.75\linewidth]{UN.png}
+		\captionof{figure}{GT}
+	\end{center}
+	\begin{block}{Xử lý nút con}
+		Sau lần chạy đầu tiên thì các nút con mới chỉ là danh sách các ký tự, vì vậy cần xử lý từng nút con để thu được cây BST hoàn chỉnh.
+	\end{block}
+\end{frame}
+
+
+\subsubsection{Sinh cây Lexed BST}
+\begin{frame}
+	\frametitle{Sinh cây Lexed BST}
+	\begin{center}
+		\centering
+		\includegraphics[width=0.6\linewidth]{lexBST.png}
+		\captionof{figure}{Một cây Lexed BST}
+	\end{center}
+	\begin{block}{Cây Lexed - BST}
+		\begin{itemize}
+			\item Mỗi nút là một đường cơ sở
+			\item Liên kết giữa các nút biểu thị quan hệ về ngữ nghĩa toán học giữa các đường cơ sở.
+		\end{itemize}
+	\end{block}
+\end{frame}
+
+
+\begin{frame}
+	\frametitle{Sinh cây Lexed BST}
+	\begin{center}
+		\centering
+		\includegraphics[width=0.6\linewidth]{nhom.png}
+		\captionof{figure}{Một cây Lexed BST}
+	\end{center}
+	
+	\begin{block}{Nhóm ký tự}
+		\begin{itemize}
+			\item Các ký tự sẽ được nhóm lại phù hợp
+		\end{itemize}
+	\end{block}
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Sinh cây Lexed BST}
+	\begin{center}
+		\centering
+		\includegraphics[width=0.6\linewidth]{lex1.png}
+		\captionof{figure}{Một cây Lexed BST}
+	\end{center}
+	
+	\begin{block}{Luật sinh}
+		\begin{itemize}
+			\item Các ký tự sẽ được nhóm lại phù hợp
+		\end{itemize}
+	\end{block}
+	
+\end{frame}
+
+%--------------------------------------------------
+%--------------------------------------------------
+%--------------------------------------------------
+%--------------------------------------------------
 	
 	
 	%--------------------------------------------------
