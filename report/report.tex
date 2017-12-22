@@ -1025,17 +1025,29 @@
 	\subsubsubsection{Thông tin mô tả tập dữ liệu biểu thức}
 	\begin{itemize}
 		\item Số người tham gia: khoảng 88 
-		\item Số lượng ảnh\footnote{Mỗi ảnh chỉ chứa một biểu thức.}:  2256. Trong đó có 1746 ảnh dùng cho training, 138 ảnh dùng cho quá trình validation và 372 ảnh để test.
+		\item Số lượng ảnh\footnote{Mỗi ảnh chỉ chứa một biểu thức.}:  2256 với 1746 ảnh dùng cho training, 138 ảnh dùng cho quá trình validation và 372 ảnh để test.
 		Trong đó, 372 ảnh test được thu thập từ 2 nguồn:
 		\begin{itemize}
 		 	\item 192 ảnh được viết bởi người chưa từng tham gia viết cho quá trình thu thập ảnh huấn luyện.
 		 	\item 102 ảnh còn lại được viết bởi 15 người đã tham gia quá trình thu thập ảnh huấn luyện.
 		\end{itemize}
 		\item Số loại biểu thức: khoảng 552
-		\item Tổng số ký tự trong tập huấn luyện: 13697
-		\item Tổng số ký tự trong tập kiểm tra: 2237
 		\item Số  người gán nhãn: 3
 	\end{itemize}
+	\begin{center}
+		\begin{tabular}{||c | c | c ||} 
+			\hline
+			 Thông tin thêm & Tập huấn luyện & Tập kiểm tra\\[0.5ex] 
+			\hline\hline
+			\makecell{Tổng số ký tự} & 13697 & 2237 \\
+			\hline
+			\makecell{Chiều dài trung bình\\ của biểu thức} &$\approx{8}$  &$\approx{6}$\\
+			\hline
+			\makecell{Kích thước trung bình\\ của ký tự}& $24\times29$&$31\times41$\\
+			\hline
+		\end{tabular}
+		\captionof{table}{Thông tin mô tả hai tập dữ liệu dùng cho huấn luyện và kiểm tra.}
+	\end{center}
 	Hình minh hoạ cho sự phân phối số lượng ký tự trong từng nhãn đối với tập huấn luyện và tập kiểm tra.
 	\begin{figure}
 		
@@ -1301,7 +1313,7 @@
 	\begin{center}
 		\begin{tabular}{||c | c | c | c | c||} 
 			\hline
-			phiên bản & I&II&III&IV\\[0.5ex] 
+			Phiên bản & I&II&III&IV\\[0.5ex] 
 			\hline\hline
 			mAP&0.58036471&0.505290245&0.63949538&0.65268642\\
 			\hline
