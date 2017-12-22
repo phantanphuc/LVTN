@@ -950,18 +950,30 @@
 		\begin{block}{Thông tin mô tả}
 			\begin{itemize}
 				\item Số người tham gia: khoảng 88 
-				\item Số lượng ảnh\footnote{Mỗi ảnh chỉ chứa một biểu thức.}:  2256. Trong đó có 1746 ảnh dùng cho training, 138 ảnh dùng cho quá trình validation và 372 ảnh để test.
+				\item Số lượng ảnh:  2256. Trong đó có 1746 ảnh dùng cho training, 138 ảnh dùng cho quá trình validation và 372 ảnh để test.
 				%				Trong đó, 372 ảnh test được thu thập từ 2 nguồn:
 				%				\begin{itemize}
 				%					\item[$-$] 192 ảnh được viết bởi người chưa từng tham gia viết cho quá trình thu thập ảnh huấn luyện.
 				%					\item[$-$] 102 ảnh còn lại được viết bởi 15 người đã tham gia quá trình thu thập ảnh huấn luyện.
 				%				\end{itemize}
 				\item Số loại biểu thức: khoảng 552
-				\item Tổng số ký tự trong tập huấn luyện: 13697
-				\item Tổng số ký tự trong tập kiểm tra: 2237
 				\item Số  người gán nhãn: 3
 			\end{itemize}
 		\end{block}
+		\begin{center}
+		\begin{tabular}{||c | c | c ||} 
+			\hline
+			Thông tin thêm & Tập huấn luyện & Tập kiểm tra\\[0.5ex] 
+			\hline\hline
+			\makecell{Tổng số ký tự} & 13697 & 2237 \\
+			\hline
+			\makecell{Chiều dài trung bình\\ của biểu thức} &$\approx{8}$  &$\approx{6}$\\
+			\hline
+			\makecell{Kích thước trung bình\\ của ký tự}& $24\times29$&$31\times41$\\
+			\hline
+		\end{tabular}
+		\captionof{table}{Thông tin mô tả hai tập dữ liệu dùng cho huấn luyện và kiểm tra.}
+	\end{center}
 	\end{frame}
 	%--------------------------------------------------
 	\subsection{Đánh giá kết quả}
