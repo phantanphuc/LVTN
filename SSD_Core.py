@@ -49,7 +49,7 @@ class SSD_Core:
 		self.transform = transforms.Compose([transforms.ToTensor(),
 										transforms.Normalize(mean=(0.485, 0.456, 0.406), std=(0.229, 0.224, 0.225))])
 		
-	def generatePrediction(self, imgpath):
+	def generatePrediction(self, imgpath, outname):
 		
 		# Load test image
 		img = Image.open(imgpath).convert('L')
@@ -87,7 +87,7 @@ class SSD_Core:
 
 			
 			
-		img.save('./temp/predict_temp.png')
+		img.save('./temp/' + outname)
 
 		return return_str
 

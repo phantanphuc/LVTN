@@ -18,6 +18,10 @@ class MainWindow:
 	def __init__(self):
 		print ('initializing...')
 		
+		self.debug = True
+		self.current_fname = ''
+		self.outlatex = ''
+
 		self.mainHandle = tkinter.Tk()
 		#self.mainHandle.configure(background='black')
 		self.mainHandle.title('Mathematical Expression Recognition - Demo')
@@ -35,6 +39,8 @@ class MainWindow:
 		self.BBparser = BB_To_Tree.BBParser()
 		
 		self.ssd = core.SSD_Core()
+
+
 		
 	def initGUI(self):
 	
@@ -48,6 +54,9 @@ class MainWindow:
 		
 		f1Browse = tkinter.Button(file_frame, text = "Browse Folder", width=15, command=self.open_callback)
 		f1Browse.pack(side = tkinter.LEFT)
+
+		massTest = tkinter.Button(file_frame, text = "MASS DEMO", width=15, command=self.MASSDEMO)
+		massTest.pack(side = tkinter.LEFT)
 
 		############# IMG FRAME #############################
 
@@ -93,18 +102,35 @@ class MainWindow:
 		self.lateximg_canvas.pack(side = tkinter.LEFT)
 		self.image_on_canvas_latex = self.lateximg_canvas.create_image(self.camvas_border, self.camvas_border, anchor = tkinter.NW, image = self.lateximg)
 	
+	def MASSDEMO(self):
+
+
+
+		for root, dirs, files in os.walk(self.file_path):
+			for name in files:
+				print(os.path.join(root, name))
+				#print(name)
+
+				self.current_fname = name
+				self.ProcessFile(name)
+			break
+
+		file = open('./temp/Predicts.txt','w') 
+		 
+		file.write(self.outlatex) 
+
+		 
+		file.close() 
+
+
 	def Test(self):
 		
 		with open('ssd_train.txt') as f:
 			z = f.readlines()
 			self.test_candidate = z
 		
-		
-	def onselectfile(self, evt):
-		w = evt.widget
-		index = int(w.curselection()[0])
-		fname = w.get(index)
-		
+	def ProcessFile(self, fname):
+
 		#self.rawimg_canvas.delete(self.image_on_canvas_raw)
 		self.rawimg = ImageTk.PhotoImage(Image.open(self.file_path + fname))
 		self.rawimg_canvas.itemconfig(self.image_on_canvas_raw, image = self.rawimg)
@@ -119,8 +145,8 @@ class MainWindow:
 		
 		###########################################
 		
-		BB_list_Str = self.ssd.generatePrediction(self.file_path + fname)
-		self.processedimg = ImageTk.PhotoImage(Image.open('./temp/predict_temp.png'))
+		BB_list_Str = self.ssd.generatePrediction(self.file_path + fname, self.current_fname)
+		self.processedimg = ImageTk.PhotoImage(Image.open('./temp/' + self.current_fname))
 		self.processed_canvas.itemconfig(self.image_on_canvas_processed, image = self.processedimg)
 
 		
@@ -134,7 +160,16 @@ class MainWindow:
 			print('Wrong parse!')
 			plt.clf()
 		
+		self.outlatex = self.outlatex + self.current_fname + ' ' + latex_string + '\n'
+
 		print(latex_string)
+		
+	def onselectfile(self, evt):
+		w = evt.widget
+		index = int(w.curselection()[0])
+		fname = w.get(index)
+		
+		self.ProcessFile(fname)
 		
 		
 	def handleBBList(self, raw_BB):
@@ -157,12 +192,14 @@ class MainWindow:
 		fig.spines['bottom'].set_visible(False)
 		fig.spines['left'].set_visible(False)
 
-		plt.savefig('./temp/temp.png')
+		temp_path = self.current_fname[:-4] + '_latex.png'
+
+		plt.savefig('./temp/' + temp_path)
 		plt.clf()
 		
 		
 		self.lateximg_canvas.delete(self.image_on_canvas_latex)
-		self.lateximg = ImageTk.PhotoImage(Image.open('./temp/temp.png'))
+		self.lateximg = ImageTk.PhotoImage(Image.open('./temp/' + temp_path))
 		
 		self.image_on_canvas_latex = self.lateximg_canvas.create_image(self.camvas_border, self.camvas_border, anchor = tkinter.NW, image = self.lateximg)
 		
