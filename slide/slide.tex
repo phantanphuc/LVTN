@@ -125,51 +125,51 @@
 \AtBeginSection[]{
 	%\frame{\sectionpage}
 	\begin{frame}{Mục lục}
-	\tableofcontents[currentsection, hideothersubsections]
-\end{frame}
+		\tableofcontents[currentsection, hideothersubsections]
+	\end{frame}
 }
 
 \begin{document}
-\begin{frame}[plain]
-\maketitle
-\small
-{\centering\itshape \huge{\bf{Luận văn tốt nghiệp đại học}} \par}
-\footnotesize
-\begin{table}[c]
-	\centering 
-	\begin{tabular}{rrl}
-		%\vspace{0.5cm}
-		\hspace{1.5 cm} & Hội đồng & : \bf{Khoa học máy tính}\\
-		%	\vspace{0.5cm}
-		\hspace{1.5 cm} & Giảng viên hướng dẫn & : \bf{TS. LÊ Thành Sách}\\
-		%\vspace{0.5cm}
-		\hspace{1.5cm} & Giảng viên phản biện & : \bf{TS. Nguyễn Đức Dũng}\\
-		%\vspace{0.5cm}
-		\hspace{1.5 cm} & Nhóm sinh viên thực hiện & : \bf{Phan Tấn Phúc - 51303058}\\
-		%	\vspace{0.5cm}
-		\hspace{1.5 cm} & \hspace{5 cm} &  \hspace{0.15cm} \bf{Bùi Khánh Ngọc - 51302567}\\
-		
-	\end{tabular}
-\end{table}
-\begin{center}
-	{\footnotesize Tp. Hồ Chí Minh, Tháng 01/2018}
-\end{center}
-\end{frame}
-
-\begin{frame}
-\frametitle{Overview} % Table of contents slide, comment this block out to remove it
-\tableofcontents[pausesections, hideallsubsections] % Throughout your presentation, if you choose to use \section{} and \subsection{} commands, these will automatically be printed on this slide as an overview of your presentation
-\end{frame}
-
-%----------------------------------------------------------------------------------------
-%	PRESENTATION SLIDES
-%----------------------------------------------------------------------------------------
-
-
-
-\section{Giới thiệu}
-%------------------------------------------------
-\subsection{Đặt vấn đề}
+	\begin{frame}[plain]
+		\maketitle
+		\small
+		{\centering\itshape \huge{\bf{Luận văn tốt nghiệp đại học}} \par}
+		\footnotesize
+		\begin{table}[c]
+			\centering 
+			\begin{tabular}{rrl}
+				%\vspace{0.5cm}
+				\hspace{1.5 cm} & Hội đồng & : \bf{Khoa học máy tính}\\
+				%	\vspace{0.5cm}
+				\hspace{1.5 cm} & Giảng viên hướng dẫn & : \bf{TS. LÊ Thành Sách}\\
+				%\vspace{0.5cm}
+				\hspace{1.5cm} & Giảng viên phản biện & : \bf{TS. Nguyễn Đức Dũng}\\
+				%\vspace{0.5cm}
+				\hspace{1.5 cm} & Nhóm sinh viên thực hiện & : \bf{Phan Tấn Phúc - 51303058}\\
+				%	\vspace{0.5cm}
+				\hspace{1.5 cm} & \hspace{5 cm} &  \hspace{0.15cm} \bf{Bùi Khánh Ngọc - 51302567}\\
+				
+			\end{tabular}
+		\end{table}
+		\begin{center}
+			{\footnotesize Tp. Hồ Chí Minh, Tháng 01/2018}
+		\end{center}
+	\end{frame}
+	
+	\begin{frame}
+		\frametitle{Overview} % Table of contents slide, comment this block out to remove it
+		\tableofcontents[pausesections, hideallsubsections] % Throughout your presentation, if you choose to use \section{} and \subsection{} commands, these will automatically be printed on this slide as an overview of your presentation
+	\end{frame}
+	
+	%----------------------------------------------------------------------------------------
+	%	PRESENTATION SLIDES
+	%----------------------------------------------------------------------------------------
+	
+	
+	
+	\section{Giới thiệu}
+	%------------------------------------------------
+	\subsection{Đặt vấn đề}
 	\begin{frame}{Đặt vấn đề}
 		\begin{center}
 			\centering
@@ -178,16 +178,16 @@
 			\captionof{figure}{Ứng dụng của công nghệ trong giáo dục.}
 		\end{center}
 	\end{frame}
-%---------------------------------------------------
-\subsection{Mục tiêu đề tài}
+	%---------------------------------------------------
+	\subsection{Mục tiêu đề tài}
 	\begin{frame}{Mục tiêu đề tài}
 		\begin{itemize}
 			\uncover<1->{\item Nhận dạng biểu thức toán học dạng offline\footnote{Nhận dạng từ hình ảnh.}.}
 			\uncover<2->{\item Chuyển biểu thức từ dạng hình ảnh sang dạng Latex.}
 		\end{itemize}
 	\end{frame}
-%---------------------------------------------------
-\subsection{Lý do chọn đề tài}
+	%---------------------------------------------------
+	\subsection{Lý do chọn đề tài}
 	\begin{frame}{Lý do chọn đề tài}
 		\begin{itemize}
 			\item Thách thức khi thực hiện đề tài:
@@ -200,95 +200,95 @@
 			\end{itemize}
 			\item Động lực tiến hành khi áp dụng kiến thức đã học để tạo ra một sản phẩm hữu ích cho xã hội và tự mình có thể sử dụng.
 		\end{itemize}
-.	\end{frame}
-%---------------------------------------------------
-
-\section{Công trình liên quan}
-%---------------------------------------------------
-\subsection{Watch, Attend and Parse}
-
-\begin{frame}{Watch, Attend and Parser\footfullcite{zhang2017watch}}
-	\begin{block}{Phương pháp}
-		\begin{itemize}
-			\item \textbf{Watcher} là mạng nơron tích chập đầy đủ- FCN\footnote{Fully convolutional network} mã hoá ảnh đầu vào (bộ 9 ảnh bao gồm 1 ảnh gốc và ảnh 8 hướng) tạo ra đặc trưng ứng với từng pixel của ảnh gốc.
-			\item \textbf{Parser} là kiến trúc mạng GRU\footfullcite{cho2014properties} nhận các vectơ đặc trưng được sinh ra từ \textbf{Watcher}, kết hợp cơ chế \textbf{Attention} do nhóm tác giả đề xuất để sinh ra chuỗi Latex.
-		\end{itemize}
-	\end{block}
-\end{frame}
-
-\begin{frame}{Watch, Attend and Parse}
-\begin{center}
-	\centering
-	\includegraphics[width=0.5\linewidth]{WAP}
-	\vspace{0.5cm}
-	\captionof{figure}{Hình minh hoạ các bước thực hiện của phương pháp Watch, Attend and Parser.}
-\end{center}
-\end{frame}
-%---------------------------------------------------
-\subsection{Context- aware Recognition}
-\begin{frame}{Context- aware Recognition\footfullcite{context}}
-	\begin{block}{Phương pháp}
-		Ảnh đầu vào sẽ qua một số lớp tích chập và pooling để tạo ra một feature map. Feature map này là input cho 3 nhiệm vụ bên dưới. Cụ thể,
-		giả sử một điểm $i$ được cho đặt tại toạ độ ($w_i$, $h_i$) của feature map đầu vào. 
-		\begin{itemize}
-			\item \textbf{Nhiệm vụ phát hiện} (Dectection task) sẽ cho ra một con số $s$ thể hiện độ tin cậy rằng một ký hiệu được đặt tại $i$.
-			\item \textbf{Nhiệm vụ hồi quy} (Regression task) cho ra một vec-tor 4 chiều {$x_1$, $y_1$, $x_2$, $y_2$} thể hiện thông tin về bounding box của ký hiệu được đặt tại $i$.
-			\item\textbf{Nhiệm vụ nhận dạng} (Recognition task) gán nhãn cho ký hiệu đặt tại $i$ cùng với xác suất của nhãn đó. 
-		\end{itemize}
-		
-	\end{block}
-\end{frame}
-
-\begin{frame}{Context- aware Recognition}
-	\begin{figure}[!h]
-		\centering
-		\includegraphics[width=0.9\linewidth]{context_aware.png}
-		\vspace{0.2cm}
-		\caption{Mô hình học được đề xuất \footfullcite{context}.}
-	\end{figure}
-\end{frame}
-%--------------------------------------------------
-\subsection{Watch, Attend and Parser và Context- aware Recognition}
-\begin{frame}{Watch, Attend and Parser và Context- aware Recognition}
-	\begin{block}{Đánh giá}
-		Cả 2 phương pháp đều tận dụng được thông tin cấu trúc 2 chiều của biểu thức toán học qua quá trình nhận dạng bằng cách sử dụng một lớp mạng CNN để tạo ra đặc trưng từ ảnh biểu thức đầu vào, thay vì sử dụng cách phương pháp phổ biến trong phân tách ký tự như phân tích hình chiếu\footnote{Thuật ngữ tiếng Anh: projection cutting}, phân tích thành phần liên thông\footnote{Thuật ngữ tiếng Anh: connected component analysis}. Do đó, hạn chế lỗi do quá trình nhận dạng ký tự gây ra ảnh hướng đến kết quả sau cùng của bài toán.
-	\end{block}
-\end{frame}
-%--------------------------------------------------
-\subsection{QAK}
-\begin{frame}{QAK\footfullcite{qak}}
-	\begin{block}{Phương pháp}
-		\begin{itemize}
-			\item \textbf{Tiền xử lý:} chuyền ảnh đầu vào về ảnh xám, khử nhiễu bằng bộ lọc Guass, thực hiện chuyển về ảnh nhị phân và phân tích thành phần liên thông để tăng cường chất lượng , hỗ trợ bước phân đoạn.
-			\item \textbf{Phân đoạn ảnh:} dùng kỹ thuật phân tích hình chiếu và phân tích thành phần liên thông để tách ảnh đầu vào thành những mảnh ảnh chỉ chứa một ký tự.
-		\end{itemize}
-	\end{block}
-\end{frame}
-
-\begin{frame}{QAK}
-\begin{block}{Phương pháp}
-	\begin{itemize}
-		\item \textbf{Nhận dạng:} sử dụng kiến trúc mạng được chỉnh sửa thì Lenet- 5\footfullcite{yanlecun} để học nhận dạng ký tự.
-		\item \textbf{Phân tích cú pháp:} tạo ra các dãy ký hiệu có khả năng là kết quả của ảnh đầu vào, áp dụng tập luật văn phạm phi ngữ cảnh do các tác giả đề xuất để chọn ra kết quả có độ tin tưởng cao nhất.
-	\end{itemize}
-\end{block}
-\end{frame}
-
-\begin{frame}{QAK}
-	\begin{block}{Đánh giá}
-		Hệ thống của nhóm tác giả vẫn còn một số vấn đề sau:
-		\begin{itemize}
-			\item Phương pháp phân tích hình chiếu gặp vấn đề với những ký tự dính nhau, overlap nhau.
-			\item Chưa giải quyết được với những biểu thức mà ký tự có chỉ số trên hoặc chỉ số dưới. 
-		\end{itemize}
-	\end{block}
-\end{frame}
-%--------------------------------------------------
-%--------------------------------------------------
-%--------------------------------------------------
-
+		.	\end{frame}
+	%---------------------------------------------------
 	
- \section{Mô hình đề xuất}
+	\section{Công trình liên quan}
+	%---------------------------------------------------
+	\subsection{Watch, Attend and Parse}
+	
+	\begin{frame}{Watch, Attend and Parser\footfullcite{zhang2017watch}}
+		\begin{block}{Phương pháp}
+			\begin{itemize}
+				\item \textbf{Watcher} là mạng nơron tích chập đầy đủ- FCN\footnote{Fully convolutional network} mã hoá ảnh đầu vào (bộ 9 ảnh bao gồm 1 ảnh gốc và ảnh 8 hướng) tạo ra đặc trưng ứng với từng pixel của ảnh gốc.
+				\item \textbf{Parser} là kiến trúc mạng GRU\footfullcite{cho2014properties} nhận các vectơ đặc trưng được sinh ra từ \textbf{Watcher}, kết hợp cơ chế \textbf{Attention} do nhóm tác giả đề xuất để sinh ra chuỗi Latex.
+			\end{itemize}
+		\end{block}
+	\end{frame}
+	
+	\begin{frame}{Watch, Attend and Parse}
+		\begin{center}
+			\centering
+			\includegraphics[width=0.5\linewidth]{WAP}
+			\vspace{0.5cm}
+			\captionof{figure}{Hình minh hoạ các bước thực hiện của phương pháp Watch, Attend and Parser.}
+		\end{center}
+	\end{frame}
+	%---------------------------------------------------
+	\subsection{Context- aware Recognition}
+	\begin{frame}{Context- aware Recognition\footfullcite{context}}
+		\begin{block}{Phương pháp}
+			Ảnh đầu vào sẽ qua một số lớp tích chập và pooling để tạo ra một feature map. Feature map này là input cho 3 nhiệm vụ bên dưới. Cụ thể,
+			giả sử một điểm $i$ được cho đặt tại toạ độ ($w_i$, $h_i$) của feature map đầu vào. 
+			\begin{itemize}
+				\item \textbf{Nhiệm vụ phát hiện} (Dectection task) sẽ cho ra một con số $s$ thể hiện độ tin cậy rằng một ký hiệu được đặt tại $i$.
+				\item \textbf{Nhiệm vụ hồi quy} (Regression task) cho ra một vec-tor 4 chiều {$x_1$, $y_1$, $x_2$, $y_2$} thể hiện thông tin về bounding box của ký hiệu được đặt tại $i$.
+				\item\textbf{Nhiệm vụ nhận dạng} (Recognition task) gán nhãn cho ký hiệu đặt tại $i$ cùng với xác suất của nhãn đó. 
+			\end{itemize}
+			
+		\end{block}
+	\end{frame}
+	
+	\begin{frame}{Context- aware Recognition}
+		\begin{figure}[!h]
+			\centering
+			\includegraphics[width=0.9\linewidth]{context_aware.png}
+			\vspace{0.2cm}
+			\caption{Mô hình học được đề xuất \footfullcite{context}.}
+		\end{figure}
+	\end{frame}
+	%--------------------------------------------------
+	\subsection{Watch, Attend and Parser và Context- aware Recognition}
+	\begin{frame}{Watch, Attend and Parser và Context- aware Recognition}
+		\begin{block}{Đánh giá}
+			Cả 2 phương pháp đều tận dụng được thông tin cấu trúc 2 chiều của biểu thức toán học qua quá trình nhận dạng bằng cách sử dụng một lớp mạng CNN để tạo ra đặc trưng từ ảnh biểu thức đầu vào, thay vì sử dụng cách phương pháp phổ biến trong phân tách ký tự như phân tích hình chiếu\footnote{Thuật ngữ tiếng Anh: projection cutting}, phân tích thành phần liên thông\footnote{Thuật ngữ tiếng Anh: connected component analysis}. Do đó, hạn chế lỗi do quá trình nhận dạng ký tự gây ra ảnh hướng đến kết quả sau cùng của bài toán.
+		\end{block}
+	\end{frame}
+	%--------------------------------------------------
+	\subsection{QAK}
+	\begin{frame}{QAK\footfullcite{qak}}
+		\begin{block}{Phương pháp}
+			\begin{itemize}
+				\item \textbf{Tiền xử lý:} chuyền ảnh đầu vào về ảnh xám, khử nhiễu bằng bộ lọc Guass, thực hiện chuyển về ảnh nhị phân và phân tích thành phần liên thông để tăng cường chất lượng , hỗ trợ bước phân đoạn.
+				\item \textbf{Phân đoạn ảnh:} dùng kỹ thuật phân tích hình chiếu và phân tích thành phần liên thông để tách ảnh đầu vào thành những mảnh ảnh chỉ chứa một ký tự.
+			\end{itemize}
+		\end{block}
+	\end{frame}
+	
+	\begin{frame}{QAK}
+		\begin{block}{Phương pháp}
+			\begin{itemize}
+				\item \textbf{Nhận dạng:} sử dụng kiến trúc mạng được chỉnh sửa thì Lenet- 5\footfullcite{yanlecun} để học nhận dạng ký tự.
+				\item \textbf{Phân tích cú pháp:} tạo ra các dãy ký hiệu có khả năng là kết quả của ảnh đầu vào, áp dụng tập luật văn phạm phi ngữ cảnh do các tác giả đề xuất để chọn ra kết quả có độ tin tưởng cao nhất.
+			\end{itemize}
+		\end{block}
+	\end{frame}
+	
+	\begin{frame}{QAK}
+		\begin{block}{Đánh giá}
+			Hệ thống của nhóm tác giả vẫn còn một số vấn đề sau:
+			\begin{itemize}
+				\item Phương pháp phân tích hình chiếu gặp vấn đề với những ký tự dính nhau, overlap nhau.
+				\item Chưa giải quyết được với những biểu thức mà ký tự có chỉ số trên hoặc chỉ số dưới. 
+			\end{itemize}
+		\end{block}
+	\end{frame}
+	%--------------------------------------------------
+	%--------------------------------------------------
+	%--------------------------------------------------
+	
+	
+	\section{Mô hình đề xuất}
 	\begin{frame}
 		\frametitle{Mô hình đề xuất}
 		{\Huge Mô hình đề xuất}
@@ -305,7 +305,12 @@
 	%--------------------------------------------------
 	\subsection{Lý thuyết mạng SSD}
 	
-	\frame{\tableofcontents[currentsection]}
+	\frame{\tableofcontents
+		[
+		currentsection,
+		currentsubsection,
+		subsubsectionstyle=hide
+		]}
 	
 	\begin{frame}
 		\frametitle{Lý thuyết mạng SSD}
@@ -330,15 +335,44 @@
 		
 		Bộ mã hóa có nhiệm vụ match các bounding box của ground truth vào các default box đã sinh được để tạo ra dữ liệu hệ thống có thể sử dụng cho quá trình huấn luyện.\\
 		
-		Dữ liệu đầu vào: Danh sách bounding box của ground truth.\\
+		\begin{itemize}
+			\item Dữ liệu đầu vào: Danh sách bounding box của ground truth.
+			\item Dữ liệu đầu ra: Danh sách default box đã match với các bounding box tương ứng.
+		\end{itemize}
 		
-		Dữ liệu đầu ra: Danh sách default box đã match với các bounding box tương ứng.
+		
+		
+		
 		
 	\end{frame}
 	
 	\begin{frame}
 		\frametitle{Bộ Mã Hóa (Encoder) - Sinh Default Box}
-		
+		\begin{center}
+			\centering
+			\includegraphics[width=0.6\linewidth]{im_3.png}
+			\captionof{figure}{GT}
+		\end{center}
+		\begin{block}{Sinh Default Box}
+			\begin{itemize}
+				\item Các default box được sinh cách đều nhau với nhiều mức kích thước khác nhau.
+				\item Tham số: Số mức scale, kích thước của default box trong mỗi mức scale, số lượng default box trong mỗi mức kích thước và số lượng aspect ratio cho default box.
+			\end{itemize}
+		\end{block}
+	\end{frame}
+	
+	\begin{frame}
+		\frametitle{Bộ Mã Hóa (Encoder) - Sinh Default Box}
+		\begin{center}
+			\centering
+			\includegraphics[width=0.5\linewidth]{aspect.png}
+			\captionof{figure}{aspect.png}
+		\end{center}
+		\begin{block}{Aspect Ratio}
+			\begin{itemize}
+				\item Tại mỗi vị trí, Encoder sinh ra nhiều default box với tỉ lệ kích thước khác nhau.
+			\end{itemize}
+		\end{block}
 	\end{frame}
 	
 	%----------------MATCHING---------------------------
@@ -367,7 +401,7 @@
 			\captionof{figure}{GT\cite{Jaccard}}
 		\end{center}
 	\end{frame}
-		\begin{frame}
+	\begin{frame}
 		\frametitle{Bộ Mã Hóa (Encoder) - Matching}
 		\begin{center}
 			\centering
@@ -391,23 +425,8 @@
 			\captionof{figure}{GT\cite{Jaccard}}
 		\end{center}
 	\end{frame}
-	\begin{frame}
-		\frametitle{Bộ Mã Hóa (Encoder) - Matching}
-		\begin{center}
-			\centering
-			\includegraphics[width=0.6\linewidth]{LOSSSS.png}
-			\captionof{figure}{GT\cite{Jaccard}}
-		\end{center}
-	\end{frame}
-	\begin{frame}
-		\frametitle{Bộ Mã Hóa (Encoder) - Matching}
-		\begin{center}
-			\centering
-			\includegraphics[width=0.6\linewidth]{LOSSX.png}
-			\captionof{figure}{GT\cite{Jaccard}}
-		\end{center}
-	\end{frame}
-
+	
+	
 	%--------------------------------------------------
 	%----------SUBSUB: DETECTOR----------------------
 	%--------------------------------------------------
@@ -415,11 +434,16 @@
 	\subsubsection{Bộ phát hiện, phân loại}
 	\begin{frame}
 		\frametitle{Bộ phát hiện, phân loại}
-		Bộ phận này có nhiệm vụ trích đặc trưng ảnh thô đầu vào, tạo ra các feature map để từ đó tiến hành phát hiện, phân loại các ký tự.
+		Bộ phận này có nhiệm vụ trích đặc trưng ảnh thô đầu vào, tạo ra các feature map ứng với nhiều mức kích thước khác nhau để từ đó tiến hành phát hiện, phân loại các ký tự.
 		
-		Dữ liệu đầu vào: Ảnh cần nhận diện, danh sách default box đã match với các bounding box tương ứng (đối với quá trình huấn luyện).
+		\begin{itemize}
+			\item Dữ liệu đầu vào: Ảnh cần nhận diện, danh sách default box đã match với các bounding box tương ứng (đối với quá trình huấn luyện).
+			\item Dữ liệu đầu ra: Danh sách bounding box dự đoán tương ứng với mỗi default box.
+		\end{itemize}
 		
-		Dữ liệu đầu ra: Danh sách bounding box dự đoán tương ứng với mỗi default box.
+		
+		
+		
 		
 	\end{frame}
 	
@@ -431,28 +455,81 @@
 	\end{frame}
 	
 	\begin{frame}
-		\frametitle{Bộ phát hiện, phân loại - Dự đoán}
-		Với mỗi feature map trích ra được, hệ thống sẽ có một lớp tích chập tương ứng để đưa ra dự đoán. Mỗi vùng ảnh được kernel trượt qua sẽ tương ứng với một dự đoán.	
+		\frametitle{Bộ phát hiện, phân loại - Trích xuất feature map}
+		
+		
+		
+		\begin{block}{Sinh Default Box}
+			\begin{itemize}
+				\item Các default box được sinh cách đều nhau với nhiều mức kích thước khác nhau.
+				\item Tham số: Số mức scale, kích thước của default box trong mỗi mức scale, số lượng default box trong mỗi mức kích thước và số lượng aspect ratio cho default box.
+			\end{itemize}
+		\end{block}
 		
 	\end{frame}
+	
+	\begin{frame}
+		\frametitle{Bộ phát hiện, phân loại - Dự đoán}
+		
+		\begin{center}
+			\centering
+			\includegraphics[width=0.5\linewidth]{depthcol.png}
+			\vspace{0.3cm}
+			\captionof{figure}{Phép tích chập để sinh bounding box}
+		\end{center}
+		
+		\begin{block}{Sinh bounding box}
+			Với mỗi feature map trích ra được, hệ thống sẽ có một lớp tích chập tương ứng để đưa ra dự đoán. Mỗi vùng ảnh được kernel trượt qua sẽ tương ứng với một số dự đoán (ứng với các tỉ lệ bounding box khác nhau).
+		\end{block}
+		
+		
+	\end{frame}
+	
+	
+	
+	
+	
 	
 	%--------------------------------------------------
 	%----------SUBSUB: LOSS----------------------
 	%--------------------------------------------------
-	\subsubsection{Tính giá trị lỗi}
+	\subsubsection{Mục tiêu huấn luyện}
 	\begin{frame}
-		\frametitle{Tính giá trị lỗi}
+		\frametitle{Mục tiêu huấn luyện}
 		Bộ phận này có nhiệm vụ tính giá trị lỗi giữa ground truth và bounding box dự đoán được, từ đó thực hiện quá trình lan truyền ngược. Giá trị lỗi gồm 02 thành phần: Lỗi về vị trí và Lỗi về độ tin cậy.
 		
-		Dữ liệu đầu vào: Ảnh cần nhận diện, danh sách default box đã match với các bounding box tương ứng (đối với quá trình huấn luyện).
 		
-		Dữ liệu đầu ra: Danh sách bounding box dự đoán tương ứng với mỗi default box và Danh sách default box đã match với các bounding box ground truth tương ứng.
+		
+		
+		
 		
 	\end{frame}
 	
 	\begin{frame}
-		\frametitle{Tính giá trị lỗi - Lỗi về vị trí}
-		$$\hat{g}_j^{cx} = (g_j^{cx} - d_i^{cx}) / d^w_i$$
+		\frametitle{Mục tiêu huấn luyện}
+		\begin{center}
+			\centering
+			\includegraphics[width=0.6\linewidth]{LOSSSS.png}
+			\captionof{figure}{GT}
+		\end{center}
+	\end{frame}
+	\begin{frame}
+		\frametitle{Mục tiêu huấn luyện}
+		\begin{center}
+			\centering
+			\includegraphics[width=0.6\linewidth]{LOSSX.png}
+			\captionof{figure}{GT}
+		\end{center}
+	\end{frame}
+	
+	\begin{frame}
+		\frametitle{Mục tiêu huấn luyện}
+		\begin{block}{Mục tiêu huấn luyện}
+			\begin{itemize}
+				\item Cực tiểu chênh lệch về vị trí.
+				\item Cực đại độ tin cậy của nhãn.
+			\end{itemize}
+		\end{block}
 		
 	\end{frame}
 	
@@ -464,14 +541,15 @@
 	
 	\begin{frame}
 		\frametitle{Bộ giải mã (Decoder)}
-		Bộ phận này có nhiệm vụ chuyển dữ liệu của bounding box dự đoán được từ độ lệch so với default box sang dữ liệu có dạng (w, h, x, y).
+		Bộ phận này có nhiệm vụ chuyển dữ liệu của các bounding box từ độ lệch so với default box sang dữ liệu có dạng (w, h, x, y).
 		
-		Dữ liệu đầu vào: Độ lệch
-		
-		Dữ liệu đầu ra: Các bounding box đã dự đoán được.
-		
+		\begin{itemize}
+			\item Dữ liệu đầu vào: Độ lệch giữa bounding box dự đoán với default box tương ứng.
+			
+			\item Dữ liệu đầu ra: Các bounding box đã dự đoán được.
+			
+		\end{itemize}
 	\end{frame}
-	
 	
 	%--------------------------------------------------
 	%----------SUBSEC: SSD----------------------
@@ -482,8 +560,10 @@
 		\begin{center}
 			\centering
 			\includegraphics[width=0.95\linewidth]{SSD_Struture.png}
-			\captionof{figure}{GT\cite{Jaccard}}
+			\vspace{0.5cm}
+			\captionof{figure}{Mô hình mạng SSD nguyên thủy}
 		\end{center}
+		
 		\begin{block}{Mô hình SSD300\cite{liu2016ssd}}
 			\begin{itemize}
 				\item Số lớp: 106
@@ -491,27 +571,59 @@
 		\end{block}
 	\end{frame}
 	
+	\begin{frame}
+		\frametitle{Phiên bản I - Phiên bản nguyên thủy}
+		\begin{center}
+			\centering
+			\includegraphics[width=0.95\linewidth]{SSD_Struture_1.png}
+			\vspace{0.5cm}
+			\captionof{figure}{Mô hình mạng SSD nguyên thủy}
+		\end{center}
+		
+	\end{frame}
+	
+	\begin{frame}
+		\frametitle{Phiên bản I - Phiên bản nguyên thủy}
+		\begin{center}
+			\centering
+			\includegraphics[width=0.95\linewidth]{SSD_Struture_2.png}
+			\vspace{0.5cm}
+			\captionof{figure}{Mô hình mạng SSD nguyên thủy}
+		\end{center}
+		
+	\end{frame}
+	
+	\begin{frame}
+		\frametitle{Phiên bản I - Phiên bản nguyên thủy}
+		\begin{center}
+			\centering
+			\includegraphics[width=0.95\linewidth]{SSD_Struture_3.png}
+			\vspace{0.5cm}
+			\captionof{figure}{Mô hình mạng SSD nguyên thủy}
+		\end{center}
+		
+	\end{frame}
 	
 	\begin{frame}
 		\frametitle{Phiên bản II}
 		\begin{center}
 			\centering
-			\includegraphics[width=0.95\linewidth]{SSD_Struture.png}
-			\captionof{figure}{GT\cite{Jaccard}}
+			\includegraphics[width=0.40\linewidth]{im_4.png}
+			\captionof{figure}{Thu nhỏ kích thước các default box}
 		\end{center}
 		\begin{block}{Các thay đổi}
-			\begin{itemize}
-				\item Số lớp: 106
-			\end{itemize}
+			Giảm kích thước các default box trong mỗi mức kích thước: \\
+			(30, 60, 111, 162, 213, 264, 315) $\rightarrow$ (9, 24, 54, 84, 114, 144, 174)
 		\end{block}
 	\end{frame}
-
+	
 	\begin{frame}
 		\frametitle{Phiên bản III}
 		\begin{center}
 			\centering
-			\includegraphics[width=0.95\linewidth]{SSD_Struture.png}
-			\captionof{figure}{GT\cite{Jaccard}}
+			\includegraphics[width=0.95\linewidth]{SSD_Struture_4.png}
+			\vspace{0.5cm}
+			\captionof{figure}{Mô hình phiên bản III}
 		\end{center}
 		\begin{block}{Các thay đổi}
 			\begin{itemize}
@@ -519,13 +631,14 @@
 			\end{itemize}
 		\end{block}
 	\end{frame}
-
+	
 	\begin{frame}
 		\frametitle{Phiên bản IV}
 		\begin{center}
 			\centering
-			\includegraphics[width=0.95\linewidth]{SSD_Struture.png}
-			\captionof{figure}{GT\cite{Jaccard}}
+			\includegraphics[width=0.95\linewidth]{SSD_Struture_5.png}
+			\vspace{0.5cm}
+			\captionof{figure}{Mô hình phiên bản IV}
 		\end{center}
 		\begin{block}{Các thay đổi}
 			\begin{itemize}
@@ -535,205 +648,205 @@
 	\end{frame}
 	
 	
-%--------------------------------------------------
-%----------SUBSEC: PARSE----------------------
-%--------------------------------------------------
-\subsection{Phân tích cấu trúc}
-\begin{frame}
-	\frametitle{Phân tích cấu trúc}
-	Bộ phận phân tích cấu trúc có nhiệm vụ nhận dữ liệu là các bounding box từ SSD\cite{liu2016ssd} và xây dựng một cây Lex - BST tạo tiền đề để xây dựng biểu thức Latex.
-\end{frame}
-
-%--------------------------------------------------
-%----------SUBSEC: BST----------------------
-%--------------------------------------------------
-\subsubsection{Sinh cây BST}
-\begin{frame}
-	\frametitle{Sinh cây BST}
-	\begin{center}
-		\centering
-		\includegraphics[width=0.6\linewidth]{BST.png}
-		\vspace{0.5cm}
-		\captionof{figure}{Một cây BST}
-	\end{center}
-	\begin{block}{Cây BST}
-		\begin{itemize}
-			\item Mỗi nút là một đường cơ sở.
-			\item Các liên kết giữa các nút thể hiện vị trí tương đối giữa các đường cơ sở.
-		\end{itemize}
-	\end{block}
-\end{frame}
-
-\begin{frame}
-	\frametitle{Phân tích cấu trúc - Tìm ký tự chủ đạo}
-	\begin{center}
-		\centering
-		\includegraphics[width=0.8\linewidth]{base.png}
-		\vspace{0.5cm}
-		\captionof{figure}{Một số ký tự chủ đạo}
-	\end{center}
-	\begin{block}{Ký tự chủ đạo}
-		Ký tự chủ đạo là ký tự bắt đầu của một đường cơ sở, là ký tự nằm bên trái nhất mà không bị thống trị.
-	\end{block}
+	%--------------------------------------------------
+	%----------SUBSEC: PARSE----------------------
+	%--------------------------------------------------
+	\subsection{Phân tích cấu trúc}
+	\begin{frame}
+		\frametitle{Phân tích cấu trúc}
+		Bộ phận phân tích cấu trúc có nhiệm vụ nhận dữ liệu là các bounding box từ SSD\cite{liu2016ssd} và xây dựng một cây Lex - BST tạo tiền đề để xây dựng biểu thức Latex.
+	\end{frame}
 	
-\end{frame}
-
-\begin{frame}
-	\frametitle{Xác định ký tự trên đường cơ sở}
-	\begin{center}
-		\centering
-		\includegraphics[width=0.6\linewidth]{hor1.png}
-		\captionof{figure}{GT}
-	\end{center}
-\end{frame}
-
-\begin{frame}
-	\frametitle{Xác định ký tự trên đường cơ sở}
-	\begin{center}
-		\centering
-		\includegraphics[width=0.6\linewidth]{hor1.png}
-		\captionof{figure}{GT}
-	\end{center}
-\end{frame}
-
-\begin{frame}
-	\frametitle{Xác định ký tự trên đường cơ sở}
-	\begin{center}
-		\centering
-		\includegraphics[width=0.6\linewidth]{hor2.png}
-		\captionof{figure}{GT}
-	\end{center}
-\end{frame}
-
-\begin{frame}
-	\frametitle{Xác định ký tự trên đường cơ sở}
-	\begin{center}
-		\centering
-		\includegraphics[width=0.6\linewidth]{hor3.png}
-		\captionof{figure}{GT}
-	\end{center}
-\end{frame}
-
-\begin{frame}
-	\frametitle{Xác định ký tự trên đường cơ sở}
-	\begin{center}
-		\centering
-		\includegraphics[width=0.6\linewidth]{hor4.png}
-		\captionof{figure}{GT}
-	\end{center}
-\end{frame}
-
-\begin{frame}
-	\frametitle{Xác định ký tự trên đường cơ sở}
-	\begin{center}
-		\centering
-		\includegraphics[width=0.6\linewidth]{hor5.png}
-		\captionof{figure}{GT}
-	\end{center}
-\end{frame}
-
-\begin{frame}
-	\frametitle{Xác định ký tự trên đường cơ sở}
-	\begin{center}
-		\centering
-		\includegraphics[width=0.6\linewidth]{hor5_5.png}
-		\captionof{figure}{GT}
-	\end{center}
-\end{frame}
-
-\begin{frame}
-	\frametitle{Xác định ký tự trên đường cơ sở}
-	\begin{center}
-		\centering
-		\includegraphics[width=0.6\linewidth]{hor6.png}
-		\captionof{figure}{GT}
-	\end{center}
-\end{frame}
-
-\begin{frame}
-	\frametitle{Xác định ký tự trên đường cơ sở}
-	\begin{center}
-		\centering
-		\includegraphics[width=0.6\linewidth]{hor7.png}
-		\captionof{figure}{GT}
-	\end{center}
-\end{frame}
-
-\begin{frame}
-	\frametitle{Tái phân vùng}
-	\begin{center}
-		\centering
-		\includegraphics[width=0.6\linewidth]{hor8.png}
-		\captionof{figure}{GT}
-	\end{center}
-\end{frame}
-
-\begin{frame}
-	\frametitle{Xử lý nút con}
-	\begin{center}
-		\centering
-		\includegraphics[width=0.75\linewidth]{UN.png}
-		\captionof{figure}{GT}
-	\end{center}
-	\begin{block}{Xử lý nút con}
-		Sau lần chạy đầu tiên thì các nút con mới chỉ là danh sách các ký tự, vì vậy cần xử lý từng nút con để thu được cây BST hoàn chỉnh.
-	\end{block}
-\end{frame}
-
-
-\subsubsection{Sinh cây Lexed BST}
-\begin{frame}
-	\frametitle{Sinh cây Lexed BST}
-	\begin{center}
-		\centering
-		\includegraphics[width=0.6\linewidth]{lexBST.png}
-		\captionof{figure}{Một cây Lexed BST}
-	\end{center}
-	\begin{block}{Cây Lexed - BST}
-		\begin{itemize}
-			\item Mỗi nút là một đường cơ sở
-			\item Liên kết giữa các nút biểu thị quan hệ về ngữ nghĩa toán học giữa các đường cơ sở.
-		\end{itemize}
-	\end{block}
-\end{frame}
-
-
-\begin{frame}
-	\frametitle{Sinh cây Lexed BST}
-	\begin{center}
-		\centering
-		\includegraphics[width=0.6\linewidth]{nhom.png}
-		\captionof{figure}{Một cây Lexed BST}
-	\end{center}
+	%--------------------------------------------------
+	%----------SUBSEC: BST----------------------
+	%--------------------------------------------------
+	\subsubsection{Sinh cây BST}
+	\begin{frame}
+		\frametitle{Sinh cây BST}
+		\begin{center}
+			\centering
+			\includegraphics[width=0.6\linewidth]{BST.png}
+			\vspace{0.5cm}
+			\captionof{figure}{Một cây BST}
+		\end{center}
+		\begin{block}{Cây BST}
+			\begin{itemize}
+				\item Mỗi nút là một đường cơ sở.
+				\item Các liên kết giữa các nút thể hiện vị trí tương đối giữa các đường cơ sở.
+			\end{itemize}
+		\end{block}
+	\end{frame}
 	
-	\begin{block}{Nhóm ký tự}
-		\begin{itemize}
-			\item Các ký tự sẽ được nhóm lại phù hợp
-		\end{itemize}
-	\end{block}
+	\begin{frame}
+		\frametitle{Phân tích cấu trúc - Tìm ký tự chủ đạo}
+		\begin{center}
+			\centering
+			\includegraphics[width=0.8\linewidth]{base.png}
+			\vspace{0.5cm}
+			\captionof{figure}{Một số ký tự chủ đạo}
+		\end{center}
+		\begin{block}{Ký tự chủ đạo}
+			Ký tự chủ đạo là ký tự bắt đầu của một đường cơ sở, là ký tự nằm bên trái nhất mà không bị thống trị.
+		\end{block}
+		
+	\end{frame}
 	
-\end{frame}
-
-\begin{frame}
-	\frametitle{Sinh cây Lexed BST}
-	\begin{center}
-		\centering
-		\includegraphics[width=0.6\linewidth]{lex1.png}
-		\captionof{figure}{Một cây Lexed BST}
-	\end{center}
+	\begin{frame}
+		\frametitle{Xác định ký tự trên đường cơ sở}
+		\begin{center}
+			\centering
+			\includegraphics[width=0.6\linewidth]{hor1.png}
+			\captionof{figure}{GT}
+		\end{center}
+	\end{frame}
 	
-	\begin{block}{Luật sinh}
-		\begin{itemize}
-			\item Các ký tự sẽ được nhóm lại phù hợp
-		\end{itemize}
-	\end{block}
+	\begin{frame}
+		\frametitle{Xác định ký tự trên đường cơ sở}
+		\begin{center}
+			\centering
+			\includegraphics[width=0.6\linewidth]{hor1.png}
+			\captionof{figure}{GT}
+		\end{center}
+	\end{frame}
 	
-\end{frame}
-
-%--------------------------------------------------
-%--------------------------------------------------
-%--------------------------------------------------
-%--------------------------------------------------
+	\begin{frame}
+		\frametitle{Xác định ký tự trên đường cơ sở}
+		\begin{center}
+			\centering
+			\includegraphics[width=0.6\linewidth]{hor2.png}
+			\captionof{figure}{GT}
+		\end{center}
+	\end{frame}
+	
+	\begin{frame}
+		\frametitle{Xác định ký tự trên đường cơ sở}
+		\begin{center}
+			\centering
+			\includegraphics[width=0.6\linewidth]{hor3.png}
+			\captionof{figure}{GT}
+		\end{center}
+	\end{frame}
+	
+	\begin{frame}
+		\frametitle{Xác định ký tự trên đường cơ sở}
+		\begin{center}
+			\centering
+			\includegraphics[width=0.6\linewidth]{hor4.png}
+			\captionof{figure}{GT}
+		\end{center}
+	\end{frame}
+	
+	\begin{frame}
+		\frametitle{Xác định ký tự trên đường cơ sở}
+		\begin{center}
+			\centering
+			\includegraphics[width=0.6\linewidth]{hor5.png}
+			\captionof{figure}{GT}
+		\end{center}
+	\end{frame}
+	
+	\begin{frame}
+		\frametitle{Xác định ký tự trên đường cơ sở}
+		\begin{center}
+			\centering
+			\includegraphics[width=0.6\linewidth]{hor5_5.png}
+			\captionof{figure}{GT}
+		\end{center}
+	\end{frame}
+	
+	\begin{frame}
+		\frametitle{Xác định ký tự trên đường cơ sở}
+		\begin{center}
+			\centering
+			\includegraphics[width=0.6\linewidth]{hor6.png}
+			\captionof{figure}{GT}
+		\end{center}
+	\end{frame}
+	
+	\begin{frame}
+		\frametitle{Xác định ký tự trên đường cơ sở}
+		\begin{center}
+			\centering
+			\includegraphics[width=0.6\linewidth]{hor7.png}
+			\captionof{figure}{GT}
+		\end{center}
+	\end{frame}
+	
+	\begin{frame}
+		\frametitle{Tái phân vùng}
+		\begin{center}
+			\centering
+			\includegraphics[width=0.6\linewidth]{hor8.png}
+			\captionof{figure}{GT}
+		\end{center}
+	\end{frame}
+	
+	\begin{frame}
+		\frametitle{Xử lý nút con}
+		\begin{center}
+			\centering
+			\includegraphics[width=0.75\linewidth]{UN.png}
+			\captionof{figure}{GT}
+		\end{center}
+		\begin{block}{Xử lý nút con}
+			Sau lần chạy đầu tiên thì các nút con mới chỉ là danh sách các ký tự, vì vậy cần xử lý từng nút con để thu được cây BST hoàn chỉnh.
+		\end{block}
+	\end{frame}
+	
+	
+	\subsubsection{Sinh cây Lexed BST}
+	\begin{frame}
+		\frametitle{Sinh cây Lexed BST}
+		\begin{center}
+			\centering
+			\includegraphics[width=0.6\linewidth]{lexBST.png}
+			\captionof{figure}{Một cây Lexed BST}
+		\end{center}
+		\begin{block}{Cây Lexed - BST}
+			\begin{itemize}
+				\item Mỗi nút là một đường cơ sở
+				\item Liên kết giữa các nút biểu thị quan hệ về ngữ nghĩa toán học giữa các đường cơ sở.
+			\end{itemize}
+		\end{block}
+	\end{frame}
+	
+	
+	\begin{frame}
+		\frametitle{Sinh cây Lexed BST}
+		\begin{center}
+			\centering
+			\includegraphics[width=0.6\linewidth]{nhom.png}
+			\captionof{figure}{Một cây Lexed BST}
+		\end{center}
+		
+		\begin{block}{Nhóm ký tự}
+			\begin{itemize}
+				\item Các ký tự sẽ được nhóm lại phù hợp
+			\end{itemize}
+		\end{block}
+		
+	\end{frame}
+	
+	\begin{frame}
+		\frametitle{Sinh cây Lexed BST}
+		\begin{center}
+			\centering
+			\includegraphics[width=0.6\linewidth]{lex1.png}
+			\captionof{figure}{Một cây Lexed BST}
+		\end{center}
+		
+		\begin{block}{Luật sinh}
+			\begin{itemize}
+				\item Các ký tự sẽ được nhóm lại phù hợp
+			\end{itemize}
+		\end{block}
+		
+	\end{frame}
+	
+	%--------------------------------------------------
+	%--------------------------------------------------
+	%--------------------------------------------------
+	%--------------------------------------------------
 	
 	
 	%--------------------------------------------------
@@ -763,12 +876,12 @@
 			\captionof{table}{Thông tin mô tả tập dữ liệu ký tự.}
 		\end{center}
 		Các nhãn ký hiệu trong tập dữ liệu hiện tại:\\ 0-9, a-z, A-Z, (, ), +, -, *, /, =,$\textcolor{black}{\int}$, $\textcolor{black}{\alpha}$, $\textcolor{black}{\beta}$, $\textcolor{black}{\gamma}$, $\textcolor{black}{\delta}$, $\textcolor{black}{\epsilon}$, $\textcolor{black}{\theta}$, $\textcolor{black}{\lambda}$, $\textcolor{black}{\mu}$, $\textcolor{black}{\pi}$, $\textcolor{black}{\rho}$, $\textcolor{black}{\sigma}$, $\textcolor{black}{\phi}$, $\textcolor{black}{\omega}$, $\textcolor{black}{\Delta}$, $\textcolor{black}{\Pi}$, $\textcolor{black}{\Sigma}$, $\textcolor{black}{\Phi}$, $\textcolor{black}{\Omega}$, $\textcolor{blue}{\sin}$, $\textcolor{blue}{\cos}$, $\textcolor{blue}{\tan}$, $\textcolor{blue}{\log}$, $\textcolor{blue}{\lim}$, $\textcolor{blue}{\surd}$, $\textcolor{blue}{\rightarrow}$, $\textcolor{blue}{\geq}$, $\textcolor{blue}{\leq}$, $\textcolor{blue}{\forall}$, $\textcolor{blue}{\exists}$, $\textcolor{blue}{\in}$, \textcolor{blue}{!}, \textcolor{blue}{.}, $\textcolor{blue}{\ldots}$, $\textcolor{blue}{\div}$, $\textcolor{blue}{\neq}$, $\textcolor{blue}{\infty}$.
-		\end{frame}
+	\end{frame}
 	
 	\begin{frame}[<+->]{Xây dựng tập ảnh biểu thức}
 		\begin{enumerate}
-		\item Chuẩn bị mẫu thu dữ liệu.
-		\seti
+			\item Chuẩn bị mẫu thu dữ liệu.
+			\seti
 		\end{enumerate}
 		\begin{figure}[!h]
 			\centering
@@ -779,45 +892,45 @@
 	\end{frame}
 	
 	\begin{frame}[<+->]{Xây dựng tập ảnh biểu thức}
-	\begin{enumerate}
-		\conti
-		\item Chuẩn bị biểu thức mẫu làm gợi ý cho người tham gia viết\footfullcite{crohme}.
-		\seti
-	\end{enumerate}
-	\begin{figure}[!h]
-		\centering
-		\includegraphics[width=0.45\linewidth]{Exp_sample1}
-		\vspace{0.5cm}
-		\caption{Ví dụ một biểu thức mẫu.}
-	\end{figure}
-	\end{frame}
-
-	\begin{frame}{Xây dựng tập ảnh biểu thức}
-	\begin{enumerate}
-		\conti
-		\item Tập hợp biểu mẫu đã cho viết, mang đi scan.
-		\seti
-	\end{enumerate}
-	\begin{figure}[!h]
-		\centering
-		\includegraphics[width=0.85\linewidth]{Exp_sample}
-		\vspace{0.2cm}
-		\caption{Mẫu đã được điền và scan.}
-	\end{figure}
+		\begin{enumerate}
+			\conti
+			\item Chuẩn bị biểu thức mẫu làm gợi ý cho người tham gia viết\footfullcite{crohme}.
+			\seti
+		\end{enumerate}
+		\begin{figure}[!h]
+			\centering
+			\includegraphics[width=0.45\linewidth]{Exp_sample1}
+			\vspace{0.5cm}
+			\caption{Ví dụ một biểu thức mẫu.}
+		\end{figure}
 	\end{frame}
 	
 	\begin{frame}{Xây dựng tập ảnh biểu thức}
-	\begin{enumerate}
-		\conti
-		\item Sử dụng đoạn mã Matlab\footfullcite{qak} để tạo ảnh đầu vào quá trình huấn luyện.
-		\seti
-	\end{enumerate}
+		\begin{enumerate}
+			\conti
+			\item Tập hợp biểu mẫu đã cho viết, mang đi scan.
+			\seti
+		\end{enumerate}
+		\begin{figure}[!h]
+			\centering
+			\includegraphics[width=0.85\linewidth]{Exp_sample}
+			\vspace{0.2cm}
+			\caption{Mẫu đã được điền và scan.}
+		\end{figure}
+	\end{frame}
+	
+	\begin{frame}{Xây dựng tập ảnh biểu thức}
+		\begin{enumerate}
+			\conti
+			\item Sử dụng đoạn mã Matlab\footfullcite{qak} để tạo ảnh đầu vào quá trình huấn luyện.
+			\seti
+		\end{enumerate}
 		\begin{center}
-		\centering
-		\includegraphics[width=0.45\linewidth]{EXP_2017_072_2A.png}
-		\vspace{0.5cm}
-		\captionof{figure}{Ví dụ một ảnh là input cho quá trình huấn luyện.}
-	\end{center}
+			\centering
+			\includegraphics[width=0.45\linewidth]{EXP_2017_072_2A.png}
+			\vspace{0.5cm}
+			\captionof{figure}{Ví dụ một ảnh là input cho quá trình huấn luyện.}
+		\end{center}
 	\end{frame}
 	
 	\begin{frame}{Xây dựng tập ảnh biểu thức}
@@ -832,17 +945,17 @@
 			\captionof{figure}{Giao diện công cụ hỗ trợ quá trình gán nhãn và xác định bounding box. }
 		\end{center}
 	\end{frame}
-
+	
 	\begin{frame}
 		\begin{block}{Thông tin mô tả}
 			\begin{itemize}
 				\item Số người tham gia: khoảng 88 
 				\item Số lượng ảnh\footnote{Mỗi ảnh chỉ chứa một biểu thức.}:  2256. Trong đó có 1746 ảnh dùng cho training, 138 ảnh dùng cho quá trình validation và 372 ảnh để test.
-%				Trong đó, 372 ảnh test được thu thập từ 2 nguồn:
-%				\begin{itemize}
-%					\item[$-$] 192 ảnh được viết bởi người chưa từng tham gia viết cho quá trình thu thập ảnh huấn luyện.
-%					\item[$-$] 102 ảnh còn lại được viết bởi 15 người đã tham gia quá trình thu thập ảnh huấn luyện.
-%				\end{itemize}
+				%				Trong đó, 372 ảnh test được thu thập từ 2 nguồn:
+				%				\begin{itemize}
+				%					\item[$-$] 192 ảnh được viết bởi người chưa từng tham gia viết cho quá trình thu thập ảnh huấn luyện.
+				%					\item[$-$] 102 ảnh còn lại được viết bởi 15 người đã tham gia quá trình thu thập ảnh huấn luyện.
+				%				\end{itemize}
 				\item Số loại biểu thức: khoảng 552
 				\item Tổng số ký tự trong tập huấn luyện: 13697
 				\item Tổng số ký tự trong tập kiểm tra: 2237
@@ -878,22 +991,22 @@
 		\end{center}
 	\end{frame}
 	\begin{frame}{Đánh giá định tính}
-	\begin{center}
-		\centering
-		\includegraphics[width=0.775\linewidth]{compare_1.png}
-		\vspace{0.5cm}
-		\captionof{figure}{Kết quả nhận diện của 4 phiên bản thử nghiệm.}
-	\end{center}
+		\begin{center}
+			\centering
+			\includegraphics[width=0.775\linewidth]{compare_1.png}
+			\vspace{0.5cm}
+			\captionof{figure}{Kết quả nhận diện của 4 phiên bản thử nghiệm.}
+		\end{center}
 	\end{frame}
 	\begin{frame}{Đánh giá định tính}
-	\begin{center}
-		\centering
-		\includegraphics[width=0.85\linewidth]{compare_7.png}
-		\vspace{0.5cm}
-		\captionof{figure}{Kết quả nhận diện phiên bản IV trên ký tự nhỏ.}
-	\end{center}
+		\begin{center}
+			\centering
+			\includegraphics[width=0.85\linewidth]{compare_7.png}
+			\vspace{0.5cm}
+			\captionof{figure}{Kết quả nhận diện phiên bản IV trên ký tự nhỏ.}
+		\end{center}
 	\end{frame}
-
+	
 	\begin{frame}{Đánh giá định lượng}
 		\begin{itemize}
 			\item Điều kiện đánh giá
@@ -921,7 +1034,7 @@
 	\end{frame}
 	
 	\begin{frame}{Kết quả}
-			\begin{center}
+		\begin{center}
 			\centering
 			\includegraphics[width=0.775\linewidth]{mAP.png}
 			\vspace{0.5cm}
@@ -932,7 +1045,7 @@
 	\section{Tổng kết}
 	\subsection{Ưu điểm}
 	\begin{frame}{Ưu điểm}
-			\begin{itemize}
+		\begin{itemize}
 			\item Hệ thống có thể nhận diện được ký tự ở nhiều kích thước khác nhau.
 			\item Nhận diện được nhiều biểu thức mà nếu chỉ dùng kỹ thuật phân vùng thì khó có thể làm được (ví dụ như biểu thức có ký tự dính nhau).
 			\item Nhận diện được nhiều loại ký tự.
@@ -963,17 +1076,17 @@
 		\end{center}
 	\end{frame}
 	\begin{frame}{Phát triển tập dữ liệu biểu thức}
-	\begin{block}{Giải pháp}
-		Bổ sung mẫu biểu thức chứa cụ thể $E\_1$ và $M\_1$ vào tập huấn luyện. Cụ thể, tăng cường 96 ảnh vào tập huấn luyện và 24 ảnh để test.
-	\end{block}
-	\begin{center}
-		\centering
-		\includegraphics[width=0.7\linewidth]{M1E1_res}
-		\vspace{0.5cm}
-		\captionof{figure}{ Kết quả nhận dạng sau khi được huấn luyện với dữ liệu bổ sung.}
-	\end{center}
+		\begin{block}{Giải pháp}
+			Bổ sung mẫu biểu thức chứa cụ thể $E\_1$ và $M\_1$ vào tập huấn luyện. Cụ thể, tăng cường 96 ảnh vào tập huấn luyện và 24 ảnh để test.
+		\end{block}
+		\begin{center}
+			\centering
+			\includegraphics[width=0.7\linewidth]{M1E1_res}
+			\vspace{0.5cm}
+			\captionof{figure}{ Kết quả nhận dạng sau khi được huấn luyện với dữ liệu bổ sung.}
+		\end{center}
 	\end{frame}
-
+	
 	\begin{frame}{Khắc phục lỗi nhận dạng sai ở ký tự lớn}
 		\begin{block}{Giải pháp}
 			Thu nhỏ nội dung ảnh.
@@ -1013,7 +1126,7 @@
 		\end{itemize}
 	\end{frame}
 	\begin{frame}{Demo}
-	\huge{Demo}
+		\huge{Demo}
 	\end{frame}
 	\section*{Tham khảo}
 	\begin{frame}
@@ -1030,10 +1143,10 @@
 	
 	\section*{Phụ lục}
 	\begin{frame}{Phụ lục}
-	\centering
-	\colorbox{blue}{\textcolor{white}{\huge{Phụ lục}}}
+		\centering
+		\colorbox{blue}{\textcolor{white}{\huge{Phụ lục}}}
 	\end{frame}
-
+	
 	\begin{frame}{Công thức tính chỉ số mAP}
 		Tính precision cho từng nhãn theo công thức\footfullcite{mAP}:
 		\begin{align}
@@ -1048,6 +1161,17 @@
 		mAP là trung bình có trọng số giữa $precision$ và $class\_weight$.
 		
 	\end{frame}
+	
+	
+	\begin{frame}{Cấu trúc mạng VGG16}
+		\begin{center}
+			\centering
+			\includegraphics[width=0.95\linewidth]{vgg16.png}
+			\vspace{0.5cm}
+			\captionof{figure}{Cấu trúc mạng VGG16}
+		\end{center}
+	\end{frame}
+	
 	%----------------------------------------------------------------------------------------
 	
 \end{document}

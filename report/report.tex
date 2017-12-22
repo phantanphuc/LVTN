@@ -545,7 +545,7 @@
 	L_{conf}(x, c) = - \sum^N_{i \in Pos} x^p_{ij} \log (\hat{c}^p_i) - \sum_{i \in Neg} \log (\hat{c}^0_i)
 	N_u	\end{align}
 	
-	Với \begin{align}\hat{c}_i^p = \frac{\exp{c_i^p}}{\sum_p \exp{c)i^p}}\end{align}
+	Với \begin{align}\hat{c}_i^p = \frac{\exp{c_i^p}}{\sum_p \exp{c}_i^p}\end{align}
 	
 	\subsection{Bộ giải mã (Decoder)}
 	
@@ -1102,6 +1102,13 @@
 	\end{center}
 	Như vậy với mỗi ảnh, hệ thống sinh ra 24148 dự đoán, gấp gần 3 lần so với ảnh SSD300 nguyên thủy\cite{liu2016ssd}. Với những thay đổi này bounding box thậm chí còn có thể match với những default box nhỏ hơn, bên cạnh đó, mật độ các default box cũng dày đặc hơn nhiều so với mạng SSD nguyên thủy\cite{liu2016ssd}.
 	
+	\begin{center}
+		\centering
+		\includegraphics[width=0.875\linewidth]{SSD_Struture_4.png}
+		\vspace{0.5cm}
+		\captionof{figure}{Cấu trúc mạng của phiên bản III}
+	\end{center}
+	
 	\subsubsection{Giảm kích thước các default box, tăng kích thước ảnh đầu vào và thêm lớp tích chập - Phiên bản IV}
 	
 	Phiên bản này thừa kế các thay đổi ở hai phiên bản trước, tuy nhiên ở phần thân mạng SSD\cite{liu2016ssd}, nhóm đã gắn thêm 2 lớp tích chập ở cuối với các tham số: \\
@@ -1135,16 +1142,23 @@
 			\hline
 			Conv\_9 & $256 \times 8 \times 8 $ &  $ \{ 1, \frac{1}{2} , 2, \frac{1}{3}, 3\} $ & 384  \\ 
 			\hline
-			Conv\_10 & $256 \times 4 \times 4$ & $ \{ 1, \frac{1}{2} , 2\} $ & 160 \\ 
+			Conv\_10 & $256 \times 4 \times 4$ & $ \{ 1, \frac{1}{2} , 2\} $ & 64 \\ 
 			\hline
-			Conv\_11 & $256 \times 2 \times 2$ & $ \{ 1, \frac{1}{2} , 2\} $ & 40 \\ 
+			Conv\_11 & $256 \times 2 \times 2$ & $ \{ 1, \frac{1}{2} , 2\} $ & 16 \\ 
 			\hline
-			Conv\_12 & $256 \times 2 \times 1$ & $ \{ 1, \frac{1}{2} , 2\} $ & 10 \\ 
+			Conv\_12 & $256 \times 2 \times 1$ & $ \{ 1, \frac{1}{2} , 2\} $ & 4 \\ 
 			\hline
 		\end{tabular}
 		\captionof{table}{Thông tin của các feature map trích được từ mạng SSD\cite{liu2016ssd} đã giảm kích thước default box, tăng kích thước ảnh đầu vào và tăng số lớp tích chập}
 	\end{center}
 	Lớp Conv\_12 được thêm vào cuối mạng với mục đích tăng độ dài danh sách feature map đưa vào lớp Multibox, điều này giúp trong quá trình matching, các ký tự lớn hơn có thể được match.
+	
+	\begin{center}
+		\centering
+		\includegraphics[width=0.875\linewidth]{SSD_Struture_5.png}
+		\vspace{0.5cm}
+		\captionof{figure}{Cấu trúc mạng của phiên bản III}
+	\end{center}
 	
 	\subsection{Xây dựng bản thử nghiệm}
 	
