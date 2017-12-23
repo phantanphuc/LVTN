@@ -294,10 +294,13 @@
 		{\Huge Mô hình đề xuất}
 		\hspace{10 cm}
 		
+		\begin{itemize}
+			\item Mạng SSD - Single Shot Multibox Detector
+			\item DRACULAE - Diagram Recognition Application for Computer Understanding of Large Algebraic Expressions
+		\end{itemize}
 		
 		
 		
-		Mạng SSD - Single Shot Multibox Detector
 	\end{frame}
 	
 	%--------------------------------------------------
@@ -305,12 +308,10 @@
 	%--------------------------------------------------
 	\subsection{Lý thuyết mạng SSD}
 	
-	\frame{\tableofcontents
-		[
-		currentsection,
-		currentsubsection,
-		subsubsectionstyle=hide
-		]}
+	\begin{frame}
+		\frametitle{Lý thuyết mạng SSD}
+		{\Huge Lý thuyết mạng SSD}
+	\end{frame}
 	
 	\begin{frame}
 		\frametitle{Lý thuyết mạng SSD}
@@ -351,7 +352,7 @@
 		\begin{center}
 			\centering
 			\includegraphics[width=0.6\linewidth]{im_3.png}
-			\captionof{figure}{GT}
+			\captionof{figure}{Các default box với mức kích thước khác nhau}
 		\end{center}
 		\begin{block}{Sinh Default Box}
 			\begin{itemize}
@@ -366,7 +367,7 @@
 		\begin{center}
 			\centering
 			\includegraphics[width=0.5\linewidth]{aspect.png}
-			\captionof{figure}{aspect.png}
+			\captionof{figure}{Tại mỗi vị trí, nhiều default box được sinh ra với tỉ lệ kích thước khác nhau}
 		\end{center}
 		\begin{block}{Aspect Ratio}
 			\begin{itemize}
@@ -381,48 +382,36 @@
 		\frametitle{Bộ Mã Hóa (Encoder) - Matching}
 		\begin{center}
 			\centering
-			\includegraphics[width=0.6\linewidth]{GT.png}
-			\captionof{figure}{GT\cite{Jaccard}}
+			\includegraphics[width=0.5\linewidth]{GT_BB.png}
+			\vspace{0.5cm}
+			\captionof{figure}{Quá trình matching}
 		\end{center}
 	\end{frame}
 	\begin{frame}
 		\frametitle{Bộ Mã Hóa (Encoder) - Matching}
 		\begin{center}
 			\centering
-			\includegraphics[width=0.6\linewidth]{GT_BB.png}
-			\captionof{figure}{GT\cite{Jaccard}}
+			\includegraphics[width=0.5\linewidth]{GT_Ja.png}
+			\captionof{figure}{Chỉ số Jaccard \footfullcite{Jaccard}}
+		\end{center}
+	\end{frame}
+
+	\begin{frame}
+		\frametitle{Bộ Mã Hóa (Encoder) - Matching}
+		\begin{center}
+			\centering
+			\includegraphics[width=0.5\linewidth]{GTM.png}
+			\vspace{0.5cm}
+			\captionof{figure}{Quá trình matching}
 		\end{center}
 	\end{frame}
 	\begin{frame}
 		\frametitle{Bộ Mã Hóa (Encoder) - Matching}
 		\begin{center}
 			\centering
-			\includegraphics[width=0.6\linewidth]{GT_Ja.png}
-			\captionof{figure}{GT\cite{Jaccard}}
-		\end{center}
-	\end{frame}
-	\begin{frame}
-		\frametitle{Bộ Mã Hóa (Encoder) - Matching}
-		\begin{center}
-			\centering
-			\includegraphics[width=0.6\linewidth]{GT_IV.png}
-			\captionof{figure}{GT\cite{Jaccard}}
-		\end{center}
-	\end{frame}
-	\begin{frame}
-		\frametitle{Bộ Mã Hóa (Encoder) - Matching}
-		\begin{center}
-			\centering
-			\includegraphics[width=0.6\linewidth]{GTM.png}
-			\captionof{figure}{GT\cite{Jaccard}}
-		\end{center}
-	\end{frame}
-	\begin{frame}
-		\frametitle{Bộ Mã Hóa (Encoder) - Matching}
-		\begin{center}
-			\centering
-			\includegraphics[width=0.6\linewidth]{GTDoneMatch.png}
-			\captionof{figure}{GT\cite{Jaccard}}
+			\includegraphics[width=0.5\linewidth]{GTDoneMatch.png}
+			\vspace{0.5cm}
+			\captionof{figure}{Quá trình matching}
 		\end{center}
 	\end{frame}
 	
@@ -449,8 +438,8 @@
 	
 	\begin{frame}
 		\frametitle{Bộ phát hiện, phân loại - Mạng cơ sở}
-		Mạng cơ sở của SSD\cite{liu2016ssd} là một mạng nơron tích chập bất kỳ, có thể là VGG\cite{Simonyan14c} hoặc lenet\cite{yanlecun},... \\
-		Khi kết hợp với mạng SSD\cite{liu2016ssd}, các lớp liên kết đầy đủ của mạng nơ-ron tích chập sẽ được thay thế bằng các lớp tích chập khác và song hành là các bước trích feature map để dự đoán vị trí, kích thước của các ký tự.
+		Mạng cơ sở của SSD\footfullcite{liu2016ssd} là một mạng nơron tích chập bất kỳ, có thể là VGG\cite{Simonyan14c} hoặc lenet\cite{yanlecun},... \\
+		Khi kết hợp với mạng SSD\footfullcite{liu2016ssd}, các lớp liên kết đầy đủ của mạng nơ-ron tích chập sẽ được thay thế bằng các lớp tích chập khác và song hành là các bước trích feature map để dự đoán vị trí, kích thước của các ký tự.
 		
 	\end{frame}
 	
@@ -510,7 +499,7 @@
 		\begin{center}
 			\centering
 			\includegraphics[width=0.6\linewidth]{LOSSSS.png}
-			\captionof{figure}{GT}
+			\captionof{figure}{Độ lệch về kích thước}
 		\end{center}
 	\end{frame}
 	\begin{frame}
@@ -518,7 +507,8 @@
 		\begin{center}
 			\centering
 			\includegraphics[width=0.6\linewidth]{LOSSX.png}
-			\captionof{figure}{GT}
+			\vspace{0.3cm}
+			\captionof{figure}{Độ lệch về vị trí trọng tâm}
 		\end{center}
 	\end{frame}
 	
@@ -554,6 +544,12 @@
 	%--------------------------------------------------
 	%----------SUBSEC: SSD----------------------
 	%--------------------------------------------------
+	
+	\begin{frame}
+		\frametitle{Xây dựng các phiên bản}
+		{\Huge Xây dựng các phiên bản}
+	\end{frame}
+	
 	\subsection{Xây dựng các phiên bản}
 	\begin{frame}
 		\frametitle{Phiên bản I - Phiên bản nguyên thủy}
@@ -625,11 +621,6 @@
 			\vspace{0.5cm}
 			\captionof{figure}{Mô hình phiên bản III}
 		\end{center}
-		\begin{block}{Các thay đổi}
-			\begin{itemize}
-				\item Số lớp: 106
-			\end{itemize}
-		\end{block}
 	\end{frame}
 	
 	\begin{frame}
@@ -640,21 +631,22 @@
 			\vspace{0.5cm}
 			\captionof{figure}{Mô hình phiên bản IV}
 		\end{center}
-		\begin{block}{Các thay đổi}
-			\begin{itemize}
-				\item Số lớp: 106
-			\end{itemize}
-		\end{block}
 	\end{frame}
 	
 	
 	%--------------------------------------------------
 	%----------SUBSEC: PARSE----------------------
 	%--------------------------------------------------
+	
+	\begin{frame}
+		\frametitle{Phân tích cấu trúc}
+		{\Huge Phân tích cấu trúc}
+	\end{frame}
+	
 	\subsection{Phân tích cấu trúc}
 	\begin{frame}
 		\frametitle{Phân tích cấu trúc}
-		Bộ phận phân tích cấu trúc có nhiệm vụ nhận dữ liệu là các bounding box từ SSD\cite{liu2016ssd} và xây dựng một cây Lex - BST tạo tiền đề để xây dựng biểu thức Latex.
+		Bộ phận phân tích cấu trúc có nhiệm vụ nhận dữ liệu là các bounding box từ SSD\footfullcite{liu2016ssd} và xây dựng một cây Lex - BST\footfullcite{zanibbi} tạo tiền đề để xây dựng biểu thức Latex.
 	\end{frame}
 	
 	%--------------------------------------------------
@@ -705,7 +697,7 @@
 		\begin{center}
 			\centering
 			\includegraphics[width=0.6\linewidth]{hor1.png}
-			\captionof{figure}{GT}
+			\captionof{figure}{Xác định ký tự trên đường cơ sở}
 		\end{center}
 	\end{frame}
 	
@@ -714,7 +706,7 @@
 		\begin{center}
 			\centering
 			\includegraphics[width=0.6\linewidth]{hor2.png}
-			\captionof{figure}{GT}
+			\captionof{figure}{Xác định ký tự trên đường cơ sở}
 		\end{center}
 	\end{frame}
 	
@@ -723,7 +715,7 @@
 		\begin{center}
 			\centering
 			\includegraphics[width=0.6\linewidth]{hor3.png}
-			\captionof{figure}{GT}
+			\captionof{figure}{Xác định ký tự trên đường cơ sở}
 		\end{center}
 	\end{frame}
 	
@@ -732,7 +724,7 @@
 		\begin{center}
 			\centering
 			\includegraphics[width=0.6\linewidth]{hor4.png}
-			\captionof{figure}{GT}
+			\captionof{figure}{Xác định ký tự trên đường cơ sở}
 		\end{center}
 	\end{frame}
 	
@@ -741,7 +733,7 @@
 		\begin{center}
 			\centering
 			\includegraphics[width=0.6\linewidth]{hor5.png}
-			\captionof{figure}{GT}
+			\captionof{figure}{Xác định ký tự trên đường cơ sở}
 		\end{center}
 	\end{frame}
 	
@@ -750,7 +742,7 @@
 		\begin{center}
 			\centering
 			\includegraphics[width=0.6\linewidth]{hor5_5.png}
-			\captionof{figure}{GT}
+			\captionof{figure}{Xác định ký tự trên đường cơ sở}
 		\end{center}
 	\end{frame}
 	
@@ -759,7 +751,7 @@
 		\begin{center}
 			\centering
 			\includegraphics[width=0.6\linewidth]{hor6.png}
-			\captionof{figure}{GT}
+			\captionof{figure}{Xác định ký tự trên đường cơ sở}
 		\end{center}
 	\end{frame}
 	
@@ -768,7 +760,7 @@
 		\begin{center}
 			\centering
 			\includegraphics[width=0.6\linewidth]{hor7.png}
-			\captionof{figure}{GT}
+			\captionof{figure}{Xác định ký tự trên đường cơ sở}
 		\end{center}
 	\end{frame}
 	
@@ -777,7 +769,7 @@
 		\begin{center}
 			\centering
 			\includegraphics[width=0.6\linewidth]{hor8.png}
-			\captionof{figure}{GT}
+			\captionof{figure}{Tái phân vùng}
 		\end{center}
 	\end{frame}
 	
@@ -786,7 +778,7 @@
 		\begin{center}
 			\centering
 			\includegraphics[width=0.75\linewidth]{UN.png}
-			\captionof{figure}{GT}
+			\captionof{figure}{Xử lý nút con}
 		\end{center}
 		\begin{block}{Xử lý nút con}
 			Sau lần chạy đầu tiên thì các nút con mới chỉ là danh sách các ký tự, vì vậy cần xử lý từng nút con để thu được cây BST hoàn chỉnh.
@@ -816,7 +808,7 @@
 		\begin{center}
 			\centering
 			\includegraphics[width=0.6\linewidth]{nhom.png}
-			\captionof{figure}{Một cây Lexed BST}
+			\captionof{figure}{Nhóm các ký tự phù hợp}
 		\end{center}
 		
 		\begin{block}{Nhóm ký tự}
@@ -832,7 +824,7 @@
 		\begin{center}
 			\centering
 			\includegraphics[width=0.6\linewidth]{lex1.png}
-			\captionof{figure}{Một cây Lexed BST}
+			\captionof{figure}{Sử dụng các luật sinh để sinh cây Lexed BST}
 		\end{center}
 		
 		\begin{block}{Luật sinh}
