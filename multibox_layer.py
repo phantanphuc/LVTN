@@ -49,6 +49,9 @@ class MultiBoxLayer(nn.Module):
 			y_conf = y_conf.view(N,-1, args.class_count)
 			y_confs.append(y_conf)
 
+		#	print(x.data.numpy().shape)
+		#quit()
+
 		loc_preds = torch.cat(y_locs, 1)
 		conf_preds = torch.cat(y_confs, 1)
 		return loc_preds, conf_preds

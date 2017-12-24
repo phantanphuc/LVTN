@@ -26,7 +26,7 @@ parser.add_argument('--resume_mode', default='none', type=str, help='Continue tr
 ######### Core Component
 parser.add_argument('--using_python_2', default=False, type=bool, help='Current python version')
 parser.add_argument('--class_count', default=107, type=int, help='Number of classes')
-parser.add_argument('--network', default='SSD500', type=str, help='network type: \'SSD300\': use original SSD300, \'SSD500\': Improved version ')
+parser.add_argument('--network', default='SSD500S', type=str, help='network type: \'SSD300\': use original SSD300, \'SSD500\': Improved version ')
 parser.add_argument('--resuming_model', default='./model/ckpt_resize_scale_p2_500_4.pth', type=str, help='Model to load (Only valid for resume_mode: pretrain and continue)')
 
 ######### PATH 
@@ -75,6 +75,10 @@ elif args.network == 'SSD500':
 elif args.network == 'SSD600':
 	Network_type = 3
 	InputImgSize = 600
+elif args.network == 'SSD500S':
+	Network_type = 4
+	InputImgSize = 500
+
 
 ################ NETWORK ACHITECHTURE ####################
 
@@ -91,9 +95,9 @@ if Network_type == 0: #SSD 300
 	#min_scale = 0.03 
 	#feature_map_sizes = (63, 32, 16, 8, 6, 4)
 	#steps_raw = (8, 16, 31, 62, 83, 125)
-	min_ratio = 8
-	max_ratio = 50
-	min_scale = 0.03
+	#min_ratio = 8
+	#max_ratio = 50
+	#min_scale = 0.03
 	in_planes = [512,1024,512,256,256,256]
 
 elif Network_type == 1: # SSD 400 (deprecated)
@@ -115,6 +119,18 @@ elif Network_type == 2: # SSD 500
 	min_scale = 0.03
 
 	in_planes = [512,1024,512,256,256,256,256]
+
+elif Network_type == 4: # SSD 500S
+	feature_map_sizes = (63, 32, 16, 16, 8, 8, 4, 4, 2, 2, 1, 1)
+	steps_raw = (8, 16, 32, 32, 64, 64, 128, 128, 250, 250, 500, 500)
+	aspect_ratios = ((2,), (2,3), (2,3), (2,3),(2,3), (2,3), (2, ), (2, ), (2, ), (2, ), (2, ), (2, ))
+	min_ratio = 8
+	max_ratio = 50
+	min_scale = 0.03
+
+	in_planes = [512,1024,512, 512,256,256,256,256 ,256,256,256,256]
+
+
 
 elif Network_type == 3: # SSD 600 (Deprecated)
 	feature_map_sizes = (75, 38, 19, 10, 8, 6, 4, 2) 

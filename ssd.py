@@ -56,7 +56,7 @@ class SSD300(nn.Module):
 		self.conv10_1 = nn.Conv2d(256, 128, kernel_size=1)
 		self.conv10_1_dp = nn.Dropout2d(p = 0.2)
 
-		if Network_type == 2:
+		if Network_type == 2 or Network_type == 4:
 			self.conv10_2 = nn.Conv2d(128, 256, kernel_size=3, padding=1, stride=2)
 			self.conv10_2_dp = nn.Dropout2d(p = 0.2)
 		else:
@@ -83,6 +83,36 @@ class SSD300(nn.Module):
 			self.conv12_2 = nn.Conv2d(128, 256, kernel_size=2)
 			self.conv12_2_dp = nn.Dropout2d(p = 0.2)
 
+		elif Network_type == 4:
+			self.conv12_1 = nn.Conv2d(256, 128, kernel_size=1)
+			self.conv12_1_dp = nn.Dropout2d(p = 0.2)
+			self.conv12_2 = nn.Conv2d(128, 256, kernel_size=2)
+			self.conv12_2_dp = nn.Dropout2d(p = 0.2)
+
+			########### B2 ###################################
+
+			self.conv8_1_b2 = nn.Conv2d(1024, 256, kernel_size=1)
+			self.conv8_2_b2 = nn.Conv2d(256, 512, kernel_size=3, padding=1, stride=2)
+
+			self.conv9_1_b2 = nn.Conv2d(512, 128, kernel_size=1)
+			self.conv9_2_b2 = nn.Conv2d(128, 256, kernel_size=3, padding=1, stride=2)
+
+			self.conv10_1_b2 = nn.Conv2d(256, 128, kernel_size=1)
+			self.conv10_1_dp_b2 = nn.Dropout2d(p = 0.2)
+			self.conv10_2_b2 = nn.Conv2d(128, 256, kernel_size=3, padding=1, stride=2)
+			self.conv10_2_dp_b2 = nn.Dropout2d(p = 0.2)
+			
+
+			self.conv11_1_b2 = nn.Conv2d(256, 128, kernel_size=1)
+			self.conv11_1_dp_b2 = nn.Dropout2d(p = 0.2)
+			self.conv11_2_b2 = nn.Conv2d(128, 256, kernel_size=3)
+			self.conv11_2_dp_b2 = nn.Dropout2d(p = 0.2)
+
+			self.conv12_1_b2 = nn.Conv2d(256, 128, kernel_size=1)
+			self.conv12_1_dp_b2 = nn.Dropout2d(p = 0.2)
+			self.conv12_2_b2 = nn.Conv2d(128, 256, kernel_size=2)
+			self.conv12_2_dp_b2 = nn.Dropout2d(p = 0.2)
+
 		elif Network_type == 3:
 			self.conv12_1 = nn.Conv2d(256, 128, kernel_size=1)
 			self.conv12_1_dp = nn.Dropout2d(p = 0.2)
@@ -103,7 +133,7 @@ class SSD300(nn.Module):
 
 		#print(h.data.numpy().shape)
 		
-		hs.append(self.norm4(h))  # conv4_3
+		hs.append(self.norm4(h))  # conv4_3 #63
 
 		h = F.max_pool2d(h, kernel_size=2, stride=2, ceil_mode=True)
 
@@ -116,19 +146,39 @@ class SSD300(nn.Module):
 		h = F.relu(self.conv7(h))
 		
 		#print(h.data.numpy().shape)
-		hs.append(h)  # conv7
+		hs.append(h)  # conv7 # 32
+
+		
+
+		if Network_type == 4:
+			h_b2 = F.relu(self.conv8_1_b2(h))
+			h_b2 = F.relu(self.conv8_2_b2(h_b2))
 
 		h = F.relu(self.conv8_1(h))
 		h = F.relu(self.conv8_2(h))
 
+
 		#print(h.data.numpy().shape)
-		hs.append(h)  # conv8_2
+		hs.append(h)  # conv8_2 #16
+		if Network_type == 4:
+			hs.append(h_b2)
+
+
+		###############################################3
 
 		h = F.relu(self.conv9_1(h))
 		h = F.relu(self.conv9_2(h))
 
 		#print(h.data.numpy().shape)
-		hs.append(h)  # conv9_2
+		hs.append(h)  # conv9_2 #8
+
+		if Network_type == 4:
+			h_b2 = F.relu(self.conv9_1(h_b2))
+			h_b2 = F.relu(self.conv9_2(h_b2))
+			hs.append(h_b2)
+
+		################################################
+
 
 		h = F.relu(self.conv10_1(h))
 		h = self.conv10_1_dp(h)
@@ -136,7 +186,16 @@ class SSD300(nn.Module):
 		h = self.conv10_2_dp(h)
 
 		#print(h.data.numpy().shape)
-		hs.append(h)  # conv10_2
+		hs.append(h)  # conv10_2 #4
+		if Network_type == 4:
+			h_b2 = F.relu(self.conv10_1_b2(h_b2))
+			h_b2 = self.conv10_1_dp_b2(h_b2)
+			h_b2 = F.relu(self.conv10_2_b2(h_b2))
+			h_b2 = self.conv10_2_dp_b2(h_b2)
+			hs.append(h_b2)
+
+
+		################################################
 
 		h = F.relu(self.conv11_1(h))
 		h = self.conv11_1_dp(h)
@@ -144,7 +203,14 @@ class SSD300(nn.Module):
 		h = self.conv11_2_dp(h)
 
 		#print(h.data.numpy().shape)
-		hs.append(h)  # conv11_2
+		hs.append(h)  # conv11_2 #2
+		if Network_type == 4:
+			h_b2 = F.relu(self.conv10_1_b2(h_b2))
+			h_b2 = self.conv10_1_dp_b2(h_b2)
+			h_b2 = F.relu(self.conv10_2_b2(h_b2))
+			h_b2 = self.conv10_2_dp_b2(h_b2)
+			hs.append(h_b2)
+
 
 
 		if Network_type == 1:
@@ -165,7 +231,25 @@ class SSD300(nn.Module):
 			h = self.conv12_2_dp(h)
 
 			#print(h.data.numpy().shape)
-			hs.append(h)  # conv11_2
+			hs.append(h)  # conv11_2 #1
+
+		if Network_type == 4:
+			h = F.relu(self.conv12_1(h))
+			h = self.conv12_1_dp(h)
+			h = F.relu(self.conv12_2(h))
+			h = self.conv12_2_dp(h)
+
+			#print(h.data.numpy().shape)
+			hs.append(h)  # conv11_2 #1
+
+			h_b2 = F.relu(self.conv12_1_b2(h_b2))
+			h_b2 = self.conv12_1_dp_b2(h_b2)
+			h_b2 = F.relu(self.conv12_2_b2(h_b2))
+			h_b2 = self.conv12_2_dp_b2(h_b2)
+
+			#print(h.data.numpy().shape)
+			hs.append(h_b2)  # conv11_2 #1
+
 
 		if Network_type == 3:
 
