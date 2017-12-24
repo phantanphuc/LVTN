@@ -26,9 +26,32 @@ class DataEncoder:
 			sizes_raw.append(scale * ratio / 100.)
 		sizes_raw = [scale * min_scale] + sizes_raw
 			
+		if Network_type == 4:
+			sizes_raw = [15.0, 40.0, 80.0, 120.0, 160.0, 200.0, 240.0, 280.0]
+			sizes_raw = [15.0, 40.0, 80.0 , 120.0, 185.0, 160.0, 270.0, 200.0, 355.0, 240.0, 440.0, 280.0, 500.0]
+
+
 		steps = [s / scale for s in steps_raw]
 		sizes = [s / scale for s in sizes_raw]
 		
+		if Network_type == 4:
+			#feature_map_sizes = (63, 32, 16, 16, 8, 8, 4, 4, 2, 2, 1, 1)
+			cross_sizes_raw = []
+			cross_sizes_raw.append(sizes[0] * sizes[1]) # 15 40
+			cross_sizes_raw.append(sizes[1] * sizes[2]) # 40 80
+			cross_sizes_raw.append(sizes[2] * sizes[3]) # 80 120
+			cross_sizes_raw.append(sizes[2] * sizes[4]) # 80 185
+			cross_sizes_raw.append(sizes[3] * sizes[5]) # 120 160
+			cross_sizes_raw.append(sizes[4] * sizes[6]) # 185 270
+			cross_sizes_raw.append(sizes[5] * sizes[7]) # 160 200
+			cross_sizes_raw.append(sizes[6] * sizes[8]) # 270 355
+			cross_sizes_raw.append(sizes[7] * sizes[9]) # 200 240
+			cross_sizes_raw.append(sizes[8] * sizes[10]) # 355 440
+			cross_sizes_raw.append(sizes[9] * sizes[11]) # 240 280
+			cross_sizes_raw.append(sizes[10] * sizes[12]) # 440 500
+
+
+
 		num_layers = len(feature_map_sizes)
 
 
@@ -42,8 +65,12 @@ class DataEncoder:
 				s = sizes[i]
 				boxes.append((cx, cy, s, s))
 
-				s = math.sqrt(sizes[i] * sizes[i+1])
-				boxes.append((cx, cy, s, s))
+				if Network_type == 4:
+					s = math.sqrt(cross_sizes_raw[i])
+					boxes.append((cx, cy, s, s))
+				else:
+					s = math.sqrt(sizes[i] * sizes[i+1])
+					boxes.append((cx, cy, s, s))
 
 				s = sizes[i]
 				for ar in aspect_ratios[i]:

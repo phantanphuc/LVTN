@@ -1,26 +1,93 @@
 
-\documentclass[a4paper,12pt]{article}
+\documentclass[a4paper]{article}
 \usepackage{vntex}
-\usepackage{a4wide, fancyhdr}
+%\usepackage[english,vietnam]{babel}
+%\usepackage[utf8]{inputenc}
+
+%\usepackage[utf8]{inputenc}
+%\usepackage[francais]{babel}
+\usepackage{a4wide,fancyhdr}
+%\usepackage{a4wide,amssymb,epsfig,latexsym,array,hhline,fancyhdr}
+
+%\usepackage[makeroom]{cancel}
 \usepackage{amsmath}
 \newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
 \usepackage{amsthm}
-\usepackage{float}
 \usepackage{multicol,longtable,amscd}
+%\usepackage{diagbox}%Make diagonal lines in tables
+%\usepackage{booktabs}
+%\usepackage{alltt}
 \usepackage[framemethod=tikz]{mdframed}% For highlighting paragraph backgrounds
 \usepackage{caption,subcaption}
+%\usepackage{arydshln}
 \usepackage{tabularx} % in the preamble
 \usepackage{tikz}
+%\usetikzlibrary{positioning}
 \usetikzlibrary{shapes, calc, shapes, arrows}
 \usepackage{pgfplots}
 \usepackage{bbm}
-\usepackage{titletoc,tocloft}
+%\usetikzlibrary{calc,positioning,shadows.blur,decorations.pathreplacing}
+%\usepackage{etoolbox}
 \DeclareMathOperator*{\argminB}{argmin} 
 \DeclareMathOperator*{\argmaxB}{argmax} 
+
+%\setlength\dashlinedash{1.5pt}
+%\setlength\dashlinegap{4.5pt}
 \setlength\arrayrulewidth{0.2pt}
+
 \usepackage{textcomp}
+%\usepackage{listings}
+%\usepackage{listingsutf8}
+% Typesetting Listings
 \usepackage{xcolor}
 \usepackage{color}
+%\definecolor{listinggray}{gray}{0.9}
+%\definecolor{lbcolor}{rgb}{0.9,0.9,0.9}
+%\definecolor{Darkgreen}{rgb}{0.1,0.6,0.1}
+%
+%\lstset{
+%	backgroundcolor=\color{lbcolor},
+%	tabsize=4,    
+%	%   rulecolor=,
+%	language=[GNU]C++,
+%	basicstyle=\scriptsize,
+%	upquote=true,
+%	aboveskip={1.5\baselineskip},
+%	columns=fixed,
+%	showstringspaces=false,
+%	extendedchars=false,
+%	breaklines=true,
+%	prebreak = \raisebox{0ex}[0ex][0ex]{\ensuremath{\hookleftarrow}},
+%	frame=single,
+%	numbers=left,
+%	showtabs=false,
+%	showspaces=false,
+%	showstringspaces=false,
+%	identifierstyle=\ttfamily,
+%	keywordstyle=\color[rgb]{0,0,1},
+%	commentstyle=\color[rgb]{0.026,0.112,0.095},
+%	stringstyle=\color[rgb]{0.627,0.126,0.941},
+%	numberstyle=\color[rgb]{0.205, 0.142, 0.73},
+%	%        \lstdefinestyle{C++}{language=C++,style=numbers}’.
+%}
+%\lstset{
+%	backgroundcolor=\color{lbcolor},
+%	tabsize=4,
+%	language=C++,
+%	captionpos=b,
+%	tabsize=3,
+%	frame=lines,
+%	numbers=left,
+%	numberstyle=\tiny,
+%	numbersep=5pt,
+%	breaklines=true,
+%	showstringspaces=false,
+%	basicstyle=\footnotesize,
+%	%  identifierstyle=\color{magenta},
+%	keywordstyle=\color[rgb]{0,0,1},
+%	commentstyle=\color{Darkgreen},
+%	stringstyle=\color{red}
+%}
 
 \usepackage{lastpage}
 \usepackage[lined,boxed,commentsnumbered]{algorithm2e}
@@ -32,31 +99,42 @@
 \usepackage{multicol}
 \usepackage{rotating}
 \usepackage{graphics}
-\usepackage{subcaption}
-\usepackage{makecell}
+%\usepackage{geometry}
+%\usepackage{setspace}
 \usetikzlibrary{arrows,snakes,backgrounds}
 \usepackage[unicode]{hyperref}
-\usepackage{xcolor}
 \hypersetup{urlcolor=blue,linkcolor=black,citecolor=black,colorlinks=true} 
+%\usepackage{pstcol} 								% PSTricks with the standard color package
+\usepackage{verbatim}
+\usepackage{makecell}
 
+\newtheorem{theorem}{{\bf Định lý}}
+\newtheorem{property}{{\bf Tính chất}}
+\newtheorem{proposition}{{\bf Mệnh đề}}
+\newtheorem{corollary}[proposition]{{\bf Hệ quả}}
+\newtheorem{lemma}[proposition]{{\bf Bổ đề}}
+\theoremstyle{definition}
+\newtheorem{exer}{Bài toán}
+
+
+%\usepackage{fancyhdr}
 \setlength{\headheight}{40pt}
 \pagestyle{fancy}
-\fancyhead{}
-
+\fancyhead{} % clear all header fields
 \graphicspath{ {Images/} }
-
 \fancyhead[L]{
 	\begin{tabular}{rl}
-		\begin{picture}(25,25)(0,0)
+		\begin{picture}(25,15)(0,0)
 		\put(0,-8){\includegraphics[width=8mm, height=8mm]{Images/hcmut.png}}
+		%\put(0,-8){\epsfig{width=10mm,figure=hcmut.eps}}
 		\end{picture}&
+		%\includegraphics[width=8mm, height=8mm]{hcmut.png} & %
 		\begin{tabular}{l}
 			\textbf{\bf \ttfamily Trường Đại Học Bách Khoa Tp.Hồ Chí Minh}\\
 			\textbf{\bf \ttfamily Khoa Khoa Học và Kỹ Thuật Máy Tính}
-		\end{tabular}
+		\end{tabular} 	
 	\end{tabular}
 }
-
 \fancyhead[R]{
 	\begin{tabular}{l}
 		\tiny \bf \\
@@ -68,10 +146,8 @@
 \renewcommand{\headrulewidth}{0.3pt}
 \renewcommand{\footrulewidth}{0.3pt}
 
-\renewcommand{\thesection}{Chương \arabic{section}}
-\renewcommand\thesubsection{\arabic{subsection}}
 
-
+%%%
 \setcounter{secnumdepth}{4}
 \setcounter{tocdepth}{3}
 \makeatletter
@@ -87,11 +163,23 @@
 
 \everymath{\color{blue}}%make in-line maths symbols blue to read/check easily
 
-%\sloppy
+\sloppy
 \captionsetup[figure]{labelfont={small,bf},textfont={small,it},belowskip=-1pt,aboveskip=-9pt}
-
+%space remove between caption, figure, and text
 \captionsetup[table]{labelfont={small,bf},textfont={small,it},belowskip=-1pt,aboveskip=7pt}
+%space remove between caption, table, and text
 
+%\floatplacement{figure}{H}%forced here float placement automatically for figures
+%\floatplacement{table}{H}%forced here float placement automatically for table
+%the following settings (11 lines) are to remove white space before or after the figures and tables
+%\setcounter{topnumber}{2}
+%\setcounter{bottomnumber}{2}
+%\setcounter{totalnumber}{4}
+%\renewcommand{\topfraction}{0.85}
+%\renewcommand{\bottomfraction}{0.85}
+%\renewcommand{\textfraction}{0.15}
+%\renewcommand{\floatpagefraction}{0.8}
+%\renewcommand{\textfraction}{0.1}
 \setlength{\floatsep}{5pt plus 2pt minus 2pt}
 \setlength{\textfloatsep}{5pt plus 2pt minus 2pt}
 \setlength{\intextsep}{10pt plus 2pt minus 2pt}
@@ -231,7 +319,6 @@
 	
 	Chương 6 đánh giá tổng kết luận văn. Nhóm sẽ nêu lên những điều còn tồn đọng và những điểm nổi bật, cũng như hướng phát triển tiếp theo của đề tài. Ngoài ra, sẽ là một vài dòng đúc kết lại chặng đường thực hiện luận văn tốt nghiệp của các thành viên nhóm: những điều đã học được, cảm xúc khi hoàn thành đề tài luận văn.
 	\newpage
-	\setlength{\cftsecnumwidth}{3cm}
 	\tableofcontents
 	\newpage
 	\listoffigures

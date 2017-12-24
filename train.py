@@ -98,7 +98,6 @@ def train(epoch):
 		train_loss += loss.data[0]
 		print('[E %d I %d]: %.3f %.3f' % (epoch, batch_idx, loss.data[0], train_loss/(batch_idx+1)))
 
-
 def test(epoch):
 	print('\nTest')
 	net.eval()

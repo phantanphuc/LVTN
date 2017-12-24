@@ -316,9 +316,9 @@
 	\begin{frame}
 		\frametitle{Lý thuyết mạng SSD}
 		
-		SSD\cite{liu2016ssd} sinh ra một số lượng hữu hạn các \textbf{default box}\footnote{Tiếng việt: Ô chuẩn} được xem là các "hệ quy chiếu" để hệ thống có thể xác định vị trí và kích thước các ký tự cần nhận diện. Thông qua quá trình huấn luyện, mạng cần phải học cách dự đoán các \textbf{bounding box}\footnote{Tiếng việt: Ô Bọc} bọc quanh ký tự cần nhận diện thông qua "hệ quy chiếu" tương ứng bên trên.
+		SSD\footfullcite{liu2016ssd} sinh ra một số lượng hữu hạn các \textbf{default box} được xem là các "hệ quy chiếu" để hệ thống có thể xác định vị trí và kích thước các ký tự cần nhận diện. Thông qua quá trình huấn luyện, mạng cần phải học cách dự đoán các \textbf{bounding box} bọc quanh ký tự cần nhận diện thông qua "hệ quy chiếu" tương ứng bên trên.
 		
-		SSD\cite{liu2016ssd} sử dụng các lớp tích chập\footnote{Thuật ngữ tiếng Anh: Convolution layer} (hay cụ thể hơn là mạng nơ-ron tích chập\footnote{Thuật ngữ tiếng anh: Convolutional neural network}) để trích đặc trưng, tạo tiền đề cho việc phát hiện và phân loại ký tự. \\
+		SSD\footfullcite{liu2016ssd} sử dụng các lớp tích chập (hay cụ thể hơn là mạng nơ-ron tích chập) để trích đặc trưng, tạo tiền đề cho việc phát hiện và phân loại ký tự. \\
 		%Nhóm xin phép được tách quá trình huấn luyện thành ba giai đoạn: mã hóa, phát hiện - phân loại và tính giá trị lỗi. Và song song với huấn luyện, quá trình kiểm tra, kiểm định, chạy thực tiễn cũng được chia thành ba giai đoạn: trích đặc trưng - phân loại và giải mã. << Talk
 		
 	\end{frame}
