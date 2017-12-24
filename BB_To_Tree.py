@@ -618,6 +618,10 @@ class LatexGenerator:
 			
 				if node['symbol'] == 'ldots':
 					return '\\ldots'
+				if node['symbol'] == 'rightarrow':
+					return ' \\rightarrow '
+				if node['symbol'] == 'intft':
+					return ' \\inf '
 			
 				node['symbol'] = node['symbol'].replace('ldot', '.')
 				
@@ -645,8 +649,10 @@ class LatexGenerator:
 					return ' \\in '
 				if node['symbol'] == 'div':
 					return ' \\div '
-				
-				
+				if node['symbol'] == 'rightarrow':
+					return ' \\rightarrow '
+
+
 				return node['symbol']
 			elif node['type'] == 'bracket':
 				return '(' + self.createLatexString(node['child'][0]) + ')'
@@ -691,13 +697,13 @@ class LatexGenerator:
 				upper_node = self.createLatexString(node['child'][0])
 				lower_node = self.createLatexString(node['child'][1])
 			
-				return '\\sum_{' + upper_node + '}^{' + lower_node + '}'
+				return '\\sum^{' + upper_node + '}_{' + lower_node + '}'
 			
 			elif node['type'] == '_Pi':
 				upper_node = self.createLatexString(node['child'][0])
 				lower_node = self.createLatexString(node['child'][1])
 			
-				return '\\prod_{' + upper_node + '}^{' + lower_node + '}'
+				return '\\prod^{' + upper_node + '}_{' + lower_node + '}'
 		
 			elif node['type'] == 'lim':
 				lower_node = self.createLatexString(node['child'][1])
