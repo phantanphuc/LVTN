@@ -1273,7 +1273,7 @@
 	\subsection{Kết quả}
 	
 	
-	\subsubsection{Định tính giữa bốn phiên bản}
+	\subsubsection{So sánh định tính giữa bốn phiên bản}
 	\subsubsubsection{Quá trình matching}
 	Nhóm đã giảm kích thước các default box, đồng thời phóng to ảnh đầu vào, một phần mục đích là để quá trình matching có thể thực hiện tốt hơn đối với các ký tự nhỏ. Công việc này thật sự đã cải thiện được quá trình matching khi kích thước tối thiểu của bounding box ground truth được cải thiện một cách đáng kể:
 	
@@ -1351,7 +1351,7 @@
 	
 	
 	
-	\subsubsection{Định lượng}
+	\subsubsection{So sánh định đlượng}
 	Trong quá trình thực hiện, nhóm đã xây dựng 4 phiên bản huấn luyện dựa trên những thay đổi của 3 yếu tố sau:
 	\begin{itemize}
 		\item Kích thước ảnh đầu vào của mạng SSD.
@@ -1419,6 +1419,13 @@
 		\captionof{figure}{Trực quan kết quả mAP cho 4 phiên bản thử nghiệm.}
 	\end{center}
 	Như vậy, từ mô hình ban đầu- mô hình I- với những thiết lập được giữ y nguyên như \cite{liu2016ssd}, nhóm đã thay đổi để tạo ra được mô hình IV- mô hình tốt nhất của nhóm. Từ đó nâng chỉ số mAP từ khoảng $58\%$ lên khoảng $65\%$. Nhìn vào đánh giá giữa 4 mô hình, rõ ràng thấy được việc thay đổi kích thước ảnh đầu vào và kích thước default box có tác động mạnh đến việc cải thiện độ chính xác của phương pháp. 
+	\vspace{1cm}
+	\begin{center}
+		\centering
+		\includegraphics[width=0.99\linewidth]{result}
+		\vspace{0.5cm}
+		\captionof{figure}{Một số ảnh kết quả sau quá trình nhận dạng sử dụng phiên bản IV.}
+	\end{center}
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	\newpage	
@@ -1517,10 +1524,24 @@
 	\end{itemize}
 	
 	\newpage
-	\subsection*{Lời kết}
+	\section*{Lời kết}
 	Trải qua giai đoạn luận văn và cả thực tập tốt nghiệp, những thành viên nhóm đã học được nhiều điều. Về kiến thức, luận văn này là cơ hội cho các thành viên nhóm tìm hiểu và hiện thực những mô hình mạng Deep learning. Bước đầu biết được những vấn đề khó khăn khi huấn luyện một mạng và cách khắc phục chúng. Hiểu và xây dựng được một ứng dụng trên lĩnh vực nhận dạng đó chính là đề tài của nhóm, mặc dù về mặt ứng dụng nó còn ở mức đơn sơ. Về cách làm việc nhóm, trên thực tế các thành viên nhóm liên tục gặp phải những bất đồng, tranh chấp trên quan điểm làm việc cũng như xử lý vần đề. Có những lúc gay gắt mà các thành viên cảm thấy không thể tiếp tục được với nhau. Tuy nhiên tất cả những điều khó khăn này xảy ra đều dựa trên nền tảng vì một luận văn thành công, vì một đề tài mà cả hai thành viên nhóm đều tự hào nên đã vượt qua được. Tất cả những điều đó là trải nghiệm, là kinh nghiệm để các thành viên nhóm hoàn thiện mình hơn cho giai đoạn công việc sắp tới. Cho đến thời điểm này, mặc dù vẫn còn đó những thiếu sót nhưng cả 2 thành viên nhóm tự hào vì những điều mình đã làm được. \\
 	Chân thành cảm ơn. 
-	
+	\newpage
+	\section*{Phụ lục}
+	\subsection*{Những lỗi sai mà hệ thống gặp phải}
+		\begin{center}
+		\centering
+		\includegraphics[width=0.775\linewidth]{phuluc_loi}
+		\vspace{0.5cm}
+		\captionof{figure}{Trường hợp sinh chuỗi Latex sai khi biểu thức chứa các ký tự có chân.}
+	\end{center}
+		\begin{center}
+		\centering
+		\includegraphics[width=0.775\linewidth]{phuluc_sainhan}
+		\vspace{0.5cm}
+		\captionof{figure}{Trường hợp hệ thống gán sai nhãn cho những ký tự có nét tương tự nhau.}
+	\end{center}
 	\newpage
 	\bibliographystyle{ieeetr}
 	\bibliography{ref}
