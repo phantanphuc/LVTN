@@ -169,6 +169,7 @@ class MainWindow:
 		index = int(w.curselection()[0])
 		fname = w.get(index)
 		
+		self.current_fname = fname
 		self.ProcessFile(fname)
 		
 		

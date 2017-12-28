@@ -316,9 +316,14 @@
 	\begin{frame}
 		\frametitle{Lý thuyết mạng SSD}
 		
-		SSD\footfullcite{liu2016ssd} sinh ra một số lượng hữu hạn các \textbf{default box} được xem là các "hệ quy chiếu" để hệ thống có thể xác định vị trí và kích thước các ký tự cần nhận diện. Thông qua quá trình huấn luyện, mạng cần phải học cách dự đoán các \textbf{bounding box} bọc quanh ký tự cần nhận diện thông qua "hệ quy chiếu" tương ứng bên trên.
+		\begin{itemize}
+			\item SSD\footfullcite{liu2016ssd} là một phương pháp phát hiện vật thể trong ảnh bằng mô hình mạng học sâu.
+			\item SSD sinh ra một số lượng hữu hạn các \textbf{default box} với nhiều kích thước, tỉ lệ khác nhau được xem là các "hệ quy chiếu" để hệ thống có thể xác định vị trí và kích thước các ký tự cần nhận diện. 
+			\item Qua quá trình huấn luyện, mạng cần phải học cách dự đoán các \textbf{bounding box} bọc quanh ký tự cần nhận diện.
+		\end{itemize}
 		
-		SSD\footfullcite{liu2016ssd} sử dụng các lớp tích chập (hay cụ thể hơn là mạng nơ-ron tích chập) để trích đặc trưng, tạo tiền đề cho việc phát hiện và phân loại ký tự. \\
+		
+		
 		%Nhóm xin phép được tách quá trình huấn luyện thành ba giai đoạn: mã hóa, phát hiện - phân loại và tính giá trị lỗi. Và song song với huấn luyện, quá trình kiểm tra, kiểm định, chạy thực tiễn cũng được chia thành ba giai đoạn: trích đặc trưng - phân loại và giải mã. << Talk
 		
 	\end{frame}
@@ -357,7 +362,7 @@
 		\begin{block}{Sinh Default Box}
 			\begin{itemize}
 				\item Các default box được sinh cách đều nhau với nhiều mức kích thước khác nhau.
-				\item Tham số: Số mức scale, kích thước của default box trong mỗi mức scale, số lượng default box trong mỗi mức kích thước và số lượng aspect ratio cho default box.
+				\item Quá trình sinh default box phụ thuộc vào một số cấu hình: Số mức scale, kích thước của default box trong mỗi mức scale, số lượng default box trong mỗi mức kích thước và số lượng aspect ratio cho default box.
 			\end{itemize}
 		\end{block}
 	\end{frame}
@@ -395,7 +400,7 @@
 			\captionof{figure}{Chỉ số Jaccard \footfullcite{Jaccard}}
 		\end{center}
 	\end{frame}
-
+	
 	\begin{frame}
 		\frametitle{Bộ Mã Hóa (Encoder) - Matching}
 		\begin{center}
@@ -437,23 +442,31 @@
 	\end{frame}
 	
 	\begin{frame}
-		\frametitle{Bộ phát hiện, phân loại - Mạng cơ sở}
-		Mạng cơ sở của SSD\footfullcite{liu2016ssd} là một mạng nơron tích chập bất kỳ, có thể là VGG\cite{Simonyan14c} hoặc lenet\cite{yanlecun},... \\
-		Khi kết hợp với mạng SSD\footfullcite{liu2016ssd}, các lớp liên kết đầy đủ của mạng nơ-ron tích chập sẽ được thay thế bằng các lớp tích chập khác và song hành là các bước trích feature map để dự đoán vị trí, kích thước của các ký tự.
+		\frametitle{Bộ phát hiện, phân loại - Trích đặc trưng}
+		\begin{itemize}
+			\item Việc trích đặc trưng của mạng SSD\footfullcite{liu2016ssd} được thực hiện bởi một mạng cơ sở.
+			\item 	Mạng cơ sở của SSD là một mạng nơron tích chập bất kỳ, có thể là VGG\footfullcite{Simonyan14c} hoặc lenet\footfullcite{yanlecun},... 
+			\item Khi kết hợp với mạng SSD, các lớp liên kết đầy đủ của mạng nơ-ron tích chập sẽ được thay thế bằng các lớp tích chập khác và song hành là các bước trích feature map để dự đoán vị trí, kích thước của các ký tự.
+		\end{itemize}
+		
+		
+		
 		
 	\end{frame}
 	
 	\begin{frame}
 		\frametitle{Bộ phát hiện, phân loại - Trích xuất feature map}
 		
+		\begin{itemize}
+			\item Mạng SSD xây dựng các lớp tích chập, trong đó có lớp có stride bằng 2, giúp tạo các feature map có kích thước theo một cấp số nhân.
+		\end{itemize}
 		
-		
-		\begin{block}{Sinh Default Box}
-			\begin{itemize}
-				\item Các default box được sinh cách đều nhau với nhiều mức kích thước khác nhau.
-				\item Tham số: Số mức scale, kích thước của default box trong mỗi mức scale, số lượng default box trong mỗi mức kích thước và số lượng aspect ratio cho default box.
-			\end{itemize}
-		\end{block}
+		\begin{center}
+			\centering
+			\includegraphics[width=0.95\linewidth]{SSD_Struture.png}
+			\vspace{0.5cm}
+			\captionof{figure}{Mô hình mạng SSD nguyên thủy}
+		\end{center}
 		
 	\end{frame}
 	
@@ -467,7 +480,7 @@
 			\captionof{figure}{Phép tích chập để sinh bounding box}
 		\end{center}
 		
-		\begin{block}{Sinh bounding box}
+		\begin{block}{Đưa ra dự đoán}
 			Với mỗi feature map trích ra được, hệ thống sẽ có một lớp tích chập tương ứng để đưa ra dự đoán. Mỗi vùng ảnh được kernel trượt qua sẽ tương ứng với một số dự đoán (ứng với các tỉ lệ bounding box khác nhau).
 		\end{block}
 		
@@ -476,26 +489,24 @@
 	
 	
 	
-	
+	\begin{frame}
+		\frametitle{Bộ phát hiện, phân loại - Dự đoán}
+		
+		\begin{itemize}
+			\item Sau khi sinh ra dự đoán ứng với tất cả default box, hệ thống sẽ lựa chọn những dự đoán tốt nhất dựa trên độ tin cậy và độ chồng lấn giữa các ký tự.
+		\end{itemize}
+		
+		
+	\end{frame}
 	
 	
 	%--------------------------------------------------
 	%----------SUBSUB: LOSS----------------------
 	%--------------------------------------------------
 	\subsubsection{Mục tiêu huấn luyện}
-	\begin{frame}
-		\frametitle{Mục tiêu huấn luyện}
-		Bộ phận này có nhiệm vụ tính giá trị lỗi giữa ground truth và bounding box dự đoán được, từ đó thực hiện quá trình lan truyền ngược. Giá trị lỗi gồm 02 thành phần: Lỗi về vị trí và Lỗi về độ tin cậy.
-		
-		
-		
-		
-		
-		
-	\end{frame}
 	
 	\begin{frame}
-		\frametitle{Mục tiêu huấn luyện}
+		\frametitle{Mục tiêu huấn luyện - "Hệ quy chiếu" ?}
 		\begin{center}
 			\centering
 			\includegraphics[width=0.6\linewidth]{LOSSSS.png}
@@ -503,7 +514,7 @@
 		\end{center}
 	\end{frame}
 	\begin{frame}
-		\frametitle{Mục tiêu huấn luyện}
+		\frametitle{Mục tiêu huấn luyện - "Hệ quy chiếu" ?}
 		\begin{center}
 			\centering
 			\includegraphics[width=0.6\linewidth]{LOSSX.png}
@@ -560,6 +571,11 @@
 			\captionof{figure}{Mô hình mạng SSD nguyên thủy}
 		\end{center}
 		
+		\begin{block}{Mô hình SSD300}
+			\begin{itemize}
+				\item Số lớp: 106
+			\end{itemize}
+		\end{block}
 	\end{frame}
 	
 	\begin{frame}
@@ -589,6 +605,17 @@
 		\begin{center}
 			\centering
 			\includegraphics[width=0.95\linewidth]{SSD_Struture_3.png}
+			\vspace{0.5cm}
+			\captionof{figure}{Mô hình mạng SSD nguyên thủy}
+		\end{center}
+		
+	\end{frame}
+	
+	\begin{frame}
+		\frametitle{Phiên bản I - Phiên bản nguyên thủy}
+		\begin{center}
+			\centering
+			\includegraphics[width=0.95\linewidth]{SSD_Struture_3_5.png}
 			\vspace{0.5cm}
 			\captionof{figure}{Mô hình mạng SSD nguyên thủy}
 		\end{center}
@@ -635,13 +662,15 @@
 	
 	\begin{frame}
 		\frametitle{Phân tích cấu trúc}
-		{\Huge Phân tích cấu trúc}
+		{\Huge Phân tích cấu trúc}\\
+		
+		DRACULAE\footfullcite{zanibbi}
 	\end{frame}
 	
 	\subsection{Phân tích cấu trúc}
 	\begin{frame}
 		\frametitle{Phân tích cấu trúc}
-		Bộ phận phân tích cấu trúc có nhiệm vụ nhận dữ liệu là các bounding box từ SSD\footfullcite{liu2016ssd} và xây dựng một cây Lex - BST\footfullcite{zanibbi} tạo tiền đề để xây dựng biểu thức Latex.
+		Bộ phận phân tích cấu trúc có nhiệm vụ nhận dữ liệu là các bounding box từ SSD\footfullcite{liu2016ssd} và xây dựng một cây Lexed - BST\footfullcite{zanibbi} tạo tiền đề để xây dựng biểu thức Latex.
 	\end{frame}
 	
 	%--------------------------------------------------
@@ -678,14 +707,6 @@
 		
 	\end{frame}
 	
-	\begin{frame}
-		\frametitle{Xác định ký tự trên đường cơ sở}
-		\begin{center}
-			\centering
-			\includegraphics[width=0.6\linewidth]{hor1.png}
-			\captionof{figure}{GT}
-		\end{center}
-	\end{frame}
 	
 	\begin{frame}
 		\frametitle{Xác định ký tự trên đường cơ sở}
@@ -723,14 +744,6 @@
 		\end{center}
 	\end{frame}
 	
-	\begin{frame}
-		\frametitle{Xác định ký tự trên đường cơ sở}
-		\begin{center}
-			\centering
-			\includegraphics[width=0.6\linewidth]{hor5.png}
-			\captionof{figure}{Xác định ký tự trên đường cơ sở}
-		\end{center}
-	\end{frame}
 	
 	\begin{frame}
 		\frametitle{Xác định ký tự trên đường cơ sở}
@@ -948,19 +961,19 @@
 			\end{itemize}
 		\end{block}
 		\begin{center}
-		\begin{tabular}{||c | c | c ||} 
-			\hline
-			Thông tin thêm & Tập huấn luyện & Tập kiểm tra\\[0.5ex] 
-			\hline\hline
-			\makecell{Tổng số ký tự} & 13697 & 2237 \\
-			\hline
-			\makecell{Chiều dài trung bình\\ của biểu thức} &$\approx{8}$  &$\approx{6}$\\
-			\hline
-			\makecell{Kích thước trung bình\\ của ký tự}& $24\times29$&$31\times41$\\
-			\hline
-		\end{tabular}
-		\captionof{table}{Thông tin mô tả hai tập dữ liệu dùng cho huấn luyện và kiểm tra.}
-	\end{center}
+			\begin{tabular}{||c | c | c ||} 
+				\hline
+				Thông tin thêm & Tập huấn luyện & Tập kiểm tra\\[0.5ex] 
+				\hline\hline
+				\makecell{Tổng số ký tự} & 13697 & 2237 \\
+				\hline
+				\makecell{Chiều dài trung bình\\ của biểu thức} &$\approx{8}$  &$\approx{6}$\\
+				\hline
+				\makecell{Kích thước trung bình\\ của ký tự}& $24\times29$&$31\times41$\\
+				\hline
+			\end{tabular}
+			\captionof{table}{Thông tin mô tả hai tập dữ liệu dùng cho huấn luyện và kiểm tra.}
+		\end{center}
 	\end{frame}
 	%--------------------------------------------------
 	\subsection{Đánh giá kết quả}
@@ -1181,7 +1194,7 @@
 	\end{frame}
 	
 	\begin{frame}{Những lỗi sai của hệ thống nhận dạng}
-			\begin{center}
+		\begin{center}
 			\centering
 			\includegraphics[width=0.775\linewidth]{phuluc_loi}
 			\vspace{0.5cm}
@@ -1190,13 +1203,13 @@
 	\end{frame}
 	
 	\begin{frame}{Những lỗi sai của hệ thống nhận dạng}
-	\begin{center}
-		\centering
-		\includegraphics[width=0.775\linewidth]{phuluc_sainhan}
-		\vspace{0.5cm}
-		\captionof{figure}{Trường hợp hệ thống gán sai nhãn cho những ký tự có nét tương tự nhau.}
-	\end{center}
-\end{frame}
+		\begin{center}
+			\centering
+			\includegraphics[width=0.775\linewidth]{phuluc_sainhan}
+			\vspace{0.5cm}
+			\captionof{figure}{Trường hợp hệ thống gán sai nhãn cho những ký tự có nét tương tự nhau.}
+		\end{center}
+	\end{frame}
 	%----------------------------------------------------------------------------------------
 	
 \end{document}

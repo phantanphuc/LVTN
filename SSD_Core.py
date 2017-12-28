@@ -86,7 +86,6 @@ class SSD_Core:
 			#draw.text((boxes[i][0] * 300, boxes[i][1] * 300), dictindex[labels.numpy()[i, 0]], font=ImageFont.truetype("./font/arial.ttf"))
 
 			
-			
 		img.save('./temp/' + outname)
 
 		return return_str

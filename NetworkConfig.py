@@ -26,7 +26,7 @@ parser.add_argument('--resume_mode', default='none', type=str, help='Continue tr
 ######### Core Component
 parser.add_argument('--using_python_2', default=False, type=bool, help='Current python version')
 parser.add_argument('--class_count', default=107, type=int, help='Number of classes')
-parser.add_argument('--network', default='SSD500S', type=str, help='network type: \'SSD300\': use original SSD300, \'SSD500\': Improved version ')
+parser.add_argument('--network', default='SSD500', type=str, help='network type: \'SSD300\': use original SSD300, \'SSD500\': Improved version ')
 parser.add_argument('--resuming_model', default='./model/ckpt_resize_scale_p2_500_4.pth', type=str, help='Model to load (Only valid for resume_mode: pretrain and continue)')
 
 ######### PATH 

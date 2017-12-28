@@ -621,7 +621,7 @@ class LatexGenerator:
 				if node['symbol'] == 'rightarrow':
 					return ' \\rightarrow '
 				if node['symbol'] == 'intft':
-					return ' \\inf '
+					return ' \\infty '
 			
 				node['symbol'] = node['symbol'].replace('ldot', '.')
 				
@@ -714,7 +714,7 @@ class LatexGenerator:
 				upper_node = self.createLatexString(node['child'][0])
 				lower_node = self.createLatexString(node['child'][1])
 			
-				return '\\int_{' + upper_node + '}^{' + lower_node + '}'
+				return '\\int^{' + upper_node + '}_{' + lower_node + '}'
 			
 
 			
@@ -786,6 +786,8 @@ class BBParser:
 		
 	def debug(self):
 		
+		self.process('null 4 272 236 323 287 13 143 265 191 323 5 359 202 438 280 72 108 173 169 258 72')
+		return 
 		self.getDataFromFile()
 		
 		k = 0
@@ -817,7 +819,6 @@ class BBParser:
 			
 		self.preprocessingBBList(BB_List)
 		BST = self.BuildBST(BB_List)
-		print(self.handling_file)
 		#self.debugPrint(BST)
 
 		################ LEX ###########################################
@@ -826,8 +827,8 @@ class BBParser:
 
 
 		LBSTTree = self.current_LBST.process(BST)
-		
 
+		
 		latex_string = self.latexgenerator.process(LBSTTree)
 		
 		return latex_string
@@ -858,7 +859,6 @@ class BBParser:
 		
 		s_start = self.start(rnode_list)
 
-		
 		idx = 0
 		for i in rnode_list:
 			if i[0] == s_start[0] and i[1] == s_start[1] and i[4] == s_start[4]:
@@ -870,7 +870,6 @@ class BBParser:
 		
 		baseline_symbols = self.Hor([s_start], rnode_list)
 
-		
 		updated_baseline = self.CollectRegion(baseline_symbols)
 
 
@@ -922,7 +921,8 @@ class BBParser:
 		
 		remaining_symbols, current_symbol_new = self.Partition(S_node_list_2, copy.deepcopy(current_symbol))
 
-		
+
+
 		#replace
 		
 		S_node_list_1.pop()
@@ -945,7 +945,7 @@ class BBParser:
 		
 		SL = remaining_symbols[:]
 
-		
+
 		while len(SL) > 0:
 			l1 = SL[0]
 
@@ -1350,5 +1350,5 @@ class BBParser:
 
 
 
-#obj = BBParser()
-#obj.debug()
+obj = BBParser()
+obj.debug()
