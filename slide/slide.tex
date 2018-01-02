@@ -141,7 +141,7 @@
 				%\vspace{0.5cm}
 				\hspace{1.5 cm} & Hội đồng & : \bf{Khoa học máy tính}\\
 				%	\vspace{0.5cm}
-				\hspace{1.5 cm} & Giảng viên hướng dẫn & : \bf{TS. LÊ Thành Sách}\\
+				\hspace{1.5 cm} & Giảng viên hướng dẫn & : \bf{TS. Lê Thành Sách}\\
 				%\vspace{0.5cm}
 				\hspace{1.5cm} & Giảng viên phản biện & : \bf{TS. Nguyễn Đức Dũng}\\
 				%\vspace{0.5cm}
@@ -303,6 +303,17 @@
 		
 	\end{frame}
 	
+	\begin{frame}
+		\frametitle{Mô hình đề xuất}
+		
+		\begin{center}
+			\centering
+			\includegraphics[width=0.95\linewidth]{pipeline.png}
+			\vspace{0.5cm}
+			\captionof{figure}{Mô hình nhóm đề xuất}
+		\end{center}
+	\end{frame}
+	
 	%--------------------------------------------------
 	%----------SUBSEC: SSD----------------------
 	%--------------------------------------------------
@@ -321,12 +332,10 @@
 			\item SSD sinh ra một số lượng hữu hạn các \textbf{default box} với nhiều kích thước, tỉ lệ khác nhau được xem là các "hệ quy chiếu" để hệ thống có thể xác định vị trí và kích thước các ký tự cần nhận diện. 
 			\item Qua quá trình huấn luyện, mạng cần phải học cách dự đoán các \textbf{bounding box} bọc quanh ký tự cần nhận diện.
 		\end{itemize}
-		
-		
-		
-		%Nhóm xin phép được tách quá trình huấn luyện thành ba giai đoạn: mã hóa, phát hiện - phân loại và tính giá trị lỗi. Và song song với huấn luyện, quá trình kiểm tra, kiểm định, chạy thực tiễn cũng được chia thành ba giai đoạn: trích đặc trưng - phân loại và giải mã. << Talk
-		
 	\end{frame}
+	
+	
+	
 	
 	%--------------------------------------------------
 	%----------SUBSUB: ENCODER----------------------
@@ -344,11 +353,7 @@
 		\begin{itemize}
 			\item Dữ liệu đầu vào: Danh sách bounding box của ground truth.
 			\item Dữ liệu đầu ra: Danh sách default box đã match với các bounding box tương ứng.
-		\end{itemize}
-		
-		
-		
-		
+		\end{itemize}	
 		
 	\end{frame}
 	
@@ -356,30 +361,18 @@
 		\frametitle{Bộ Mã Hóa (Encoder) - Sinh Default Box}
 		\begin{center}
 			\centering
-			\includegraphics[width=0.6\linewidth]{im_3.png}
+			\includegraphics[width=0.9\linewidth]{im_3.png}
+			\vspace{0.5cm}
 			\captionof{figure}{Các default box với mức kích thước khác nhau}
 		\end{center}
 		\begin{block}{Sinh Default Box}
 			\begin{itemize}
 				\item Các default box được sinh cách đều nhau với nhiều mức kích thước khác nhau.
-				\item Quá trình sinh default box phụ thuộc vào một số cấu hình: Số mức scale, kích thước của default box trong mỗi mức scale, số lượng default box trong mỗi mức kích thước và số lượng aspect ratio cho default box.
+				\item Quá trình sinh default box phụ thuộc vào một số cấu hình: Số mức scale, kích thước của default box trong mỗi mức scale, số lượng default box trong mỗi mức kích thước và số lượng aspect ratio.
 			\end{itemize}
 		\end{block}
 	\end{frame}
 	
-	\begin{frame}
-		\frametitle{Bộ Mã Hóa (Encoder) - Sinh Default Box}
-		\begin{center}
-			\centering
-			\includegraphics[width=0.5\linewidth]{aspect.png}
-			\captionof{figure}{Tại mỗi vị trí, nhiều default box được sinh ra với tỉ lệ kích thước khác nhau}
-		\end{center}
-		\begin{block}{Aspect Ratio}
-			\begin{itemize}
-				\item Tại mỗi vị trí, Encoder sinh ra nhiều default box với tỉ lệ kích thước khác nhau.
-			\end{itemize}
-		\end{block}
-	\end{frame}
 	
 	%----------------MATCHING---------------------------
 	
@@ -387,17 +380,9 @@
 		\frametitle{Bộ Mã Hóa (Encoder) - Matching}
 		\begin{center}
 			\centering
-			\includegraphics[width=0.5\linewidth]{GT_BB.png}
+			\includegraphics[width=0.95\linewidth]{GT_BB.png}
 			\vspace{0.5cm}
 			\captionof{figure}{Quá trình matching}
-		\end{center}
-	\end{frame}
-	\begin{frame}
-		\frametitle{Bộ Mã Hóa (Encoder) - Matching}
-		\begin{center}
-			\centering
-			\includegraphics[width=0.5\linewidth]{GT_Ja.png}
-			\captionof{figure}{Chỉ số Jaccard \footfullcite{Jaccard}}
 		\end{center}
 	\end{frame}
 	
@@ -405,16 +390,7 @@
 		\frametitle{Bộ Mã Hóa (Encoder) - Matching}
 		\begin{center}
 			\centering
-			\includegraphics[width=0.5\linewidth]{GTM.png}
-			\vspace{0.5cm}
-			\captionof{figure}{Quá trình matching}
-		\end{center}
-	\end{frame}
-	\begin{frame}
-		\frametitle{Bộ Mã Hóa (Encoder) - Matching}
-		\begin{center}
-			\centering
-			\includegraphics[width=0.5\linewidth]{GTDoneMatch.png}
+			\includegraphics[width=0.95\linewidth]{GT_BB2.png}
 			\vspace{0.5cm}
 			\captionof{figure}{Quá trình matching}
 		\end{center}
@@ -425,9 +401,9 @@
 	%----------SUBSUB: DETECTOR----------------------
 	%--------------------------------------------------
 	
-	\subsubsection{Bộ phát hiện, phân loại}
+	\subsubsection{Bộ phận trích xuất các feature map}
 	\begin{frame}
-		\frametitle{Bộ phát hiện, phân loại}
+		\frametitle{Bộ phận trích xuất các feature map}
 		Bộ phận này có nhiệm vụ trích đặc trưng ảnh thô đầu vào, tạo ra các feature map ứng với nhiều mức kích thước khác nhau để từ đó tiến hành phát hiện, phân loại các ký tự.
 		
 		\begin{itemize}
@@ -441,37 +417,21 @@
 		
 	\end{frame}
 	
-	\begin{frame}
-		\frametitle{Bộ phát hiện, phân loại - Trích đặc trưng}
-		\begin{itemize}
-			\item Việc trích đặc trưng của mạng SSD\footfullcite{liu2016ssd} được thực hiện bởi một mạng cơ sở.
-			\item 	Mạng cơ sở của SSD là một mạng nơron tích chập bất kỳ, có thể là VGG\footfullcite{Simonyan14c} hoặc lenet\footfullcite{yanlecun},... 
-			\item Khi kết hợp với mạng SSD, các lớp liên kết đầy đủ của mạng nơ-ron tích chập sẽ được thay thế bằng các lớp tích chập khác và song hành là các bước trích feature map để dự đoán vị trí, kích thước của các ký tự.
-		\end{itemize}
-		
-		
-		
-		
-	\end{frame}
 	
 	\begin{frame}
-		\frametitle{Bộ phát hiện, phân loại - Trích xuất feature map}
-		
-		\begin{itemize}
-			\item Mạng SSD xây dựng các lớp tích chập, trong đó có lớp có stride bằng 2, giúp tạo các feature map có kích thước theo một cấp số nhân.
-		\end{itemize}
+		\frametitle{Bộ phận trích xuất các feature map}
 		
 		\begin{center}
 			\centering
-			\includegraphics[width=0.95\linewidth]{SSD_Struture.png}
+			\includegraphics[width=0.85\linewidth]{pipeline2.png}
 			\vspace{0.5cm}
-			\captionof{figure}{Mô hình mạng SSD nguyên thủy}
+			\captionof{figure}{Sơ đồ bộ phận trích xuất feature map}
 		\end{center}
 		
 	\end{frame}
 	
 	\begin{frame}
-		\frametitle{Bộ phát hiện, phân loại - Dự đoán}
+		\frametitle{Bộ phận đưa ra dự đoán}
 		
 		\begin{center}
 			\centering
@@ -489,51 +449,18 @@
 	
 	
 	
-	\begin{frame}
-		\frametitle{Bộ phát hiện, phân loại - Dự đoán}
-		
-		\begin{itemize}
-			\item Sau khi sinh ra dự đoán ứng với tất cả default box, hệ thống sẽ lựa chọn những dự đoán tốt nhất dựa trên độ tin cậy và độ chồng lấn giữa các ký tự.
-		\end{itemize}
-		
-		
-	\end{frame}
+	%\begin{frame}
+	%	\frametitle{Bộ phát hiện, phân loại - Dự đoán}
+	%	
+	%	\begin{itemize}
+	%		\item Sau khi sinh ra dự đoán ứng với tất cả default box, hệ thống sẽ lựa chọn những dự đoán tốt nhất dựa trên độ tin cậy và độ chồng lấn giữa các ký tự.
+	%	\end{itemize}
+	%	
+	%	
+	%\end{frame}
 	
 	
-	%--------------------------------------------------
-	%----------SUBSUB: LOSS----------------------
-	%--------------------------------------------------
-	\subsubsection{Mục tiêu huấn luyện}
-	
-	\begin{frame}
-		\frametitle{Mục tiêu huấn luyện - "Hệ quy chiếu" ?}
-		\begin{center}
-			\centering
-			\includegraphics[width=0.6\linewidth]{LOSSSS.png}
-			\captionof{figure}{Độ lệch về kích thước}
-		\end{center}
-	\end{frame}
-	\begin{frame}
-		\frametitle{Mục tiêu huấn luyện - "Hệ quy chiếu" ?}
-		\begin{center}
-			\centering
-			\includegraphics[width=0.6\linewidth]{LOSSX.png}
-			\vspace{0.3cm}
-			\captionof{figure}{Độ lệch về vị trí trọng tâm}
-		\end{center}
-	\end{frame}
-	
-	\begin{frame}
-		\frametitle{Mục tiêu huấn luyện}
-		\begin{block}{Mục tiêu huấn luyện}
-			\begin{itemize}
-				\item Cực tiểu chênh lệch về vị trí.
-				\item Cực đại độ tin cậy của nhãn.
-			\end{itemize}
-		\end{block}
-		
-	\end{frame}
-	
+
 	
 	%--------------------------------------------------
 	%----------SUBSUB: LOSS----------------------
@@ -663,14 +590,23 @@
 	\begin{frame}
 		\frametitle{Phân tích cấu trúc}
 		{\Huge Phân tích cấu trúc}\\
+		\begin{itemize}
+			\item DRACULAE\footfullcite{zanibbi}
+		\end{itemize}
 		
-		DRACULAE\footfullcite{zanibbi}
 	\end{frame}
 	
 	\subsection{Phân tích cấu trúc}
 	\begin{frame}
 		\frametitle{Phân tích cấu trúc}
 		Bộ phận phân tích cấu trúc có nhiệm vụ nhận dữ liệu là các bounding box từ SSD\footfullcite{liu2016ssd} và xây dựng một cây Lexed - BST\footfullcite{zanibbi} tạo tiền đề để xây dựng biểu thức Latex.
+	
+		\begin{center}
+			\centering
+			\includegraphics[width=0.95\linewidth]{pipeline3.png}
+			\vspace{0.5cm}
+		\end{center}
+
 	\end{frame}
 	
 	%--------------------------------------------------
@@ -1218,5 +1154,40 @@
 		\end{center}
 	\end{frame}
 	%----------------------------------------------------------------------------------------
+	
+		%--------------------------------------------------
+	%----------SUBSUB: LOSS----------------------
+	%--------------------------------------------------
+	\subsubsection{Mục tiêu huấn luyện}
+	
+	\begin{frame}
+		\frametitle{Mục tiêu huấn luyện - "Hệ quy chiếu" ?}
+		\begin{center}
+			\centering
+			\includegraphics[width=0.6\linewidth]{LOSSSS.png}
+			\captionof{figure}{Độ lệch về kích thước}
+		\end{center}
+	\end{frame}
+	\begin{frame}
+		\frametitle{Mục tiêu huấn luyện - "Hệ quy chiếu" ?}
+		\begin{center}
+			\centering
+			\includegraphics[width=0.6\linewidth]{LOSSX.png}
+			\vspace{0.3cm}
+			\captionof{figure}{Độ lệch về vị trí trọng tâm}
+		\end{center}
+	\end{frame}
+	
+	\begin{frame}
+		\frametitle{Mục tiêu huấn luyện}
+		\begin{block}{Mục tiêu huấn luyện}
+			\begin{itemize}
+				\item Cực tiểu chênh lệch về vị trí.
+				\item Cực đại độ tin cậy của nhãn.
+			\end{itemize}
+		\end{block}
+		
+	\end{frame}
+	
 	
 \end{document}
