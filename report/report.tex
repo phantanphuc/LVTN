@@ -1250,7 +1250,7 @@
 		\end{tabular}
 		\captionof{table}{Thông tin của các feature map trích được từ mạng SSD\cite{liu2016ssd} đã giảm kích thước default box, tăng kích thước ảnh đầu vào và tăng số lớp tích chập}
 	\end{center}
-	Lớp Conv\_12 được thêm vào cuối mạng với mục đích tăng độ dài danh sách feature map đưa vào lớp Multibox, điều này giúp trong quá trình matching, các ký tự lớn hơn có thể được match.
+	Lớp Conv\_12 được thêm vào gần cuối mạng với mục đích tăng độ dài danh sách feature map đưa vào lớp Multibox, điều này giúp trong quá trình matching, các ký tự lớn hơn có thể được match. Bên canh đó, lớp Conv\_10 được thay đổi stride từ 1 lên 3, điều này giúp kích thước các feature map thu được có kích thước tuân theo một cấp số nhân.
 	
 	\begin{center}
 		\centering
