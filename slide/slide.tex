@@ -310,7 +310,7 @@
 		
 		\begin{center}
 			\centering
-			\includegraphics[width=0.95\linewidth]{pipeline.png}
+			\includegraphics[width=0.95\linewidth]{r_pipeline.png}
 			\vspace{0.5cm}
 			\captionof{figure}{Mô hình nhóm đề xuất}
 		\end{center}
@@ -319,15 +319,15 @@
 	%--------------------------------------------------
 	%----------SUBSEC: SSD----------------------
 	%--------------------------------------------------
-	\subsection{Lý thuyết mạng SSD}
+	\subsection{Kiến trúc mạng SSD}
 	
+%	\begin{frame}
+%		\frametitle{Lý thuyết mạng SSD}
+%		{\Huge Lý thuyết mạng SSD}
+%	\end{frame}
+%	
 	\begin{frame}
-		\frametitle{Lý thuyết mạng SSD}
-		{\Huge Lý thuyết mạng SSD}
-	\end{frame}
-	
-	\begin{frame}
-		\frametitle{Lý thuyết mạng SSD}
+		\frametitle{Giới thiệu mạng SSD}
 		
 		\begin{itemize}
 			\item SSD\footfullcite{liu2016ssd} là một phương pháp phát hiện vật thể trong ảnh bằng mô hình mạng học sâu.
@@ -347,17 +347,17 @@
 	
 	\subsubsection{Bộ Mã Hóa (Encoder)}
 	
-	\begin{frame}
-		\frametitle{Bộ Mã Hóa (Encoder)}
-		
-		Bộ mã hóa có nhiệm vụ match các bounding box của ground truth vào các default box đã sinh được để tạo ra dữ liệu hệ thống có thể sử dụng cho quá trình huấn luyện.\\
-		
-		\begin{itemize}
-			\item Dữ liệu đầu vào: Danh sách bounding box của ground truth.
-			\item Dữ liệu đầu ra: Danh sách default box đã match với các bounding box tương ứng.
-		\end{itemize}	
-		
-	\end{frame}
+%	\begin{frame}
+%		\frametitle{Bộ Mã Hóa (Encoder)}
+%		
+%		Bộ mã hóa có nhiệm vụ match các bounding box của ground truth vào các default box đã sinh được để tạo ra dữ liệu hệ thống có thể sử dụng cho quá trình huấn luyện.\\
+%		
+%		\begin{itemize}
+%			\item Dữ liệu đầu vào: Danh sách bounding box của ground truth.
+%			\item Dữ liệu đầu ra: Danh sách default box đã match với các bounding box tương ứng.
+%		\end{itemize}	
+%		
+%	\end{frame}
 	
 	\begin{frame}
 		\frametitle{Bộ Mã Hóa (Encoder) - Sinh Default Box}
@@ -395,20 +395,16 @@
 	%--------------------------------------------------
 	
 	\subsubsection{Bộ phận trích xuất các feature map}
-	\begin{frame}
-		\frametitle{Bộ phận trích xuất các feature map}
-		Bộ phận này có nhiệm vụ trích đặc trưng ảnh thô đầu vào, tạo ra các feature map ứng với nhiều mức kích thước khác nhau để từ đó tiến hành phát hiện, phân loại các ký tự.
+%	\begin{frame}
+%		\frametitle{Bộ phận trích xuất các feature map}
+%		Bộ phận này có nhiệm vụ trích đặc trưng ảnh thô đầu vào, tạo ra các feature map ứng với nhiều mức kích thước khác nhau để từ đó tiến hành phát hiện, phân loại các ký tự.
+%		
+%		\begin{itemize}
+%			\item Dữ liệu đầu vào: Ảnh cần nhận diện, danh sách default box đã match với các bounding box tương ứng (đối với quá trình huấn luyện).
+%			\item Dữ liệu đầu ra: Danh sách bounding box dự đoán tương ứng với mỗi default box.
+%		\end{itemize}	
 		
-		\begin{itemize}
-			\item Dữ liệu đầu vào: Ảnh cần nhận diện, danh sách default box đã match với các bounding box tương ứng (đối với quá trình huấn luyện).
-			\item Dữ liệu đầu ra: Danh sách bounding box dự đoán tương ứng với mỗi default box.
-		\end{itemize}
-		
-		
-		
-		
-		
-	\end{frame}
+%	\end{frame}
 	
 	
 	\begin{frame}
