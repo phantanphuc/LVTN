@@ -254,7 +254,7 @@
 		\end{table}
 		\vspace{2cm}
 		\begin{center}
-			{\footnotesize Tp. Hồ Chí Minh, Tháng 12/2017}
+			{\footnotesize Tp. Hồ Chí Minh, Tháng 01/2018}
 		\end{center}
 	\end{titlepage}
 	\newpage
@@ -311,13 +311,15 @@
 	
 	Chương 2 sẽ đề cập những kiến thức liên quan trực tiếp đến đề tài mà nhóm đã tìm hiểu, cụ thể là kiến trúc mạng SSD.
 	
-	Chương 3 tóm lược một số công trình liên quan trực tiếp đến đề tài. Trong mục này, nhóm sẽ giới thiệu 4 công trình là cơ sở tham khảo cho quá trình hoàn thiện luận văn. 
+	Chương 3 tóm lược một số công trình liên quan trực tiếp đến đề tài. Trong mục này, nhóm sẽ giới thiệu 3 công trình là cơ sở tham khảo cho quá trình hoàn thiện luận văn. 
 	
 	Chương 4 trình bày về phương pháp đã được sử dụng để hiện thực đề tài luận văn. Phương pháp này được xây dựng dựa trên những kiến thức đã tìm hiểu được trình bày ở chương 2 và những công trình được giới thiệu ở chương 3.
 	
 	Chương 5 chỉ ra quá trình hiện thực đề tài bao gồm chuẩn bị tập dữ liệu, xây dựng hệ thống và chương trình thử nghiệm. Cụ thể, nhóm sẽ diễn giải về cách cấu hình, các thông số trong từng giai đoạn của quá trình nhận dạng. Tiếp theo, nhóm sẽ giới thiệu cách thức thu thập dữ liệu cùng một số mô tả cho tập dữ liệu hiện tại mà nhóm đang sử dụng. Cuối cùng là kết quả từ chương trình thử nghiệm và những so sánh, đánh giá giữa các phiên bản được tạo ra từ việc thay đổi một số yếu tố liên quan đến quá trình nhận dạng. 
 	
-	Chương 6 đánh giá tổng kết luận văn. Nhóm sẽ nêu lên những điều còn tồn đọng và những điểm nổi bật, cũng như hướng phát triển tiếp theo của đề tài. Ngoài ra, sẽ là một vài dòng đúc kết lại chặng đường thực hiện luận văn tốt nghiệp của các thành viên nhóm: những điều đã học được, cảm xúc khi hoàn thành đề tài luận văn.
+	Chương 6 đánh giá tổng kết luận văn. Nhóm sẽ nêu lên những điều còn tồn đọng và những điểm nổi bật, cũng như hướng phát triển tiếp theo của đề tài.
+	
+	 Ngoài ra, sẽ là một vài dòng đúc kết lại chặng đường thực hiện luận văn tốt nghiệp của các thành viên nhóm: những điều đã học được, cảm xúc khi hoàn thành đề tài luận văn.
 	\newpage
 	\tableofcontents
 	\newpage
@@ -379,6 +381,7 @@
 	\begin{itemize}
 		\item Nhận dạng biểu thức toán học viết tay dạng offline\footnote{Nhận dạng từ ảnh chứa biểu thức toán học.}.
 		\item Chuyển biểu thức từ dạng hình ảnh sang dạng máy có thể hiểu được (Latex).
+		\item Mỗi ảnh dùng để nhận dạng chỉ chứa đúng 1 biểu thức và biểu thức này có đường cơ sở\footnote{Thuật ngữ tiếng Anh: baseline} không bị lệch khỏi đường nằm ngang của ảnh.
 		%\item Ảnh nhận diện ít nhiễu và không bị xoay quá nhiều.
 		%\item Nhận diện được các cấu trúc đơn giản (tích phân, tổng, chỉ số trên, chỉ số dưới, phân số, giới hạn, ...)
 		
@@ -617,10 +620,10 @@
 		\begin{align}
 		L(x) = \begin{cases} 0.5x^2 \quad if |x| < 1 \\ |x| - 0.5 \quad otherwise \end{cases}
 		\end{align}
-		\item \begin{align}\hat{g}_j^{cx} = (g_j^{cx} - d_i^{cx}) / d^w_i\end{align}Với $d$ biểu thị cho default box.
-		\item \begin{align}\hat{g}_j^{cy} = (g_j^{cy} - d_i^{cy}) / d^h_i\end{align}
-		\item \begin{align}\hat{g}^w_j = \log \left( \frac{g_j^w}{d_i^w} \right)\end{align}
-		\item \begin{align}\hat{g}^h_j = \log \left( \frac{g_j^h}{d_i^h} \right)\end{align}
+		\begin{align}\hat{g}_j^{cx} = (g_j^{cx} - d_i^{cx}) / d^w_i\end{align}Với $d$ biểu thị cho default box.
+		\begin{align}\hat{g}_j^{cy} = (g_j^{cy} - d_i^{cy}) / d^h_i\end{align}
+		\begin{align}\hat{g}^w_j = \log \left( \frac{g_j^w}{d_i^w} \right)\end{align}
+		\begin{align}\hat{g}^h_j = \log \left( \frac{g_j^h}{d_i^h} \right)\end{align}
 	\end{itemize}
 	
 	Bốn công thức $\hat{g}$ trên chính là độ lệch giữa ô đang xét và default box, mà nhóm đã đề cập ở mục trước.
@@ -1351,7 +1354,7 @@
 	
 	
 	
-	\subsubsection{So sánh định đlượng}
+	\subsubsection{So sánh định lượng}
 	Trong quá trình thực hiện, nhóm đã xây dựng 4 phiên bản huấn luyện dựa trên những thay đổi của 3 yếu tố sau:
 	\begin{itemize}
 		\item Kích thước ảnh đầu vào của mạng SSD.

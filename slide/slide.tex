@@ -179,11 +179,13 @@
 		\end{center}
 	\end{frame}
 	%---------------------------------------------------
-	\subsection{Mục tiêu đề tài}
-	\begin{frame}{Mục tiêu đề tài}
+	\subsection{Phạm vi đề tài}
+	\begin{frame}{Phạm vi đề tài}
 		\begin{itemize}
 			\uncover<1->{\item Nhận dạng biểu thức toán học dạng offline\footnote{Nhận dạng từ hình ảnh.}.}
 			\uncover<2->{\item Chuyển biểu thức từ dạng hình ảnh sang dạng Latex.}
+			\uncover<3->{\item Mỗi ảnh dùng để nhận dạng chỉ chứa đúng 1 biểu thức và biểu thức này có đường cơ sở\footnote{Thuật ngữ tiếng Anh: baseline} không bị lệch khỏi đường nằm ngang của ảnh.}
+			
 		\end{itemize}
 	\end{frame}
 	%---------------------------------------------------
@@ -976,7 +978,19 @@
 			\end{center}
 		\end{itemize}
 	\end{frame}
-	
+	\begin{frame}{Công thức tính chỉ số mAP}
+	Tính precision cho từng nhãn theo công thức\footfullcite{mAP}:
+	\begin{align}
+	precision = \frac{TP}{TP+FP},
+	\end{align}
+	\hspace{2cm}với $TP$ được viết tắt từ $True Positive$\footfullcite{mAP} và $FP$ từ $False Positive$\footfullcite{mAP}.\\
+	Tính trọng số của từng nhãn trong tập dữ liệu kiểm tra theo công thức:
+	\begin{align}
+	class\_weight_i = \frac{N_i}{\sum_{u=0}^{106}N_u},
+	\end{align}
+	\hspace{2cm}với $N_i$ là số lượng ký tự thuộc nhãn $i$.\\
+	mAP là trung bình có trọng số giữa $precision$ và $class\_weight$.
+	\end{frame}
 	\begin{frame}{Kết quả}
 		\begin{center}
 			\centering
@@ -1004,7 +1018,14 @@
 			\item Các ký tự hoàn toàn trùng lên nhau dễ bị bỏ sót (dấu căn).
 		\end{itemize}
 	\end{frame}
-	
+	\subsection{Những điều đã làm được}
+	\begin{frame}{ Những điều đã làm được}
+		\begin{itemize}
+			\item Xây dựng tập dữ liệu ký tự và biểu thức.
+			\item Cải tiến mạng SSD gốc để phát hiện và nhận dạng được những đối tượng có kích thước nhỏ, cụ thể là ký tự toán học viết tay.
+			\item Hiện thực bộ parser dựa trên lý thuyết của Zanibbi\footfullcite{zanibbi}
+		\end{itemize}
+	\end{frame}
 	\subsection{Hướng phát triển}
 	\begin{frame}{Phát triển tập dữ liệu biểu thức}
 		\begin{itemize}
@@ -1091,20 +1112,7 @@
 		\colorbox{blue}{\textcolor{white}{\huge{Phụ lục}}}
 	\end{frame}
 	
-	\begin{frame}{Công thức tính chỉ số mAP}
-		Tính precision cho từng nhãn theo công thức\footfullcite{mAP}:
-		\begin{align}
-		precision = \frac{TP}{TP+FP},
-		\end{align}
-		\hspace{2cm}với $TP$ được viết tắt từ $True Positive$\footfullcite{mAP} và $FP$ từ $False Positive$\footfullcite{mAP}.\\
-		Tính trọng số của từng nhãn trong tập dữ liệu kiểm tra theo công thức:
-		\begin{align}
-		class\_weight_i = \frac{N_i}{\sum_{u=0}^{106}N_u},
-		\end{align}
-		\hspace{2cm}với $N_i$ là số lượng ký tự thuộc nhãn $i$.\\
-		mAP là trung bình có trọng số giữa $precision$ và $class\_weight$.
-		
-	\end{frame}
+	
 	\begin{frame}{Mẫu thu ký tự}
 	\begin{center}
 		\centering
