@@ -250,7 +250,7 @@
 		\end{figure}
 	\end{frame}
 	%--------------------------------------------------
-	\subsection{Watch, Attend and Parser và Context- aware Recognition}
+
 	\begin{frame}{Watch, Attend and Parser và Context- aware Recognition}
 		\begin{block}{Đánh giá}
 			Cả 2 phương pháp đều tận dụng được thông tin cấu trúc 2 chiều của biểu thức toán học qua quá trình nhận dạng bằng cách sử dụng một lớp mạng CNN để tạo ra đặc trưng từ ảnh biểu thức đầu vào, thay vì sử dụng cách phương pháp phổ biến trong phân tách ký tự như phân tích hình chiếu\footnote{Thuật ngữ tiếng Anh: projection cutting}, phân tích thành phần liên thông\footnote{Thuật ngữ tiếng Anh: connected component analysis}. Do đó, hạn chế lỗi do quá trình nhận dạng ký tự gây ra ảnh hướng đến kết quả sau cùng của bài toán.
@@ -326,16 +326,7 @@
 %		{\Huge Lý thuyết mạng SSD}
 %	\end{frame}
 %	
-	\begin{frame}
-		\frametitle{Giới thiệu mạng SSD}
-		
-		\begin{itemize}
-			\item SSD\footfullcite{liu2016ssd} là một phương pháp phát hiện vật thể trong ảnh bằng mô hình mạng học sâu.
-			\item SSD sinh ra một số lượng hữu hạn các \textbf{default box} với nhiều kích thước, tỉ lệ khác nhau được xem là các "hệ quy chiếu" để hệ thống có thể xác định vị trí và kích thước các ký tự cần nhận diện. 
-			\item Qua quá trình huấn luyện, mạng cần phải học cách dự đoán các \textbf{bounding box} bọc quanh ký tự cần nhận diện.
-		\end{itemize}
-	\end{frame}
-	
+
 	
 	
 	
@@ -369,7 +360,7 @@
 		\end{center}
 		\begin{block}{Sinh Default Box}
 			\begin{itemize}
-				\item Các default box được sinh cách đều nhau với nhiều mức kích thước khác nhau.
+				\item Các default box được sinh với nhiều mức kích thước khác nhau dựa trên công thức $s_k = s_{min} + \frac{s_{max} - s_{min}}{m - 1}(k - 1)$ .
 				\item Quá trình sinh default box phụ thuộc vào một số cấu hình: Số mức scale, kích thước của default box trong mỗi mức scale, số lượng default box trong mỗi mức kích thước và số lượng aspect ratio.
 			\end{itemize}
 		\end{block}
@@ -454,19 +445,7 @@
 	%--------------------------------------------------
 	%----------SUBSUB: LOSS----------------------
 	%--------------------------------------------------
-	\subsubsection{Bộ giải mã (Decoder)}
-	
-	\begin{frame}
-		\frametitle{Bộ giải mã (Decoder)}
-		Bộ phận này có nhiệm vụ chuyển dữ liệu của các bounding box từ độ lệch so với default box sang dữ liệu có dạng (w, h, x, y).
-		
-		\begin{itemize}
-			\item Dữ liệu đầu vào: Độ lệch giữa bounding box dự đoán với default box tương ứng.
-			
-			\item Dữ liệu đầu ra: Các bounding box đã dự đoán được.
-			
-		\end{itemize}
-	\end{frame}
+
 	
 	%--------------------------------------------------
 	%----------SUBSEC: SSD----------------------
@@ -1019,7 +998,7 @@
 		\begin{itemize}
 			\item Xây dựng tập dữ liệu ký tự và biểu thức.
 			\item Cải tiến mạng SSD gốc để phát hiện và nhận dạng được những đối tượng có kích thước nhỏ, cụ thể là ký tự toán học viết tay.
-			\item Hiện thực bộ parser dựa trên lý thuyết của Zanibbi\footfullcite{zanibbi}
+			\item Hiện thực bộ parser dựa trên lý thuyết của Zanibbi\footfullcite{zanibbi}.
 		\end{itemize}
 	\end{frame}
 	\subsection{Hướng phát triển}
