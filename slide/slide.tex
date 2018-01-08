@@ -183,9 +183,9 @@
 	\begin{frame}{Phạm vi đề tài}
 		\begin{itemize}
 			\uncover<1->{\item Nhận dạng biểu thức toán học dạng offline\footnote{Nhận dạng từ hình ảnh.}.}
-			\uncover<2->{\item Chuyển biểu thức từ dạng hình ảnh sang dạng Latex.}
-			\uncover<3->{\item Mỗi ảnh dùng để nhận dạng chỉ chứa đúng 1 biểu thức và biểu thức này có đường cơ sở\footnote{Thuật ngữ tiếng Anh: baseline} không bị lệch khỏi đường nằm ngang của ảnh.}
 			
+			\uncover<2->{\item Mỗi ảnh dùng để nhận dạng chỉ chứa đúng 1 biểu thức và biểu thức này có đường cơ sở\footnote{Thuật ngữ tiếng Anh: baseline} không bị lệch khỏi đường nằm ngang của ảnh.}
+			\uncover<3->{\item Chuyển biểu thức từ dạng hình ảnh sang dạng Latex.}
 		\end{itemize}
 	\end{frame}
 	%---------------------------------------------------
@@ -473,7 +473,27 @@
 		\end{block}
 	\end{frame}
 	
-
+	\begin{frame}
+		\frametitle{Phiên bản I - Phiên bản nguyên thủy}
+		\begin{center}
+			\centering
+			\includegraphics[width=0.95\linewidth]{SSD_Struture_1.png}
+			\vspace{0.5cm}
+			\captionof{figure}{Mô hình mạng SSD nguyên thủy}
+		\end{center}
+		
+	\end{frame}
+	
+	\begin{frame}
+		\frametitle{Phiên bản I - Phiên bản nguyên thủy}
+		\begin{center}
+			\centering
+			\includegraphics[width=0.95\linewidth]{SSD_Struture_2.png}
+			\vspace{0.5cm}
+			\captionof{figure}{Mô hình mạng SSD nguyên thủy}
+		\end{center}
+		
+	\end{frame}
 	
 	
 	\begin{frame}
@@ -638,7 +658,15 @@
 			\captionof{figure}{Xác định ký tự trên đường cơ sở}
 		\end{center}
 	\end{frame}
-
+	
+	\begin{frame}
+		\frametitle{Xác định ký tự trên đường cơ sở}
+		\begin{center}
+			\centering
+			\includegraphics[width=0.6\linewidth]{hor6.png}
+			\captionof{figure}{Xác định ký tự trên đường cơ sở}
+		\end{center}
+	\end{frame}
 	
 	\begin{frame}
 		\frametitle{Xác định ký tự trên đường cơ sở}
@@ -857,7 +885,7 @@
 				\hline\hline
 				\makecell{Kích thước \\ảnh đầu vào}& 300x300 & 300x300 & 500x500 & 500x500 \\ 
 				\hline
-				\makecell{Kích thước \\default boxes\footnote{(max\_ratio, min\_ratio, min\_scale)}}& (20,90,0.1) & (8,50,0.03) & (8,50,0.03)& (8,50,0.03)\\ 
+				\makecell{Kích thước \\default boxes\footnote{Kích thước default box được quy định bởi bộ 2 thông số: (max\_ratio, min\_ratio)}}& (20,90) & (8,50) & (8,50)& (8,50)\\ 
 				\hline
 				\makecell{Số lượng \\default boxes} & 8732 & 8732 & 24148 & 24024\\
 				\hline
@@ -959,10 +987,11 @@
 	\subsection{Nhược điểm}
 	\begin{frame}{Nhược điểm}
 		\begin{itemize}
-			\item Khi có nhiều ký tự trong ảnh thì hệ thống nhận diện gặp nhiều khó khăn.
+		%	\item Khi có nhiều ký tự trong ảnh thì hệ thống nhận diện gặp nhiều khó khăn.
+			\item Vẫn còn sai sót trong việc gán nhãn ký tự.
 			\item Tốc độ xử lý một ảnh còn chậm.
 			\item Bộ phân tích cú pháp đơn giản.
-			\item Các ký tự hoàn toàn trùng lên nhau dễ bị bỏ sót (dấu căn).
+			\item Các ký tự overlap nhau dễ bị bỏ sót (dấu căn).
 		\end{itemize}
 	\end{frame}
 	\subsection{Những điều đã làm được}
