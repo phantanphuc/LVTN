@@ -297,8 +297,8 @@
 		\hspace{10 cm}
 		
 		\begin{itemize}
-			\item Mạng SSD - Single Shot Multibox Detector
-			\item DRACULAE - Diagram Recognition Application for Computer Understanding of Large Algebraic Expressions
+			\item Mạng SSD\footfullcite{liu2016ssd} - Single Shot Multibox Detector
+			\item DRACULAE\footfullcite{zanibbi} - Diagram Recognition Application for Computer Understanding of Large Algebraic Expressions
 		\end{itemize}
 		
 		
@@ -468,32 +468,12 @@
 		
 		\begin{block}{Mô hình SSD300}
 			\begin{itemize}
+				\item Mạng cơ sở: VGG
 				\item Số lớp: 106
 			\end{itemize}
 		\end{block}
 	\end{frame}
-	
-%	\begin{frame}
-%		\frametitle{Phiên bản I - Phiên bản nguyên thủy}
-%		\begin{center}
-%			\centering
-%			\includegraphics[width=0.95\linewidth]{SSD_Struture_1.png}
-%			\vspace{0.5cm}
-%			\captionof{figure}{Mô hình mạng SSD nguyên thủy}
-%		\end{center}
-%		
-%	\end{frame}
-%	
-%	\begin{frame}
-%		\frametitle{Phiên bản I - Phiên bản nguyên thủy}
-%		\begin{center}
-%			\centering
-%			\includegraphics[width=0.95\linewidth]{SSD_Struture_2.png}
-%			\vspace{0.5cm}
-%			\captionof{figure}{Mô hình mạng SSD nguyên thủy}
-%		\end{center}
-%		
-%	\end{frame}
+
 	
 	
 	\begin{frame}
@@ -503,6 +483,11 @@
 			\includegraphics[width=0.95\linewidth]{SSD_Struture_3_5.png}
 			\vspace{0.5cm}
 			\captionof{figure}{Mô hình mạng SSD nguyên thủy}
+				\begin{block}{Mô hình SSD300}
+				\begin{itemize}
+					\item Do kích thước default box không đủ nhỏ nên hệ thống gặp khó khăn trong việc nhận diện ký tự nhỏ.
+				\end{itemize}
+			\end{block}
 		\end{center}
 		
 	\end{frame}
@@ -511,13 +496,14 @@
 		\frametitle{Phiên bản II}
 		\begin{center}
 			\centering
-			\includegraphics[width=0.90\linewidth]{im_5.png}
+			\includegraphics[width=0.70\linewidth]{im_5.png}
 			\vspace{0.5cm}
 			\captionof{figure}{Thu nhỏ kích thước các default box}
 		\end{center}
 		\begin{block}{Các thay đổi}
 			Giảm kích thước các default box trong mỗi mức kích thước: \\
-			(30, 60, 111, 162, 213, 264, 315) $\rightarrow$ (9, 24, 54, 84, 114, 144, 174)
+			(30, 60, 111, 162, 213, 264, 315) $\rightarrow$ (9, 24, 54, 84, 114, 144, 174).\\
+			Điều này khiến lưới default box bị phá hỏng.
 		\end{block}
 	\end{frame}
 	
@@ -529,16 +515,23 @@
 			\vspace{0.5cm}
 			\captionof{figure}{Mô hình phiên bản III}
 		\end{center}
+	\begin{block}{Các thay đổi}
+		Tăng kích thước ảnh đầu vào từ $300 \times 300$ lên $500 \times 500$ kéo theo kích thước các feature map cũng tăng lên.
+	\end{block}
 	\end{frame}
 	
 	\begin{frame}
 		\frametitle{Phiên bản III}
 		\begin{center}
 			\centering
-			\includegraphics[width=0.95\linewidth]{im_6.png}
+			\includegraphics[width=0.85\linewidth]{im_6.png}
 			\vspace{0.5cm}
 			\captionof{figure}{Mô hình phiên bản III}
 		\end{center}
+	\begin{block}{}
+
+		Khi kích thước feature map tăng lên, số lượng default box tương ứng với feature map đó cũng tăng lên, lấp đầy phần lưới bị hổng.
+	\end{block}
 	\end{frame}
 	
 	\begin{frame}
@@ -549,6 +542,12 @@
 			\vspace{0.5cm}
 			\captionof{figure}{Mô hình phiên bản IV}
 		\end{center}
+	\begin{block}{Các thay đổi}
+		\begin{itemize}
+			\item Tăng thêm một khối gồm 02 lớp convolutoin nhầm tăng số feature map trích xuất được.
+		\end{itemize}
+		
+	\end{block}
 	\end{frame}
 	
 	
@@ -583,7 +582,7 @@
 	%--------------------------------------------------
 	\subsubsection{Sinh cây BST}
 	\begin{frame}
-		\frametitle{Sinh cây BST}
+		\frametitle{Sinh cây BST - Baseline Structure Tree}
 		\begin{center}
 			\centering
 			\includegraphics[width=0.6\linewidth]{BST.png}
@@ -613,14 +612,6 @@
 	\end{frame}
 	
 	
-	\begin{frame}
-		\frametitle{Xác định ký tự trên đường cơ sở}
-		\begin{center}
-			\centering
-			\includegraphics[width=0.6\linewidth]{hor1.png}
-			\captionof{figure}{Xác định ký tự trên đường cơ sở}
-		\end{center}
-	\end{frame}
 	
 	\begin{frame}
 		\frametitle{Xác định ký tự trên đường cơ sở}
@@ -720,28 +711,20 @@
 		\frametitle{Sinh cây Lexed BST}
 		\begin{center}
 			\centering
-			\includegraphics[width=0.6\linewidth]{nhom.png}
-			\captionof{figure}{Nhóm các ký tự phù hợp}
+			\includegraphics[width=0.9\linewidth]{nhom.png}
+			\vspace{0.5cm}
+			\captionof{figure}{Sinh cây Lexed BST}
 		\end{center}
 		
-		\begin{block}{Nhóm ký tự}
+		\begin{block}{Sinh cây Lexed BST}
 			\begin{itemize}
 				\item Các ký tự sẽ được nhóm lại phù hợp
+				\item Sử dụng tập luật để xây dựng ngữ nghĩa.
 			\end{itemize}
 		\end{block}
 		
 	\end{frame}
-	
-	\begin{frame}
-		\frametitle{Sinh cây Lexed BST}
-		\begin{center}
-			\centering
-			\includegraphics[width=0.6\linewidth]{lex1.png}
-			\captionof{figure}{Sử dụng các luật sinh để sinh cây Lexed BST}
-		\end{center}
-		
-		
-	\end{frame}
+
 	
 	%--------------------------------------------------
 	%--------------------------------------------------
@@ -885,7 +868,7 @@
 				\hline\hline
 				\makecell{Kích thước \\ảnh đầu vào}& 300x300 & 300x300 & 500x500 & 500x500 \\ 
 				\hline
-				\makecell{Kích thước \\default boxes\footnote{Kích thước default box được quy định bởi bộ 2 thông số: (max\_ratio, min\_ratio)}}& (20,90) & (8,50) & (8,50)& (8,50)\\ 
+				\makecell{Kích thước \\default boxes\footnote{Kích thước default box được quy định bởi bộ 2 thông số: ($s_{min}$, $s_{max}$)\\}}& (20,90) & (8,50) & (8,50)& (8,50)\\ 
 				\hline
 				\makecell{Số lượng \\default boxes} & 8732 & 8732 & 24148 & 24024\\
 				\hline
@@ -1069,6 +1052,12 @@
 	\begin{frame}{Demo}
 		\huge{Demo}
 	\end{frame}
+	
+	\section*{Lời kết}
+	\begin{frame}
+		\Huge{\centering{Cảm ơn quý thầy cô và các bạn!}}
+	\end{frame}
+	
 	\section*{Tham khảo}
 	\begin{frame}
 		\frametitle{Tham khảo}
@@ -1077,10 +1066,7 @@
 	
 	
 	%------------------------------------------------
-	\section*{Lời kết}
-	\begin{frame}
-		\Huge{\centering{Cảm ơn quý thầy cô và các bạn!}}
-	\end{frame}
+	
 	
 	\section*{Phụ lục}
 	\begin{frame}{Phụ lục}
