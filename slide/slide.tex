@@ -207,8 +207,37 @@
 	
 	\section{Công trình liên quan}
 	%---------------------------------------------------
-	\subsection{Watch, Attend and Parse}
 	
+	%\subsection{Quy trình nhận dạng biểu thức toán học}
+	\begin{frame}{Giới thiệu quy trình nhận dạng}
+	\begin{center}
+		\centering
+		\includegraphics[width=0.99\linewidth]{2phase}
+		\vspace{0.5cm}
+		\captionof{figure}{Hai quá trình căn bản của nhận dạng biểu thức toán học.}
+	\end{center}
+	\end{frame}
+
+	
+	\begin{frame}{Giới thiệu quy trình nhận dạng}
+	\begin{center}
+		\centering
+		\includegraphics[width=0.99\linewidth]{tuantu}
+		\vspace{0.5cm}
+		\captionof{figure}{Hai quá trình căn bản của nhận dạng biểu thức toán học.}
+	\end{center}
+	\end{frame}
+	
+	\begin{frame}{Giới thiệu quy trình nhận dạng}
+	\begin{center}
+		\centering
+		\includegraphics[width=0.8\linewidth]{kethop}
+		\vspace{0.5cm}
+		\captionof{figure}{Hai quá trình căn bản của nhận dạng biểu thức toán học.}
+	\end{center}
+	\end{frame}
+
+	\subsection{Watch, Attend and Parse}
 	\begin{frame}{Watch, Attend and Parser\footfullcite{zhang2017watch}}
 		\begin{block}{Phương pháp}
 			\begin{itemize}
@@ -217,6 +246,7 @@
 			\end{itemize}
 		\end{block}
 	\end{frame}
+	
 	
 	\begin{frame}{Watch, Attend and Parse}
 		\begin{center}
@@ -253,7 +283,12 @@
 
 	\begin{frame}{Watch, Attend and Parser và Context- aware Recognition}
 		\begin{block}{Đánh giá}
-			Cả 2 phương pháp đều tận dụng được thông tin cấu trúc 2 chiều của biểu thức toán học qua quá trình nhận dạng bằng cách sử dụng một lớp mạng CNN để tạo ra đặc trưng từ ảnh biểu thức đầu vào, thay vì sử dụng cách phương pháp phổ biến trong phân tách ký tự như phân tích hình chiếu\footnote{Thuật ngữ tiếng Anh: projection cutting}, phân tích thành phần liên thông\footnote{Thuật ngữ tiếng Anh: connected component analysis}. Do đó, hạn chế lỗi do quá trình nhận dạng ký tự gây ra ảnh hướng đến kết quả sau cùng của bài toán.
+			\begin{itemize}
+				\item Ưu điểm: tận dụng được thông tin cấu trúc 2 chiều của biểu thức toán học.
+				\item Cách làm: đưa cả ảnh biểu thức qua quá trình nhận dạng.
+			\end{itemize}
+			
+%			Cả 2 phương pháp đều tận dụng được thông tin cấu trúc 2 chiều của biểu thức toán học qua quá trình nhận dạng bằng cách sử dụng một lớp mạng CNN để tạo ra đặc trưng từ ảnh biểu thức đầu vào, thay vì sử dụng cách phương pháp phổ biến trong phân tách ký tự như phân tích hình chiếu\footnote{Thuật ngữ tiếng Anh: projection cutting}, phân tích thành phần liên thông\footnote{Thuật ngữ tiếng Anh: connected component analysis}. Do đó, hạn chế lỗi do quá trình nhận dạng ký tự gây ra ảnh hướng đến kết quả sau cùng của bài toán.
 		\end{block}
 	\end{frame}
 	%--------------------------------------------------
@@ -304,7 +339,14 @@
 		
 		
 	\end{frame}
-	
+	\begin{frame}{Tổng quan phương pháp}
+		\begin{center}
+			\centering
+			\includegraphics[width=0.65\linewidth]{overview}
+			\vspace{0.5cm}
+			\captionof{figure}{Tổng quan phương pháp.}
+		\end{center}
+	\end{frame}
 	\begin{frame}
 		\frametitle{Mô hình đề xuất}
 		
@@ -1026,10 +1068,13 @@
 	\begin{frame}{Khắc phục lỗi nhận dạng sai ở ký tự lớn}
 		\begin{center}
 			\centering
-			\includegraphics[width=0.875\linewidth]{compare_future.png}
-			\vspace{0.5cm}
+			\includegraphics[width=0.775\linewidth]{compare_future.png}
+			\vspace{0.2cm}
 			\captionof{figure}{Kết quả thu được sau khi thu nhỏ nội dung ảnh.}
 		\end{center}
+		\begin{block}{Hướng thực hiện}
+			Xác định kích thước ký tự như thế nào là tối ưu với hệ thống nhận dạng, từ đó cải tiến bộ tiền xử lý để tạo ra ảnh đầu vào phù hợp với hệ thống.
+		\end{block}
 	\end{frame}
 	
 	\begin{frame}{Hướng phát triển khác}
