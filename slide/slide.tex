@@ -310,11 +310,44 @@
 		
 		\begin{center}
 			\centering
-			\includegraphics[width=0.95\linewidth]{r_pipeline.png}
+			\includegraphics[width=0.95\linewidth]{ssd.png}
 			\vspace{0.5cm}
-			\captionof{figure}{Mô hình nhóm đề xuất}
+			\captionof{figure}{Mô hình mạng SSD nhóm đề xuất}
 		\end{center}
 	\end{frame}
+	
+	\begin{frame}
+		\frametitle{Mô hình đề xuất}
+		
+		\begin{center}
+			\centering
+			\includegraphics[width=0.95\linewidth]{ssd2.png}
+			\vspace{0.5cm}
+			\captionof{figure}{Mô hình mạng SSD nhóm đề xuất}
+		\end{center}
+	\end{frame}
+
+\begin{frame}
+	\frametitle{Mô hình đề xuất}
+	
+	\begin{center}
+		\centering
+		\includegraphics[width=0.95\linewidth]{ssd3.png}
+		\vspace{0.5cm}
+		\captionof{figure}{Mô hình bộ phân tích cú pháp Draculae nhóm đề xuất}
+	\end{center}
+\end{frame}
+	
+\begin{frame}
+	\frametitle{Mô hình đề xuất}
+	
+	\begin{center}
+		\centering
+		\includegraphics[width=0.95\linewidth]{r_pipeline.png}
+		\vspace{0.5cm}
+		\captionof{figure}{Mô hình nhóm đề xuất}
+	\end{center}
+\end{frame}
 	
 	%--------------------------------------------------
 	%----------SUBSEC: SSD----------------------
@@ -470,6 +503,7 @@
 			\begin{itemize}
 				\item Mạng cơ sở: VGG
 				\item Số lớp: 106
+				\item Kích thước ảnh đầu vào: $300 \times 300$
 			\end{itemize}
 		\end{block}
 	\end{frame}
@@ -530,7 +564,7 @@
 		\end{center}
 	\begin{block}{}
 
-		Khi kích thước feature map tăng lên, số lượng default box tương ứng với feature map đó cũng tăng lên, lấp đầy phần lưới bị hổng.
+		Khi kích thước feature map tăng lên, số lượng default box tương ứng với feature map đó cũng tăng lên góp phần lấp đầy phần lưới bị hổng.
 	\end{block}
 	\end{frame}
 	
@@ -544,7 +578,7 @@
 		\end{center}
 	\begin{block}{Các thay đổi}
 		\begin{itemize}
-			\item Tăng thêm một khối gồm 02 lớp convolutoin nhầm tăng số feature map trích xuất được.
+			\item Tăng thêm một khối gồm 02 lớp tích chập nhằm tăng số feature map trích xuất được.
 		\end{itemize}
 		
 	\end{block}
